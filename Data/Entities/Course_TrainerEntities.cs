@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Data.Entities
+﻿namespace Data.Entities
 {
-    class Course_TrainerEntities
+    internal class Course_TrainerEntities
     {
     }
 }
