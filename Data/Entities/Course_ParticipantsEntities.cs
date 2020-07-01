@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data.Entities
 {
-    class Course_Trainer
+    class Course_ParticipantsEntities
     {
     }
 }
