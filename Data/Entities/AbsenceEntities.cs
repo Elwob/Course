@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Data.Entities
 {
-    class Entitie
+    class AbsenceEntitie
     {
+
     }
 }
