@@ -9,7 +9,7 @@ namespace Data.Models
     public class Address
     {
         [Column("id")]
-        public int Int { get; set; }
+        public int Id { get; set; }
         [Column("street", TypeName = "varchar(200)")]
         public string Street { get; set; }
         [Column("place", TypeName = "varchar(200)")]
