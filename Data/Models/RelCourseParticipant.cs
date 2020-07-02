@@ -3,7 +3,7 @@
 namespace Data.Models
 {
     [Table("RelCourseParticipants")]
-    public class RelCourseParticipants
+    public class RelCourseParticipant
     {
         [Column("id", TypeName = "int")]
         public int Id { get; set; }

@@ -11,6 +11,14 @@ namespace Data.Entities
         public DbSet<Course> Courses { get; set; }
         public DbSet<Content> Contents { get; set; }
 
+
+        public DbSet<RelCourseParticipant> RelCourseParticipants{ get; set; }
+        public DbSet<RelCourseTrainer> RelCourseTrainers { get; set; }
+        public DbSet<Absence> Absences { get; set; }
+        public DbSet<EmailTemplate> EmailTemplates { get; set; }
+
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySQL("server=192.168.0.94;database=dcv;user=root");
@@ -19,7 +27,7 @@ namespace Data.Entities
         {
             base.OnModelCreating(modelBuilder);
 
-            
+
 
             modelBuilder.Entity<Course>(entity =>
             {
@@ -54,6 +62,51 @@ namespace Data.Entities
                 entity.Property(x => x.Class).IsRequired();
                 entity.Property(x => x.ClassId).IsRequired();              
             });
+
+
+
+
+
+
+
+
+
+            modelBuilder.Entity<RelCourseParticipant>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.CourseId).IsRequired();
+                entity.Property(x => x.ParticipantId).IsRequired();
+             
+            });
+
+            modelBuilder.Entity<RelCourseTrainer>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.CourseId).IsRequired();
+                entity.Property(x => x.TrainerID).IsRequired();
+
+            });
+
+
+            modelBuilder.Entity<Absence>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Start).IsRequired();
+                entity.Property(x => x.ParticipantId).IsRequired();
+                entity.Property(x => x.CourseId).IsRequired();
+                entity.Property(x => x.Completed).IsRequired();
+
+
+            });
+
+            modelBuilder.Entity<EmailTemplate>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.DocumentType).IsRequired();
+                entity.Property(x => x.Text).IsRequired();
+
+            });
+
             modelBuilder.Entity<RelDocumentClass>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -61,6 +114,7 @@ namespace Data.Entities
                 entity.Property(x => x.Class).IsRequired();
                 entity.Property(x => x.ClassId).IsRequired();
             });
+
 
 
 
