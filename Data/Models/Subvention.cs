@@ -11,10 +11,12 @@ namespace Data.Models
         [Column ("id")]
         public int Id { get; set; }
         [Column("name", TypeName = "varchar(250)")]
-        public int Name { get; set; }
+        public string Name { get; set; }
         [Column("percentage")]
         public double Percentage { get; set; }
         [Column("amount")]
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
+        [NotMapped]
+        public List<RelCourseSubvention> CourseSubventions { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Logic
 
         public void AddToDatabase()
         {
-            documentController.AddDataToDatabase();
+            //documentController.AddDataToDatabase();
         }
     }
 }

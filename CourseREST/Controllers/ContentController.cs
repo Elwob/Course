@@ -6,6 +6,7 @@ using Data.Entities;
 using Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseREST.Controllers
 {
@@ -15,10 +16,11 @@ namespace CourseREST.Controllers
     {
         CourseEntities entities = new CourseEntities();
         [HttpGet]
-        public List<Content> get()
+        public List<Course> get()
         {
-            var lala = entities.Content.ToList();
-            return lala;
+            var courses = entities.Courses.Include(c => c.CourseContents).ThenInclude(x => x.Content).Include(x => x.CourseSubventions).ThenInclude(x => x.Subvention).ToList();
+            //var lala = entities.Content.ToList();
+            return courses;
         }
     }
 }

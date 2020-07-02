@@ -14,7 +14,11 @@ namespace Data.Models
         public int CourseId { get; set; }
         [Column ("content_id")]
         public int ContentId { get; set; }
-        [Column("unit_estimation")]
-        public int UnitEstimation { get; set; }
+        [Column("units")]
+        public int? UnitEstimation { get; set; }
+        [NotMapped]
+        public Course Course { get; set; }
+        [NotMapped]
+        public Content Content { get; set; }
     }
 }

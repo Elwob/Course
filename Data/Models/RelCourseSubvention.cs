@@ -14,5 +14,9 @@ namespace Data.Models
         public int CourseId { get; set; }
         [Column("subvention_id")]
         public int SubventionId { get; set; }
+        [NotMapped]
+        public Course Course { get; set; }
+        [NotMapped]
+        public Subvention Subvention { get; set; }
     }
 }
