@@ -5,24 +5,27 @@ using System.Text;
 
 namespace Data.Models
 {
-    [Table ("documents")]
-    public class Document
+    [Table ("communication")]
+    public class Communication
     {
         [Column ("id")]
         public int Id { get; set; }
-        [Column("url", TypeName = "varchar(200)")]
-        public string Url { get; set; }
-        [Column("name", TypeName = "varchar(100)")]
-        public string Name { get; set; }
-        [Column("comment", TypeName = "varchar(500)")]
+        [Column("channel", TypeName = ("varchar(50)"))]
+        public string Channel { get; set; }
+        [Column("person_id")]
+        public int PersonId { get; set; }
+        [Column("date")]
+        public DateTime Date { get; set; }
+        [Column("comment", TypeName = ("varchar(500)"))]
         public string Comment { get; set; }
+        [Column("document_id")]
+        public int DocumentId { get; set; }
         [Column("reminder_id")]
         public int ReminderId { get; set; }
         [Column("created@")]
         public DateTime CreatedAt { get; set; }
         [Column("modified@")]
         public DateTime ModifiedAt { get; set; }
-        [Column("type", TypeName = "varchar(50)")]
-        public EDocumentType Type { get; set; }
+
     }
 }
