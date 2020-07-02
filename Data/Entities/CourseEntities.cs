@@ -110,7 +110,6 @@ namespace Data.Entities
                             c.CourseSubventions)
                         .HasForeignKey(sub => 
                             sub.SubventionId);
-
                 entity.Property(x => x.CourseId).IsRequired();
             });
 

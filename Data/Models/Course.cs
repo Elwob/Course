@@ -15,10 +15,10 @@ namespace Data.Models
         public string Title { get; set; }
 
         [Column("course_number", TypeName = "varchar(15)")]
-        public string CourseNumber { get; set; }
+        public string? CourseNumber { get; set; }
 
         [Column("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Column("category", TypeName = "varchar(100)")]
         public ECourseCategory Category { get; set; }
@@ -28,19 +28,19 @@ namespace Data.Models
         [Column ("end")]
         public DateTime? End { get; set; }
         [Column ("unit")]
-        public int Unit { get; set; }
+        public int? Unit { get; set; }
 
         [Column("price")]
-        public double Price { get; set; }
+        public double? Price { get; set; }
 
         [Column("classroom_id")]
-        public int ClassroomID { get; set; }
+        public int? ClassroomID { get; set; }
 
         [Column("participant_max")]
-        public int MaxParticipants { get; set; }
+        public int? MaxParticipants { get; set; }
 
         [Column("participant_min")]
-        public int MinParticipants { get; set; }
+        public int? MinParticipants { get; set; }
 
         [Column("created@")]
         public DateTime CreatedAt { get; set; }

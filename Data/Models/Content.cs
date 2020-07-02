@@ -13,7 +13,7 @@ namespace Data.Models
         public string Topic { get; set; }
 
         [Column("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Column("unit_estimation")]
         public int? UnitEstimation { get; set; }
