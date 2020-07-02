@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data.Entities
+namespace Data.Models
 {
-    class Entitie
+    public enum EClass
     {
+        Person,
+        Course
     }
 }
