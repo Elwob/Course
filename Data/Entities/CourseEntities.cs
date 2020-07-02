@@ -112,7 +112,6 @@ namespace Data.Entities
                             sub.SubventionId);
 
                 entity.Property(x => x.CourseId).IsRequired();
-                entity.Property(x => x.ParticipantId).IsRequired();
             });
 
             modelBuilder.Entity<RelCourseTrainer>(entity =>

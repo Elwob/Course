@@ -28,16 +28,6 @@ namespace Data.Models
         [Column ("end")]
         public DateTime? End { get; set; }
         [Column ("unit")]
-
-
-        [Column("start")]
-        public DateTime Start { get; set; }
-
-        [Column("end")]
-        public DateTime End { get; set; }
-
-        [Column("unit")]
-
         public int Unit { get; set; }
 
         [Column("price")]

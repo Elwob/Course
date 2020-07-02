@@ -20,10 +20,5 @@ namespace Data.Models
         public Course Course { get; set; }
         [NotMapped]
         public Content Content { get; set; }
-
-
-        [Column("unit_estimation")]
-        public int UnitEstimation { get; set; }
-
     }
 }
