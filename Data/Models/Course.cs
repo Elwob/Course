@@ -17,7 +17,7 @@ namespace Data.Models
         [Column ("description")]
         public string Description { get; set; }
         [Column ("category", TypeName = "varchar(100)")]
-        public CourseCategory Category { get; set; }
+        public ECourseCategory Category { get; set; }
         [Column ("start")]
         public DateTime Start { get; set; }
         [Column ("end")]

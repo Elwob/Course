@@ -8,11 +8,12 @@ namespace Data.Entities
 {
     public class CourseEntities : DbContext
     {
-        public DbSet<Course> course { get; set; }
+        public DbSet<Course> Course { get; set; }
+        public DbSet<Content> Content { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=localhost;database=dcv;user=root");
+            optionsBuilder.UseMySQL("server=192.168.0.94;database=dcv;user=root");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +25,11 @@ namespace Data.Entities
                 entity.Property(x => x.Title).IsRequired();
                 entity.Property(x => x.Category).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
+            });
+
+            modelBuilder.Entity<Content>(entity =>
+            {
+                entity.HasKey(x => x.id);
             });
         }
     }

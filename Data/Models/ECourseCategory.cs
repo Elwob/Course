@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data.Models
 {
-    public enum CourseCategory
+    public enum ECourseCategory
     {
         CodingCampus,
         DigitalMarketingAcademy,
