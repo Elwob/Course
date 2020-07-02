@@ -47,8 +47,14 @@ namespace Data.Models
 
         [Column("modified@")]
         public DateTime? ModifiedAt { get; set; }
+
         [NotMapped]
         public List<RelCourseContent> CourseContents { get; set; }
+
+        [NotMapped]
         public List<RelCourseSubvention> CourseSubventions { get; set; }
+
+        [NotMapped]
+        public List<RelCourseParticipant> RelCourseParticipants { get; set; }
     }
 }

@@ -70,9 +70,16 @@ namespace Data.Entities
 
             modelBuilder.Entity<RelCourseParticipant>(entity =>
             {
-                entity.HasKey(x => x.Id);
-
+                entity.HasKey(x => new { x.Id, x.CourseId, x.ParticipantId});
                 entity.Property(x => x.Id).IsRequired();
+
+                entity.HasOne(c => c.Course)
+                .WithMany(r => r.RelCourseParticipants)
+                .HasForeignKey(r => r.CourseId);
+
+                entity.HasOne(p => p.Person)
+                .WithMany(r => r.RelCourseParticipants)
+                .HasForeignKey(r => r.ParticipantId);
             });
 
             modelBuilder.Entity<Subvention>(entity =>
@@ -98,7 +105,7 @@ namespace Data.Entities
 
             modelBuilder.Entity<RelCourseSubvention>(entity =>
             {
-                entity.HasKey(x => new { x.Id, x.CourseId, x.SubventionId });
+                entity.HasKey(x => x.Id);
                 entity.Property(x => x.CourseId).IsRequired();
                 entity.Property(x => x.SubventionId).IsRequired();
                 entity.HasOne(c => c.Course)

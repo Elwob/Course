@@ -63,5 +63,8 @@ namespace Data.Models
 
         [NotMapped]
         public List<Contact> Contacts { get; set; }
+
+        [NotMapped]
+        public List<RelCourseParticipant> RelCourseParticipants { get; set; }
     }
 }
