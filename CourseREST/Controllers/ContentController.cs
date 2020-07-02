@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Data.Entities;
+using Data.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Data.Entities;
-using Data.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CourseREST.Controllers
 {
@@ -13,7 +10,8 @@ namespace CourseREST.Controllers
     [ApiController]
     public class ContentController : ControllerBase
     {
-        CourseEntities entities = new CourseEntities();
+        private CourseEntities entities = new CourseEntities();
+
         [HttpGet]
         public List<Content> get()
         {

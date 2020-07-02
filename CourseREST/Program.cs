@@ -1,17 +1,13 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Logic;
 
 namespace CourseREST
 {
     public class Program
     {
-
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
-            
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -20,6 +16,5 @@ namespace CourseREST
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
     }
 }

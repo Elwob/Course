@@ -1,23 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Data.Models
 {
-    [Table ("comment")]
+    [Table("comment")]
     public class Comment
     {
-        [Column ("id")]
+        [Column("id")]
         public int Id { get; set; }
+
         [Column("person_id")]
         public int PersonId { get; set; }
+
         [Column("comment_value")]
         public string CommentValue { get; set; }
+
         [Column("value_date")]
         public DateTime ValueDate { get; set; }
+
         [Column("created@")]
         public DateTime CreatedAt { get; set; }
+
         [Column("modify@")]
         public DateTime ModifiedAt { get; set; }
     }
