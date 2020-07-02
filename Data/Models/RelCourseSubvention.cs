@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
 {
@@ -10,8 +7,10 @@ namespace Data.Models
     {
         [Column("id")]
         public int Id { get; set; }
+
         [Column("course_id")]
         public int CourseId { get; set; }
+
         [Column("subvention_id")]
         public int SubventionId { get; set; }
         [NotMapped]
