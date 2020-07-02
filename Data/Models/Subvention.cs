@@ -14,7 +14,7 @@ namespace Data.Models
         public string Name { get; set; }
 
         [Column("percentage")]
-        public double Percentage { get; set; }
+        public double? Percentage { get; set; }
 
         [Column("amount")]
         public double? Amount { get; set; }
