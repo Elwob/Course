@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
 {
-    [Table ("addressperson")]
+    [Table("addressperson")]
     public class RelAddressPerson
     {
-        [Column ("id")]
+        [Column("id")]
         public int Id { get; set; }
+
         [Column("addressId")]
         public int AdressId { get; set; }
+
         [Column("personId")]
         public int PersonId { get; set; }
     }
