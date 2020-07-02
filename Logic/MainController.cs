@@ -6,7 +6,7 @@
 
         public void AddToDatabase()
         {
-            documentController.AddDataToDatabase();
+            //documentController.AddDataToDatabase();
         }
     }
 }

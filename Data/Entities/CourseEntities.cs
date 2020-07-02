@@ -1,4 +1,4 @@
-﻿using Data.Models;
+using Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Entities
@@ -7,6 +7,9 @@ namespace Data.Entities
     {
         public DbSet<Course> Courses { get; set; }
         public DbSet<Content> Contents { get; set; }
+        public DbSet<Content> Subventions { get; set; }
+        public DbSet<RelCourseContent> RelCourseContents { get; set; }
+        public DbSet<RelCourseSubvention> RelCourseSubventions { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<RelDocumentClass> RelDocumentClasses { get; set; }
         public DbSet<Communication> Communications { get; set; }
@@ -21,6 +24,7 @@ namespace Data.Entities
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySQL("server=192.168.0.94;database=dcv;user=root");
@@ -33,6 +37,7 @@ namespace Data.Entities
             modelBuilder.Entity<Course>(entity =>
             {
                 entity.HasKey(x => x.Id);
+                entity.Property(x => x.Id).IsRequired();
                 entity.Property(x => x.Title).IsRequired();
                 entity.Property(x => x.Category).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
@@ -66,6 +71,46 @@ namespace Data.Entities
             modelBuilder.Entity<RelCourseParticipant>(entity =>
             {
                 entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.Id).IsRequired();
+            });
+
+            modelBuilder.Entity<Subvention>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Name).IsRequired();
+            });
+
+            modelBuilder.Entity<RelCourseContent>(entity =>
+            {
+                entity.HasKey(x => new { x.Id, x.CourseId, x.ContentId });
+                entity.Property(x => x.CourseId).IsRequired();
+                entity.Property(x => x.ContentId).IsRequired();
+
+                entity.HasOne(c => c.Course)
+                .WithMany(co => co.CourseContents)
+                .HasForeignKey(c => c.CourseId);
+
+                entity.HasOne(co => co.Content)
+                .WithMany(c => c.CourseContents)
+                .HasForeignKey(co => co.ContentId);
+            });
+
+            modelBuilder.Entity<RelCourseSubvention>(entity =>
+            {
+                entity.HasKey(x => new { x.Id, x.CourseId, x.SubventionId });
+                entity.Property(x => x.CourseId).IsRequired();
+                entity.Property(x => x.SubventionId).IsRequired();
+                entity.HasOne(c => c.Course)
+                        .WithMany(sub => sub.CourseSubventions)
+                        .HasForeignKey(c => c.CourseId);
+                entity.HasOne(sub => 
+                            sub.Subvention)
+                        .WithMany(c => 
+                            c.CourseSubventions)
+                        .HasForeignKey(sub => 
+                            sub.SubventionId);
+
                 entity.Property(x => x.CourseId).IsRequired();
                 entity.Property(x => x.ParticipantId).IsRequired();
             });
@@ -144,6 +189,7 @@ namespace Data.Entities
                 entity.Property(x => x.CommentValue).IsRequired();
                 entity.Property(x => x.ValueDate).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
+
             });
         }
     }

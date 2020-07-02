@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
 {
@@ -14,7 +14,16 @@ namespace Data.Models
         [Column("content_id")]
         public int ContentId { get; set; }
 
+        [Column("units")]
+        public int? UnitEstimation { get; set; }
+        [NotMapped]
+        public Course Course { get; set; }
+        [NotMapped]
+        public Content Content { get; set; }
+
+
         [Column("unit_estimation")]
         public int UnitEstimation { get; set; }
+
     }
 }
