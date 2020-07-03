@@ -10,27 +10,27 @@ namespace Data.Models
         public int Id { get; set; }
 
         [Column("street", TypeName = "varchar(200)")]
-        public string Street { get; set; }
+        public string? Street { get; set; }
 
         [Column("place", TypeName = "varchar(200)")]
-        public string Place { get; set; }
+        public string? Place { get; set; }
 
         [Column("zip")]
-        public int Zip { get; set; }
+        public int? Zip { get; set; }
 
         [Column("country", TypeName = "varchar(200)")]
-        public string Country { get; set; }
+        public string? Country { get; set; }
 
         [Column("contact_type", TypeName = "varchar(200)")]
-        public string ContactType { get; set; }
+        public string? ContactType { get; set; }
 
         [Column("billing_address")]
-        public bool BillingAddress { get; set; }
+        public bool? BillingAddress { get; set; }
 
         [Column("created@")]
         public DateTime CreatedAt { get; set; }
 
         [Column("modify@")]
-        public DateTime ModifiedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; }
     }
 }

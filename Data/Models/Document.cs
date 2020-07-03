@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
@@ -16,18 +17,20 @@ namespace Data.Models
         public string Name { get; set; }
 
         [Column("comment", TypeName = "varchar(500)")]
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
         [Column("reminder_id")]
-        public int ReminderId { get; set; }
+        public int? ReminderId { get; set; }
 
         [Column("created@")]
         public DateTime CreatedAt { get; set; }
 
         [Column("modified@")]
-        public DateTime ModifiedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; }
 
         [Column("type", TypeName = "varchar(50)")]
         public EDocumentType Type { get; set; }
+        [NotMapped]
+        public List<RelDocumentClass> DocumentClasses { get; set; }
     }
 }
