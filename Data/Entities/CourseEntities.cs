@@ -24,6 +24,19 @@ namespace Data.Entities
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        private static CourseEntities instance = null;
+
+        public static CourseEntities GetInstance()
+        {
+            if (instance == null)
+            {
+                return new CourseEntities();
+            }
+            else
+            {
+                return instance;
+            }
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -83,22 +96,24 @@ namespace Data.Entities
 
             modelBuilder.Entity<RelCourseContent>(entity =>
             {
-                entity.HasKey(x => new { x.Id, x.CourseId, x.ContentId });
+                entity.HasKey(x => x.Id);
                 entity.Property(x => x.CourseId).IsRequired();
                 entity.Property(x => x.ContentId).IsRequired();
-
                 entity.HasOne(c => c.Course)
-                .WithMany(co => co.CourseContents)
-                .HasForeignKey(c => c.CourseId);
-
+                        .WithMany(co => 
+                            co.CourseContents)
+                        .HasForeignKey(c => 
+                            c.CourseId);
                 entity.HasOne(co => co.Content)
-                .WithMany(c => c.CourseContents)
-                .HasForeignKey(co => co.ContentId);
+                        .WithMany(c => 
+                            c.CourseContents)
+                        .HasForeignKey(co => 
+                            co.ContentId);
             });
 
             modelBuilder.Entity<RelCourseSubvention>(entity =>
             {
-                entity.HasKey(x => new { x.Id, x.CourseId, x.SubventionId });
+                entity.HasKey(x => x.Id);
                 entity.Property(x => x.CourseId).IsRequired();
                 entity.Property(x => x.SubventionId).IsRequired();
                 entity.HasOne(c => c.Course)
