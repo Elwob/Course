@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace CourseREST.Controllers
 {
+    [Route ("content")]
     [Route("[controller]")]
     [ApiController]
     public class ContentApiController : ControllerBase

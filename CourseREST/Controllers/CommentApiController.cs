@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace CourseREST.Controllers
 {
+    [Route("comment")]
     [Route("[controller]")]
     [ApiController]
     public class CommentApiController : ControllerBase

@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace CourseREST.Controllers
 {
+
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

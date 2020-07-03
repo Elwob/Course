@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CourseREST.Controllers
 {
+    [Route("course")]
     [Route("[controller]")]
     [ApiController]
     public class CourseApiController : ControllerBase

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CourseREST.Controllers
 {
-
+    [Route("communication")]
     [Route("[controller]")]
     [ApiController]
     public class CommunicationApiController : ControllerBase
