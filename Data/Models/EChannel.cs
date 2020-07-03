@@ -1,5 +1,8 @@
 ﻿namespace Data.Models
 {
+    /// <summary>
+    /// different communication channels
+    /// </summary>
     public enum EChannel
     {
         Email,
