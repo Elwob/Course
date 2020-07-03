@@ -16,5 +16,7 @@ namespace Data.Models
 
         [Column("class_id")]
         public int ClassId { get; set; }
+        [NotMapped]
+        public Document Document { get; set; }
     }
 }
