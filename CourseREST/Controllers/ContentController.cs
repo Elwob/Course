@@ -14,11 +14,11 @@ namespace CourseREST.Controllers
         private CourseEntities entities = new CourseEntities();
 
         [HttpGet]
-        public List<Course> getCourses()
+        public List<Content> get()
+
         {
-            var courses = entities.Courses.Include(c => c.CourseContents).ThenInclude(x => x.Content).Include(x => x.CourseSubventions).ThenInclude(x => x.Subvention).ToList();
-            //var lala = entities.Content.ToList();
-            return courses;
+            var content = entities.Contents.ToList();
+            return content;
         }
 
 
