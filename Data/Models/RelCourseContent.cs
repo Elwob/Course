@@ -16,8 +16,10 @@ namespace Data.Models
 
         [Column("units")]
         public int? UnitEstimation { get; set; }
+
         [NotMapped]
         public Course Course { get; set; }
+
         [NotMapped]
         public Content Content { get; set; }
     }

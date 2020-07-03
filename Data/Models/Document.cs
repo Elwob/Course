@@ -29,5 +29,8 @@ namespace Data.Models
 
         [Column("type", TypeName = "varchar(50)")]
         public EDocumentType Type { get; set; }
+
+        [NotMapped]
+        public Absence Absence { get; set; }
     }
 }

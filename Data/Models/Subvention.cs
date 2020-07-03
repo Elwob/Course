@@ -10,7 +10,6 @@ namespace Data.Models
         public int Id { get; set; }
 
         [Column("name", TypeName = "varchar(250)")]
-
         public string Name { get; set; }
 
         [Column("percentage")]
@@ -18,6 +17,7 @@ namespace Data.Models
 
         [Column("amount")]
         public double? Amount { get; set; }
+
         [NotMapped]
         public List<RelCourseSubvention> CourseSubventions { get; set; }
     }

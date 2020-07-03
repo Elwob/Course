@@ -19,6 +19,5 @@ namespace Data.Models
 
         [NotMapped]
         public Person Person { get; set; }
-
     }
 }
