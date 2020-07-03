@@ -86,7 +86,7 @@ namespace Data.Entities
                 entity.Property(x => x.PersonId).IsRequired();
                 entity.Property(x => x.Date).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
-
+                // connection document-person
                 entity.HasOne(x => x.Document);
                 entity.HasOne(x => x.Person);
             });
@@ -96,6 +96,7 @@ namespace Data.Entities
                 entity.Property(x => x.CommunicationId).IsRequired();
                 entity.Property(x => x.Class).IsRequired();
                 entity.Property(x => x.ClassId).IsRequired();
+
                 entity.HasOne(x => x.Communication)
                         .WithMany(x => x.CommunicationClasses)
                         .HasForeignKey(x => x.CommunicationId);

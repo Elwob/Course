@@ -12,7 +12,7 @@ namespace CourseREST.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CourseController : ControllerBase
+    public class CourseApiController : ControllerBase
     {
         private CourseEntities entities = CourseEntities.GetInstance();
 

@@ -10,14 +10,14 @@ namespace CourseREST.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class AddressController : ControllerBase
+    public class ContactApiController : ControllerBase
     {
         private CourseEntities entities = CourseEntities.GetInstance();
         [HttpGet]
-        public List<Address> get()
+        public List<Contact> get()
         {
-            var addresses = entities.Addresses.ToList();
-            return addresses;
+            var contacts = entities.Contacts.ToList();
+            return contacts;
         }
     }
 }

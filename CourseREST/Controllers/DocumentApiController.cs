@@ -9,7 +9,7 @@ namespace CourseREST.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class DocumentController : ControllerBase
+    public class DocumentApiController : ControllerBase
     {
         private CourseEntities entities = CourseEntities.GetInstance();
         [HttpGet]

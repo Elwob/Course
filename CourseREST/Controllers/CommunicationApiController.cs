@@ -8,18 +8,17 @@ using System.Threading.Tasks;
 
 namespace CourseREST.Controllers
 {
+
     [Route("[controller]")]
     [ApiController]
-    public class PersonController : ControllerBase
+    public class CommunicationApiController : ControllerBase
     {
         private CourseEntities entities = CourseEntities.GetInstance();
-
         [HttpGet]
-        public List<Person> get()
-
+        public List<Communication> get()
         {
-            var persons = entities.Persons.ToList();
-            return persons;
+            var communications = entities.Communications.ToList();
+            return communications;
         }
     }
 }
