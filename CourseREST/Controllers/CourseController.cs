@@ -14,7 +14,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class CourseController : ControllerBase
     {
-        private CourseEntities entities = new CourseEntities();
+        private CourseEntities entities = CourseEntities.GetInstance();
 
         [HttpGet]
         public List<Course> get()
