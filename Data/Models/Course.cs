@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,11 +22,13 @@ namespace Data.Models
         [Column("category", TypeName = "varchar(100)")]
         public ECourseCategory Category { get; set; }
 
-        [Column ("start")]
+        [Column("start")]
         public DateTime? Start { get; set; }
-        [Column ("end")]
+
+        [Column("end")]
         public DateTime? End { get; set; }
-        [Column ("unit")]
+
+        [Column("unit")]
         public int? Unit { get; set; }
 
         [Column("price")]
@@ -47,8 +48,20 @@ namespace Data.Models
 
         [Column("modified@")]
         public DateTime? ModifiedAt { get; set; }
+
         [NotMapped]
         public List<RelCourseContent> CourseContents { get; set; }
+
+        [NotMapped]
         public List<RelCourseSubvention> CourseSubventions { get; set; }
+
+        [NotMapped]
+        public List<RelCourseParticipant> RelCourseParticipants { get; set; }
+
+        [NotMapped]
+        public List<RelCourseTrainer> RelCourseTrainers { get; set; }
+
+        [NotMapped]
+        public List<Absence> Absences { get; set; }
     }
 }

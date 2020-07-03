@@ -13,5 +13,11 @@ namespace Data.Models
 
         [Column("trainer_id", TypeName = "int")]
         public int TrainerID { get; set; }
+
+        [NotMapped]
+        public Person Person { get; set; }
+
+        [NotMapped]
+        public Course Course { get; set; }
     }
 }
