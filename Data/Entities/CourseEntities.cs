@@ -142,6 +142,9 @@ namespace Data.Entities
                 entity.Property(x => x.DocId).IsRequired();
                 entity.Property(x => x.Class).IsRequired();
                 entity.Property(x => x.ClassId).IsRequired();
+                entity.HasOne(x => x.Document)
+                .WithMany(x => x.DocumentClasses)
+                .HasForeignKey(x => x.DocId);
             });
 
             modelBuilder.Entity<Person>(entity =>
