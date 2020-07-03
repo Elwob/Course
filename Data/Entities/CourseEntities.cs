@@ -65,6 +65,18 @@ namespace Data.Entities
                 entity.Property(x => x.Type).IsRequired();
             });
 
+            modelBuilder.Entity<RelDocumentClass>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.DocId).IsRequired();
+                entity.Property(x => x.Class).IsRequired();
+                entity.Property(x => x.ClassId).IsRequired();
+
+                entity.HasOne(x => x.Document)
+                .WithMany(x => x.DocumentClasses)
+                .HasForeignKey(x => x.DocId);
+            });
+
             modelBuilder.Entity<Communication>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -72,6 +84,9 @@ namespace Data.Entities
                 entity.Property(x => x.PersonId).IsRequired();
                 entity.Property(x => x.Date).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
+
+                entity.HasOne(x => x.Document);
+                entity.HasOne(x => x.Person);
             });
             modelBuilder.Entity<RelCommunicationClass>(entity =>
             {
@@ -79,6 +94,9 @@ namespace Data.Entities
                 entity.Property(x => x.CommunicationId).IsRequired();
                 entity.Property(x => x.Class).IsRequired();
                 entity.Property(x => x.ClassId).IsRequired();
+                entity.HasOne(x => x.Communication)
+                        .WithMany(x => x.CommunicationClasses)
+                        .HasForeignKey(x => x.CommunicationId);
             });
 
             modelBuilder.Entity<RelCourseParticipant>(entity =>
@@ -100,14 +118,14 @@ namespace Data.Entities
                 entity.Property(x => x.CourseId).IsRequired();
                 entity.Property(x => x.ContentId).IsRequired();
                 entity.HasOne(c => c.Course)
-                        .WithMany(co => 
+                        .WithMany(co =>
                             co.CourseContents)
-                        .HasForeignKey(c => 
+                        .HasForeignKey(c =>
                             c.CourseId);
                 entity.HasOne(co => co.Content)
-                        .WithMany(c => 
+                        .WithMany(c =>
                             c.CourseContents)
-                        .HasForeignKey(co => 
+                        .HasForeignKey(co =>
                             co.ContentId);
             });
 
@@ -119,11 +137,11 @@ namespace Data.Entities
                 entity.HasOne(c => c.Course)
                         .WithMany(sub => sub.CourseSubventions)
                         .HasForeignKey(c => c.CourseId);
-                entity.HasOne(sub => 
+                entity.HasOne(sub =>
                             sub.Subvention)
-                        .WithMany(c => 
+                        .WithMany(c =>
                             c.CourseSubventions)
-                        .HasForeignKey(sub => 
+                        .HasForeignKey(sub =>
                             sub.SubventionId);
                 entity.Property(x => x.CourseId).IsRequired();
             });
@@ -151,16 +169,7 @@ namespace Data.Entities
                 entity.Property(x => x.Text).IsRequired();
             });
 
-            modelBuilder.Entity<RelDocumentClass>(entity =>
-            {
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.DocId).IsRequired();
-                entity.Property(x => x.Class).IsRequired();
-                entity.Property(x => x.ClassId).IsRequired();
-                entity.HasOne(x => x.Document)
-                .WithMany(x => x.DocumentClasses)
-                .HasForeignKey(x => x.DocId);
-            });
+         
 
             modelBuilder.Entity<Person>(entity =>
             {
@@ -183,8 +192,21 @@ namespace Data.Entities
             modelBuilder.Entity<RelAddressPerson>(entity =>
             {
                 entity.HasKey(x => x.Id);
-                entity.Property(x => x.AdressId).IsRequired();
+                entity.Property(x => x.AddressId).IsRequired();
                 entity.Property(x => x.PersonId).IsRequired();
+
+                entity.HasOne(c => c.Person)
+                      .WithMany(co =>
+                          co.AddressPersons)
+                      .HasForeignKey(c =>
+                          c.PersonId);
+                entity.HasOne(co => co.Address)
+                        .WithMany(c =>
+                            c.AddressPersons)
+                        .HasForeignKey(co =>
+                            co.AddressId);
+
+
             });
 
             modelBuilder.Entity<Contact>(entity =>
@@ -196,6 +218,8 @@ namespace Data.Entities
                 entity.Property(x => x.ContactType).IsRequired();
                 entity.Property(x => x.MainContact).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
+
+                entity.HasOne(x => x.Person);
             });
 
             modelBuilder.Entity<Comment>(entity =>
@@ -205,6 +229,8 @@ namespace Data.Entities
                 entity.Property(x => x.CommentValue).IsRequired();
                 entity.Property(x => x.ValueDate).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
+
+                entity.HasOne(x => x.Person);
 
             });
         }

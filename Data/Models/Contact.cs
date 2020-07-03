@@ -12,6 +12,9 @@ namespace Data.Models
         [Column("person_id")]
         public int PersonId { get; set; }
 
+        [NotMapped]
+        public Person Person { get; set; }
+
         [Column("art_of_communication", TypeName = "varchar(200)")]
         public string ArtOfCommunication { get; set; }
 

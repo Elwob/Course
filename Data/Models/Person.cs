@@ -56,12 +56,15 @@ namespace Data.Models
         public DateTime? ModifiedAt { get; set; }
 
         [NotMapped]
-        public List<RelAddressPerson> Adresses { get; set; }
+        public List<RelAddressPerson> AddressPersons { get; set; }
 
         [NotMapped]
         public List<Comment> Comments { get; set; }
 
         [NotMapped]
         public List<Contact> Contacts { get; set; }
+
+        
+
     }
 }

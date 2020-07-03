@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
@@ -32,5 +33,8 @@ namespace Data.Models
 
         [Column("modify@")]
         public DateTime? ModifiedAt { get; set; }
+
+        [NotMapped]
+        public List<RelAddressPerson> AddressPersons  { get; set; }
     }
 }

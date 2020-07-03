@@ -12,6 +12,9 @@ namespace Data.Models
         [Column("person_id")]
         public int PersonId { get; set; }
 
+        [NotMapped]
+        public Person Person { get; set; }
+
         [Column("comment_value")]
         public string CommentValue { get; set; }
 

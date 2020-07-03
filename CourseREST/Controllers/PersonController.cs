@@ -1,22 +1,25 @@
 ﻿using Data.Entities;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CourseREST.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class DocumentController : ControllerBase
+    public class PersonController : ControllerBase
     {
         private CourseEntities entities = CourseEntities.GetInstance();
+
         [HttpGet]
-        public List<Document> get()
+        public List<Person> get()
+
         {
-            var documents = entities.Documents.ToList();
-            return documents;
+            var persons = entities.Persons.ToList();
+            return persons;
         }
     }
 }
