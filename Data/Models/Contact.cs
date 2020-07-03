@@ -28,6 +28,6 @@ namespace Data.Models
         public DateTime CreatedAt { get; set; }
 
         [Column("modified@")]
-        public DateTime ModifiedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; }
     }
 }

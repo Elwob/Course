@@ -17,25 +17,25 @@ namespace Data.Models
         public string LastName { get; set; }
 
         [Column("title", TypeName = "varchar(200)")]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         [Column("sv_nr")]
-        public int InsuranceNumber { get; set; }
+        public int? InsuranceNumber { get; set; }
 
         [Column("date")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [Column("gender", TypeName = "varchar(200)")]
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
 
         [Column("busy", TypeName = "varchar(200)")]
-        public string Busy { get; set; }
+        public string? Busy { get; set; }
 
         [Column("busy_by", TypeName = "varchar(200)")]
-        public string BusyBy { get; set; }
+        public string? BusyBy { get; set; }
 
         [Column("picture")]
-        public string Picture { get; set; }
+        public string? Picture { get; set; }
 
         [Column("function", TypeName = "varchar(200)")]
         public string Function { get; set; }
@@ -53,7 +53,7 @@ namespace Data.Models
         public DateTime CreatedAt { get; set; }
 
         [Column("modify@")]
-        public DateTime ModifiedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; }
 
         [NotMapped]
         public List<RelAddressPerson> Adresses { get; set; }
