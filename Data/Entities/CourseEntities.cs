@@ -25,7 +25,7 @@ namespace Data.Entities
         public DbSet<Comment> Comments { get; set; }
 
 
-        private static CourseEntities instance = null;
+       private static CourseEntities instance = null;
 
         public static CourseEntities GetInstance()
         {
@@ -168,9 +168,9 @@ namespace Data.Entities
                 .WithMany(a => a.Absences)
                 .HasForeignKey(a => a.ParticipantId);
 
-                entity.HasMany(d => Documents)
+                entity.HasMany(d =>d.Documents)
                 .WithOne(a => a.Absence)
-                .HasForeignKey(a => a.Absence.DocumentId);
+                .HasForeignKey(a=>a.Id);
             });
 
             modelBuilder.Entity<EmailTemplate>(entity =>
