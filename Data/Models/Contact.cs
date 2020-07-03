@@ -20,6 +20,11 @@ namespace Data.Models
         [Column("person_id")]
         public int PersonId { get; set; }
         /// <summary>
+        /// needed for linking
+        /// </summary>
+        [NotMapped]
+        public Person Person { get; set; }
+        /// <summary>
         /// the kind of communication ???????
         /// </summary>
         [Column("art_of_communication", TypeName = "varchar(200)")]

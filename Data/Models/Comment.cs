@@ -20,6 +20,11 @@ namespace Data.Models
         [Column("person_id")]
         public int PersonId { get; set; }
         /// <summary>
+        /// needed for linking
+        /// </summary>
+        [NotMapped]
+        public Person Person { get; set; }
+        /// <summary>
         /// the text of the comment
         /// </summary>
         [Column("comment_value")]

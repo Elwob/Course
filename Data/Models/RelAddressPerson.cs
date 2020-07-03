@@ -17,11 +17,22 @@ namespace Data.Models
         /// the addresses' id
         /// </summary>
         [Column("addressId")]
-        public int AdressId { get; set; }
+        public int AddressId { get; set; }
         /// <summary>
         /// the persons' id
         /// </summary>
         [Column("personId")]
         public int PersonId { get; set; }
+        /// <summary>
+        /// needed for linking
+        /// </summary>
+        [NotMapped]
+        public Person Person { get; set; }
+        /// <summary>
+        /// needed for linking
+        /// </summary>
+        [NotMapped]
+        public Address Address { get; set; }      
+       
     }
 }

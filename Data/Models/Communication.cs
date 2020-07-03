@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
@@ -25,6 +26,11 @@ namespace Data.Models
         [Column("person_id")]
         public int PersonId { get; set; }
         /// <summary>
+        /// needed for linking
+        /// </summary>
+        [NotMapped]
+        public Person Person { get; set; }
+        /// <summary>
         /// the date the communication was held on
         /// </summary>
         [Column("date")]
@@ -40,6 +46,11 @@ namespace Data.Models
         [Column("document_id")]
         public int? DocumentId { get; set; }
         /// <summary>
+        /// needed for linking
+        /// </summary>
+        [NotMapped]
+        public Document Document { get; set; }
+        /// <summary>
         /// contains the id of a belonging reminder (Reminders not implemented yet)
         /// </summary>
         [Column("reminder_id")]
@@ -54,5 +65,10 @@ namespace Data.Models
         /// </summary>
         [Column("modified@")]
         public DateTime? ModifiedAt { get; set; }
+        /// <summary>
+        /// list of all relations between communications and classes
+        /// </summary>
+        [NotMapped]
+        public List<RelCommunicationClass> CommunicationClasses { get; set; }
     }
 }

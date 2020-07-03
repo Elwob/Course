@@ -91,11 +91,6 @@ namespace Data.Models
         [Column("modify@")]
         public DateTime? ModifiedAt { get; set; }
         /// <summary>
-        /// a list of relations to addresses
-        /// </summary>
-        [NotMapped]
-        public List<RelAddressPerson> Addresses { get; set; }
-        /// <summary>
         /// a list of relations to comments
         /// </summary>
         [NotMapped]
@@ -105,14 +100,26 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public List<Contact> Contacts { get; set; }
-
+        /// <summary>
+        /// list of all relations between addresses and persons
+        /// </summary>
+        [NotMapped]
+        public List<RelAddressPerson> AddressPersons { get; set; }
+        /// <summary>
+        /// list of all relations between courses and participants
+        /// </summary>
         [NotMapped]
         public List<RelCourseParticipant> RelCourseParticipants { get; set; }
-
+        /// <summary>
+        /// list of all relations between courses and trainers
+        /// </summary>
         [NotMapped]
         public List<RelCourseTrainer> RelCourseTrainers { get; set; }
-
+        /// <summary>
+        /// list of all absences
+        /// </summary>
         [NotMapped]
         public List<Absence> Absences { get; set; }
+
     }
 }
