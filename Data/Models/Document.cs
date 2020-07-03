@@ -51,9 +51,15 @@ namespace Data.Models
         [Column("type", TypeName = "varchar(50)")]
         public EDocumentType Type { get; set; }
         /// <summary>
+        /// needed for creating link
+        /// </summary>
+        [NotMapped]
+        public Absence Absence { get; set; }
+        /// <summary>
         /// contains relations to "classes" (e.g. Persons or Courses)
         /// </summary>
         [NotMapped]
         public List<RelDocumentClass> DocumentClasses { get; set; }
+
     }
 }

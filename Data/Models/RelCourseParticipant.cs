@@ -23,5 +23,11 @@ namespace Data.Models
         /// </summary>
         [Column("participant_id", TypeName = "int")]
         public int ParticipantId { get; set; }
+
+        [NotMapped]
+        public Course Course { get; set; }
+
+        [NotMapped]
+        public Person Person { get; set; }
     }
 }

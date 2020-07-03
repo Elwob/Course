@@ -34,6 +34,5 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public List<RelCourseContent> CourseContents { get; set; }
-
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -91,5 +90,14 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public List<RelCourseSubvention> CourseSubventions { get; set; }
+
+        [NotMapped]
+        public List<RelCourseParticipant> RelCourseParticipants { get; set; }
+
+        [NotMapped]
+        public List<RelCourseTrainer> RelCourseTrainers { get; set; }
+
+        [NotMapped]
+        public List<Absence> Absences { get; set; }
     }
 }

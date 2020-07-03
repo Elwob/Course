@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
@@ -23,7 +24,8 @@ namespace Data.Models
         /// a absences' end date
         /// </summary>
         [Column("end")]
-        public DateTime End { get; set; }
+
+        public DateTime? End { get; set; }
         /// <summary>
         /// the absent participant's id
         /// </summary>
@@ -38,17 +40,18 @@ namespace Data.Models
         /// the amount of units the participant was absent
         /// </summary>
         [Column("units")]
-        public int Units { get; set; }
+
+        public int? Units { get; set; }
         /// <summary>
         /// says if the participant was excused or not
         /// </summary>
         [Column("excused")]
-        public bool Excused { get; set; }
+        public bool? Excused { get; set; }
         /// <summary>
         /// the document id of e.g. a medical certificate
         /// </summary>
         [Column("document_id")]
-        public int DocumentId { get; set; }
+        public int? DocumentId { get; set; }
         /// <summary>
         /// says if the absence has ended yet
         /// </summary>
@@ -58,11 +61,20 @@ namespace Data.Models
         /// contains the id of a belonging reminder (Reminders not implemented yet)
         /// </summary>
         [Column("reminder_id")]
-        public int ReminderId { get; set; }
+        public int? ReminderId { get; set; }
         /// <summary>
         /// a open comment
         /// </summary>
         [Column("comment", TypeName = "varchar(1000)")]
-        public string comment { get; set; }
+        public string? comment { get; set; }
+
+        [NotMapped]
+        public Course Course { get; set; }
+
+        [NotMapped]
+        public Person Person { get; set; }
+
+        [NotMapped]
+        public List<Document> Documents { get; set; }
     }
 }
