@@ -1,32 +1,95 @@
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace Data.Entities
 {
+    /// <summary>
+    /// contains all data needed to manage courses from DataBase "dcv"
+    /// </summary>
     public class CourseEntities : DbContext
     {
+        /// <summary>
+        /// contains all courses existing in DB
+        /// </summary>
         public DbSet<Course> Courses { get; set; }
+        /// <summary>
+        /// contains all teaching contents existing in DB
+        /// </summary>
         public DbSet<Content> Contents { get; set; }
+        /// <summary>
+        /// contains all subventions existing in DB
+        /// </summary>
         public DbSet<Content> Subventions { get; set; }
-        public DbSet<RelCourseContent> RelCourseContents { get; set; }
-        public DbSet<RelCourseSubvention> RelCourseSubventions { get; set; }
+        /// <summary>
+        /// contains all documents existing in DB
+        /// </summary>
         public DbSet<Document> Documents { get; set; }
-        public DbSet<RelDocumentClass> RelDocumentClasses { get; set; }
+        /// <summary>
+        /// contains all communication records existing in DB
+        /// </summary>
         public DbSet<Communication> Communications { get; set; }
-        public DbSet<RelCommunicationClass> RelCommunicationClasses { get; set; }
-        public DbSet<RelCourseParticipant> RelCourseParticipants { get; set; }
-        public DbSet<RelCourseTrainer> RelCourseTrainers { get; set; }
+        /// <summary>
+        /// contains all absences existing in DB
+        /// </summary>
         public DbSet<Absence> Absences { get; set; }
+        /// <summary>
+        /// contains all templates for automatic document creation existing in DB
+        /// </summary>
         public DbSet<EmailTemplate> EmailTemplates { get; set; }
+        /// <summary>
+        /// contains core data for all persons in DB
+        /// </summary>
         public DbSet<Person> Persons { get; set; }
+        /// <summary>
+        /// contains all addresses existing in DB
+        /// </summary>
         public DbSet<Address> Addresses { get; set; }
-        public DbSet<RelAddressPerson> RelAddressPersons { get; set; }
+        /// <summary>
+        /// contains all contact options existing in DB
+        /// </summary>
         public DbSet<Contact> Contacts { get; set; }
+        /// <summary>
+        /// contains all comments for persons existing in DB
+        /// </summary>
         public DbSet<Comment> Comments { get; set; }
+        /// <summary>
+        /// contains all relations between courses and contents existing in DB
+        /// </summary>
+        public DbSet<RelCourseContent> RelCourseContents { get; set; }
+        /// <summary>
+        /// contains all relations between courses and subventions existing in DB
+        /// </summary>
+        public DbSet<RelCourseSubvention> RelCourseSubventions { get; set; }
+        /// <summary>
+        /// contains all relations between documents and classes (like Person, Course, etc.) existing in DB
+        /// </summary>
+        public DbSet<RelDocumentClass> RelDocumentClasses { get; set; }
+        /// <summary>
+        /// contains all relations between communications and classes (like Person, Course, etc.) existing in DB
+        /// </summary>
+        public DbSet<RelCommunicationClass> RelCommunicationClasses { get; set; }
+        /// <summary>
+        /// contains all relations between courses and participants existing in DB
+        /// </summary>
+        public DbSet<RelCourseParticipant> RelCourseParticipants { get; set; }
+        /// <summary>
+        /// contains all relations between courses and trainers existing in DB
+        /// </summary>
+        public DbSet<RelCourseTrainer> RelCourseTrainers { get; set; }
+        /// <summary>
+        /// contains all relations between addresses and persons existing in DB
+        /// </summary>
+        public DbSet<RelAddressPerson> RelAddressPersons { get; set; }
+        /// <summary>
+        /// the singleton instance handed if method CourseEntities.GetInstance() is called
+        /// </summary>
+        private static CourseEntities instance = null;
 
-
-       private static CourseEntities instance = null;
-
+        /// <summary>
+        /// returns the singleton instance of CourseEntities
+        /// </summary>
+        /// <returns></returns>
         public static CourseEntities GetInstance()
         {
             if (instance == null)
@@ -39,16 +102,36 @@ namespace Data.Entities
             }
         }
 
-
+        /// <summary>
+        /// creates a DBContextOptionsBuilder to represent the DCV-dataBase
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
+        /// set to "server=192.168.0.94;database=dcv;user=root" if used with DB on server
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=192.168.0.94;database=dcv;user=root");
+            optionsBuilder.UseMySQL("server=localhost;database=dcv;user=root");
         }
 
+        /// <summary>
+        /// creates the model to represent the DCV-database
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            CreateCourseSpecificModels(modelBuilder);
+            CreatePersonSpecificModels(modelBuilder);
+            CreateCourseRelations(modelBuilder);
+            CreatePersonRelations(modelBuilder);
+        }
 
+        /// <summary>
+        /// creates primary course models
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        private void CreateCourseSpecificModels(ModelBuilder modelBuilder)
+        {
+            // builds model Course
             modelBuilder.Entity<Course>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -57,7 +140,13 @@ namespace Data.Entities
                 entity.Property(x => x.Category).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
             });
-
+            // represents the model Subvention
+            modelBuilder.Entity<Subvention>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Name).IsRequired();
+            });
+            // builds model Document
             modelBuilder.Entity<Document>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -66,111 +155,7 @@ namespace Data.Entities
                 entity.Property(x => x.CreatedAt).IsRequired();
                 entity.Property(x => x.Type).IsRequired();
             });
-
-            modelBuilder.Entity<RelDocumentClass>(entity =>
-            {
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.DocId).IsRequired();
-                entity.Property(x => x.Class).IsRequired();
-                entity.Property(x => x.ClassId).IsRequired();
-
-                entity.HasOne(x => x.Document)
-                .WithMany(x => x.DocumentClasses)
-                .HasForeignKey(x => x.DocId);
-            });
-
-            modelBuilder.Entity<Communication>(entity =>
-            {
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.Channel).IsRequired();
-                entity.Property(x => x.PersonId).IsRequired();
-                entity.Property(x => x.Date).IsRequired();
-                entity.Property(x => x.CreatedAt).IsRequired();
-                // connection document-person
-                entity.HasOne(x => x.Document);
-                entity.HasOne(x => x.Person);
-            });
-            modelBuilder.Entity<RelCommunicationClass>(entity =>
-            {
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.CommunicationId).IsRequired();
-                entity.Property(x => x.Class).IsRequired();
-                entity.Property(x => x.ClassId).IsRequired();
-
-                entity.HasOne(x => x.Communication)
-                        .WithMany(x => x.CommunicationClasses)
-                        .HasForeignKey(x => x.CommunicationId);
-            });
-
-            modelBuilder.Entity<RelCourseParticipant>(entity =>
-            {
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.Id).IsRequired();
-
-                entity.HasOne(c => c.Course)
-                .WithMany(r => r.RelCourseParticipants)
-                .HasForeignKey(r => r.CourseId);
-
-                entity.HasOne(p => p.Person)
-                .WithMany(r => r.RelCourseParticipants)
-                .HasForeignKey(r => r.ParticipantId);
-            });
-
-            modelBuilder.Entity<Subvention>(entity =>
-            {
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.Name).IsRequired();
-            });
-
-            modelBuilder.Entity<RelCourseContent>(entity =>
-            {
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.CourseId).IsRequired();
-                entity.Property(x => x.ContentId).IsRequired();
-                entity.HasOne(c => c.Course)
-                        .WithMany(co =>
-                            co.CourseContents)
-                        .HasForeignKey(c =>
-                            c.CourseId);
-                entity.HasOne(co => co.Content)
-                        .WithMany(c =>
-                            c.CourseContents)
-                        .HasForeignKey(co =>
-                            co.ContentId);
-            });
-
-            modelBuilder.Entity<RelCourseSubvention>(entity =>
-            {
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.CourseId).IsRequired();
-                entity.Property(x => x.SubventionId).IsRequired();
-                entity.HasOne(c => c.Course)
-                        .WithMany(sub => sub.CourseSubventions)
-                        .HasForeignKey(c => c.CourseId);
-                entity.HasOne(sub =>
-                            sub.Subvention)
-                        .WithMany(c =>
-                            c.CourseSubventions)
-                        .HasForeignKey(sub =>
-                            sub.SubventionId);
-                entity.Property(x => x.CourseId).IsRequired();
-            });
-
-            modelBuilder.Entity<RelCourseTrainer>(entity =>
-            {
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.CourseId).IsRequired();
-                entity.Property(x => x.TrainerID).IsRequired();
-
-                entity.HasOne(c => c.Course)
-                .WithMany(r => r.RelCourseTrainers)
-                .HasForeignKey(r => r.CourseId);
-
-                entity.HasOne(p => p.Person)
-                .WithMany(r => r.RelCourseTrainers)
-                .HasForeignKey(r => r.TrainerID);
-            });
-
+            // represents the model Absence
             modelBuilder.Entity<Absence>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -178,29 +163,35 @@ namespace Data.Entities
                 entity.Property(x => x.ParticipantId).IsRequired();
                 entity.Property(x => x.CourseId).IsRequired();
                 entity.Property(x => x.Completed).IsRequired();
-
+                // connection to a course
                 entity.HasOne(c => c.Course)
                 .WithMany(a => a.Absences)
                 .HasForeignKey(a => a.CourseId);
-
+                // connection to a participant (Person)
                 entity.HasOne(p => p.Person)
                 .WithMany(a => a.Absences)
                 .HasForeignKey(a => a.ParticipantId);
-
-                entity.HasMany(d =>d.Documents)
+                // connection to a document
+                entity.HasMany(d => d.Documents)
                 .WithOne(a => a.Absence)
-                .HasForeignKey(a=>a.Id);
+                .HasForeignKey(a => a.Id);
             });
-
+            // represents the model EmailTemplate
             modelBuilder.Entity<EmailTemplate>(entity =>
             {
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.DocumentType).IsRequired();
                 entity.Property(x => x.Text).IsRequired();
             });
+        }
 
-         
-
+        /// <summary>
+        /// creates primary person models
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        private void CreatePersonSpecificModels(ModelBuilder modelBuilder)
+        {
+            // represents the model Person (core data)
             modelBuilder.Entity<Person>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -212,33 +203,13 @@ namespace Data.Entities
                 entity.Property(x => x.WantsNewsletter).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
             });
-
+            // represents the model Address
             modelBuilder.Entity<Address>(entity =>
             {
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.CreatedAt).IsRequired();
             });
-
-            modelBuilder.Entity<RelAddressPerson>(entity =>
-            {
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.AddressId).IsRequired();
-                entity.Property(x => x.PersonId).IsRequired();
-
-                entity.HasOne(c => c.Person)
-                      .WithMany(co =>
-                          co.AddressPersons)
-                      .HasForeignKey(c =>
-                          c.PersonId);
-                entity.HasOne(co => co.Address)
-                        .WithMany(c =>
-                            c.AddressPersons)
-                        .HasForeignKey(co =>
-                            co.AddressId);
-
-
-            });
-
+            // represents the model Contact
             modelBuilder.Entity<Contact>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -248,9 +219,22 @@ namespace Data.Entities
                 entity.Property(x => x.ContactType).IsRequired();
                 entity.Property(x => x.MainContact).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
+                // connection to a person
                 entity.HasOne(x => x.Person);
             });
-
+            // builds model Communication
+            modelBuilder.Entity<Communication>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Channel).IsRequired();
+                entity.Property(x => x.PersonId).IsRequired();
+                entity.Property(x => x.Date).IsRequired();
+                entity.Property(x => x.CreatedAt).IsRequired();
+                // connections to document and person
+                entity.HasOne(x => x.Document);
+                entity.HasOne(x => x.Person);
+            });
+            // represents the model Comment
             modelBuilder.Entity<Comment>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -258,9 +242,124 @@ namespace Data.Entities
                 entity.Property(x => x.CommentValue).IsRequired();
                 entity.Property(x => x.ValueDate).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
+                // connection to a person
                 entity.HasOne(x => x.Person);
-
             });
         }
+
+        /// <summary>
+        /// creates primarily relations between person models
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        private void CreatePersonRelations(ModelBuilder modelBuilder)
+        {
+            // represents the n:m relation document-classes
+            modelBuilder.Entity<RelDocumentClass>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.DocId).IsRequired();
+                entity.Property(x => x.Class).IsRequired();
+                entity.Property(x => x.ClassId).IsRequired();
+                // connection between document and different classes (e.g. Person, Course)
+                entity.HasOne(x => x.Document)
+                .WithMany(x => x.DocumentClasses)
+                .HasForeignKey(x => x.DocId);
+            });
+            // represents the n:m relation communication-classes
+            modelBuilder.Entity<RelCommunicationClass>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.CommunicationId).IsRequired();
+                entity.Property(x => x.Class).IsRequired();
+                entity.Property(x => x.ClassId).IsRequired();
+                // connection between communication and different classes (e.g. Person, Course)
+                entity.HasOne(x => x.Communication)
+                        .WithMany(x => x.CommunicationClasses)
+                        .HasForeignKey(x => x.CommunicationId);
+            });
+            // represents the n:m relation between addresses and persons
+            modelBuilder.Entity<RelAddressPerson>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.AddressId).IsRequired();
+                entity.Property(x => x.PersonId).IsRequired();
+                // connection to n persons
+                entity.HasOne(c => c.Person).
+                WithMany(co => co.AddressPersons)
+                .HasForeignKey(c => c.PersonId);
+                // connection to n addresses
+                entity.HasOne(co => co.Address)
+                .WithMany(c => c.AddressPersons)
+                .HasForeignKey(co => co.AddressId);
+            });
+        }
+
+        /// <summary>
+        /// creates primarily relations between course models as well as course-person relations
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        private void CreateCourseRelations(ModelBuilder modelBuilder)
+        {
+            // represents the n:m relation course-participants
+            modelBuilder.Entity<RelCourseParticipant>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Id).IsRequired();
+                // connection to n courses
+                entity.HasOne(c => c.Course)
+                .WithMany(r => r.RelCourseParticipants)
+                .HasForeignKey(r => r.CourseId);
+                // connection to n participants (Person)
+                entity.HasOne(p => p.Person)
+                .WithMany(r => r.RelCourseParticipants)
+                .HasForeignKey(r => r.ParticipantId);
+            });
+            // represents the n:m relaton between courses and contents
+            modelBuilder.Entity<RelCourseContent>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.CourseId).IsRequired();
+                entity.Property(x => x.ContentId).IsRequired();
+                // connection to n courses
+                entity.HasOne(c => c.Course)
+                .WithMany(co => co.CourseContents)
+                .HasForeignKey(c => c.CourseId);
+                // connection to n contents
+                entity.HasOne(co => co.Content)
+                .WithMany(c => c.CourseContents)
+                .HasForeignKey(co => co.ContentId);
+            });
+            // represents the n:m relation between courses and subventions
+            modelBuilder.Entity<RelCourseSubvention>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.CourseId).IsRequired();
+                entity.Property(x => x.SubventionId).IsRequired();
+                entity.Property(x => x.CourseId).IsRequired();
+                // connection to n courses
+                entity.HasOne(c => c.Course)
+                .WithMany(sub => sub.CourseSubventions)
+                .HasForeignKey(c => c.CourseId);
+                // connection to n subventions
+                entity.HasOne(sub => sub.Subvention)
+                .WithMany(c => c.CourseSubventions)
+                .HasForeignKey(sub => sub.SubventionId);
+            });
+            // represents the n:m relation between courses and trainers
+            modelBuilder.Entity<RelCourseTrainer>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.CourseId).IsRequired();
+                entity.Property(x => x.TrainerID).IsRequired();
+                // connection to n courses
+                entity.HasOne(c => c.Course)
+                .WithMany(r => r.RelCourseTrainers)
+                .HasForeignKey(r => r.CourseId);
+                // connection to n trainers (Person)
+                entity.HasOne(p => p.Person)
+                .WithMany(r => r.RelCourseTrainers)
+                .HasForeignKey(r => r.TrainerID);
+            });
+        } 
     }
 }
