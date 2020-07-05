@@ -14,21 +14,25 @@ namespace Data.Models
         /// </summary>
         [Column("id")]
         public int Id { get; set; }
+
         /// <summary>
         /// the subventions' name
         /// </summary>
         [Column("name", TypeName = "varchar(250)")]
         public string Name { get; set; }
+
         /// <summary>
         /// the percentage the subvention
         /// </summary>
         [Column("percentage")]
         public double? Percentage { get; set; }
+
         /// <summary>
         /// the amount of the subvention
         /// </summary>
         [Column("amount")]
         public double? Amount { get; set; }
+
         /// <summary>
         /// a list of relations to courses
         /// </summary>

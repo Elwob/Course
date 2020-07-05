@@ -1,10 +1,8 @@
 ﻿using Data.Entities;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourseREST.Controllers
 {
@@ -14,6 +12,7 @@ namespace CourseREST.Controllers
     public class CommunicationApiController : ControllerBase
     {
         private CourseEntities entities = CourseEntities.GetInstance();
+
         [HttpGet]
         public List<Communication> get()
         {

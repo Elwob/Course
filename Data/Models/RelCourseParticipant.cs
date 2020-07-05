@@ -13,11 +13,13 @@ namespace Data.Models
         /// </summary>
         [Column("id", TypeName = "int")]
         public int Id { get; set; }
+
         /// <summary>
         /// the courses' id
         /// </summary>
         [Column("course_id", TypeName = "int")]
         public int CourseId { get; set; }
+
         /// <summary>
         /// the participants' id
         /// </summary>

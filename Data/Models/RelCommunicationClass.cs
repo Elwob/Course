@@ -13,16 +13,19 @@ namespace Data.Models
         /// </summary>
         [Column("id")]
         public int Id { get; set; }
+
         /// <summary>
         /// the communications' id
         /// </summary>
         [Column("communication_id")]
         public int CommunicationId { get; set; }
+
         /// <summary>
         /// the class the communication is linked to
         /// </summary>
         [Column("class", TypeName = ("varchar(200)"))]
         public string Class { get; set; }
+
         /// <summary>
         /// the id of the object the communication is linked to
         /// </summary>
