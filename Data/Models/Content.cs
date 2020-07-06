@@ -34,5 +34,12 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public List<RelCourseContent> CourseContents { get; set; }
+
+        public Content(string topic, string description, int? unitEstimation)
+        {
+            Topic = topic;
+            Description = description;
+            UnitEstimation = unitEstimation;
+        }
     }
 }
