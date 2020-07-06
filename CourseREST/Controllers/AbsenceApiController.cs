@@ -10,7 +10,7 @@ namespace CourseREST.Controllers
     [Route("Absence")]
     [Route("[controller]")]
     [Route("Api")]
-    public class AbsenceApiControllerb : ControllerBase
+    public class AbsenceApiController : ControllerBase
     {
         private CourseEntities entitie = CourseEntities.GetInstance();
 
