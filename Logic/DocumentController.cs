@@ -1,11 +1,7 @@
-﻿using Data.Models;
-using System.Collections.Generic;
-
-namespace Logic
+﻿namespace Logic
 {
     public class DocumentController : MainController
     {
-
         public static DocumentController instance = null;
 
         public static DocumentController GetInstance()
@@ -17,7 +13,5 @@ namespace Logic
 
             return instance;
         }
-      
-     
     }
 }
