@@ -18,6 +18,16 @@ namespace CourseREST
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Policy1",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader();
+                    });
+            });
             services.AddControllersWithViews().
                 AddNewtonsoftJson(x =>
                 x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -37,7 +47,7 @@ namespace CourseREST
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseCors("Policy1");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
