@@ -26,6 +26,12 @@ namespace Data.Models
         [Column("participant_id", TypeName = "int")]
         public int ParticipantId { get; set; }
 
+        /// <summary>
+        /// the participants Status
+        /// </summary>
+        [Column("completed", TypeName = "tinyint")]
+        public bool Completed { get; set; }
+
         [NotMapped]
         public Course Course { get; set; }
 
