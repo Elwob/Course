@@ -13,11 +13,13 @@ namespace Data.Models
         /// </summary>
         [Column("id", TypeName = "int")]
         public int Id { get; set; }
+
         /// <summary>
         /// contains the type of document a template is for
         /// </summary>
         [Column("document_type", TypeName = "varchar(100)")]
         public EDocumentType DocumentType { get; set; }
+
         /// <summary>
         /// text of the template
         /// </summary>

@@ -1,13 +1,12 @@
 using Data.Entities;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CourseREST.Controllers
 {
-    [Route ("content")]
+    [Route("content")]
     [Route("[controller]")]
     [ApiController]
     public class ContentApiController : ControllerBase
@@ -21,7 +20,5 @@ namespace CourseREST.Controllers
             var content = entities.Contents.ToList();
             return content;
         }
-
-
     }
 }
