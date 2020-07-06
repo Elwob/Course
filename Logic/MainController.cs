@@ -1,12 +1,12 @@
-﻿namespace Logic
+﻿using Data.Entities;
+using Data.Models;
+
+namespace Logic
 {
     public class MainController
     {
-        private DocumentController documentController = DocumentController.GetInstance();
+        public CourseEntities entities = CourseEntities.GetInstance();
 
-        public void AddToDatabase()
-        {
-            //documentController.AddDataToDatabase();
-        }
+
     }
 }

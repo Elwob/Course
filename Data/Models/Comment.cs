@@ -14,31 +14,37 @@ namespace Data.Models
         /// </summary>
         [Column("id")]
         public int Id { get; set; }
+
         /// <summary>
         /// the person a comment belongs to
         /// </summary>
         [Column("person_id")]
         public int PersonId { get; set; }
+
         /// <summary>
         /// needed for linking
         /// </summary>
         [NotMapped]
         public Person Person { get; set; }
+
         /// <summary>
         /// the text of the comment
         /// </summary>
         [Column("comment_value")]
         public string CommentValue { get; set; }
+
         /// <summary>
         /// contains a date ??????????
         /// </summary>
         [Column("value_date")]
         public DateTime ValueDate { get; set; }
+
         /// <summary>
         /// date when the address was created
         /// </summary>
         [Column("created@")]
         public DateTime CreatedAt { get; set; }
+
         /// <summary>
         /// date when the address was modified
         /// </summary>

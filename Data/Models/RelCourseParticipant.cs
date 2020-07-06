@@ -13,16 +13,24 @@ namespace Data.Models
         /// </summary>
         [Column("id", TypeName = "int")]
         public int Id { get; set; }
+
         /// <summary>
         /// the courses' id
         /// </summary>
         [Column("course_id", TypeName = "int")]
         public int CourseId { get; set; }
+
         /// <summary>
         /// the participants' id
         /// </summary>
         [Column("participant_id", TypeName = "int")]
         public int ParticipantId { get; set; }
+
+        /// <summary>
+        /// the participants Status
+        /// </summary>
+        [Column("completed", TypeName = "tinyint")]
+        public bool Completed { get; set; }
 
         [NotMapped]
         public Course Course { get; set; }

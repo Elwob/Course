@@ -1,6 +1,5 @@
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace Data.Entities
 {
@@ -13,74 +12,92 @@ namespace Data.Entities
         /// contains all courses existing in DB
         /// </summary>
         public DbSet<Course> Courses { get; set; }
+
         /// <summary>
         /// contains all teaching contents existing in DB
         /// </summary>
         public DbSet<Content> Contents { get; set; }
+
         /// <summary>
         /// contains all subventions existing in DB
         /// </summary>
         public DbSet<Content> Subventions { get; set; }
+
         /// <summary>
         /// contains all documents existing in DB
         /// </summary>
         public DbSet<Document> Documents { get; set; }
+
         /// <summary>
         /// contains all communication records existing in DB
         /// </summary>
         public DbSet<Communication> Communications { get; set; }
+
         /// <summary>
         /// contains all absences existing in DB
         /// </summary>
         public DbSet<Absence> Absences { get; set; }
+
         /// <summary>
         /// contains all templates for automatic document creation existing in DB
         /// </summary>
         public DbSet<EmailTemplate> EmailTemplates { get; set; }
+
         /// <summary>
         /// contains core data for all persons in DB
         /// </summary>
         public DbSet<Person> Persons { get; set; }
+
         /// <summary>
         /// contains all addresses existing in DB
         /// </summary>
         public DbSet<Address> Addresses { get; set; }
+
         /// <summary>
         /// contains all contact options existing in DB
         /// </summary>
         public DbSet<Contact> Contacts { get; set; }
+
         /// <summary>
         /// contains all comments for persons existing in DB
         /// </summary>
         public DbSet<Comment> Comments { get; set; }
+
         /// <summary>
         /// contains all relations between courses and contents existing in DB
         /// </summary>
         public DbSet<RelCourseContent> RelCourseContents { get; set; }
+
         /// <summary>
         /// contains all relations between courses and subventions existing in DB
         /// </summary>
         public DbSet<RelCourseSubvention> RelCourseSubventions { get; set; }
+
         /// <summary>
         /// contains all relations between documents and classes (like Person, Course, etc.) existing in DB
         /// </summary>
         public DbSet<RelDocumentClass> RelDocumentClasses { get; set; }
+
         /// <summary>
         /// contains all relations between communications and classes (like Person, Course, etc.) existing in DB
         /// </summary>
         public DbSet<RelCommunicationClass> RelCommunicationClasses { get; set; }
+
         /// <summary>
         /// contains all relations between courses and participants existing in DB
         /// </summary>
         public DbSet<RelCourseParticipant> RelCourseParticipants { get; set; }
+
         /// <summary>
         /// contains all relations between courses and trainers existing in DB
         /// </summary>
         public DbSet<RelCourseTrainer> RelCourseTrainers { get; set; }
+
         /// <summary>
         /// contains all relations between addresses and persons existing in DB
         /// </summary>
         public DbSet<RelAddressPerson> RelAddressPersons { get; set; }
+
         /// <summary>
         /// the singleton instance handed if method CourseEntities.GetInstance() is called
         /// </summary>
@@ -305,6 +322,7 @@ namespace Data.Entities
             {
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.Id).IsRequired();
+                entity.Property(x => x.Completed).IsRequired();
                 // connection to n courses
                 entity.HasOne(c => c.Course)
                 .WithMany(r => r.RelCourseParticipants)
@@ -360,6 +378,6 @@ namespace Data.Entities
                 .WithMany(r => r.RelCourseTrainers)
                 .HasForeignKey(r => r.TrainerID);
             });
-        } 
+        }
     }
 }

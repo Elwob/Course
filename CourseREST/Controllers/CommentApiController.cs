@@ -1,10 +1,8 @@
 ﻿using Data.Entities;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourseREST.Controllers
 {
@@ -14,12 +12,12 @@ namespace CourseREST.Controllers
     public class CommentApiController : ControllerBase
     {
         private CourseEntities entities = CourseEntities.GetInstance();
+
         [HttpGet]
         public List<Comment> get()
         {
             var comments = entities.Comments.ToList();
             return comments;
         }
-
     }
 }
