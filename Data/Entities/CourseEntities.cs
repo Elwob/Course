@@ -322,6 +322,7 @@ namespace Data.Entities
             {
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.Id).IsRequired();
+                entity.Property(x => x.Completed).IsRequired();
                 // connection to n courses
                 entity.HasOne(c => c.Course)
                 .WithMany(r => r.RelCourseParticipants)
