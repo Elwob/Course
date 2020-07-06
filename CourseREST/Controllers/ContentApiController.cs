@@ -6,6 +6,7 @@ using System.Linq;
 using Logic;
 using Data.Models.ReceiveModels;
 
+
 namespace CourseREST.Controllers
 {
     [Route("content")]
@@ -25,6 +26,19 @@ namespace CourseREST.Controllers
         public Content Post([FromBody] ReceivedContent recContent)
         {
             return contentController.PostContent(recContent);
+        }
+
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] Content content)
+        {
+            contentController.PutContent(id, content);
+            
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            contentController.DeleteContent(id);
         }
     }
 }
