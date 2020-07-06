@@ -12,13 +12,12 @@ namespace CourseREST.Controllers
     public class ContentApiController : ControllerBase
     {
         
-
         [HttpGet]
-        public List<Content> get()
-
+        public List<Content> Get()
         {
-            var content = entities.Contents.ToList();
-            return content;
+            List<Content> contents = null;
+            return contents;
+         
         }
     }
 }

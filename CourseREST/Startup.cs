@@ -22,6 +22,16 @@ namespace CourseREST
                 AddNewtonsoftJson(x =>
                 x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Policy1",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,6 +47,8 @@ namespace CourseREST
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("Policy1");
 
             app.UseEndpoints(endpoints =>
             {

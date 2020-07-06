@@ -65,6 +65,17 @@ namespace Data.Models
         public Absence Absence { get; set; }
 
         /// <summary>
+        /// temporarily needed for building the right relationships in RelDocumentClass
+        /// </summary>
+        [NotMapped]
+        public int? CourseId { get; set; }
+        /// <summary>
+        /// temporarily needed for building the right relationships in RelDocumentClass
+        /// </summary>
+        [NotMapped]
+        public int? PersonId { get; set; }
+
+        /// <summary>
         /// contains relations to "classes" (e.g. Persons or Courses)
         /// </summary>
         [NotMapped]
