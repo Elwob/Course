@@ -14,6 +14,7 @@ namespace Logic
             {
                 instance = new DocumentController();
             }
+
             return instance;
         }
       
