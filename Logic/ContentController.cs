@@ -1,5 +1,5 @@
 ﻿using Data.Models;
-using Data.Models.ReceiveModels;
+using Data.Models.JSONModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace Logic
         /// </summary>
         /// <param name="recContent"></param>
         /// <returns></returns>
-        public Content PostContent(ReceivedContent recContent)
+        public Content PostContent(JSONContent recContent)
         {
             entities.Contents.Add(new Content(recContent.Topic, recContent.Description, recContent.UnitEstimation));
             entities.SaveChanges();
@@ -39,7 +39,7 @@ namespace Logic
         /// </summary>
         /// <param name="id"></param>
         /// <param name="content"></param>
-        public void PutContent(int id, Content content)
+        public void PutContent(int id, JSONContent content)
         {
             var putContent = entities.Contents.Where(x => x.Id == id).FirstOrDefault();
             putContent.Topic = content.Topic;
