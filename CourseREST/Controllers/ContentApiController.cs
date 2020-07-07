@@ -34,7 +34,6 @@ namespace CourseREST.Controllers
         public Content Put(int id, [FromBody] Content content)
         {
             return contentController.PutContent(id, content);
-            
         }
 
         [HttpDelete("{id}")]
