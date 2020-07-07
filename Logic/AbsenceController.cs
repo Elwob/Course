@@ -13,8 +13,7 @@ namespace Logic
         {
             entities.Absences.Add(absence);
                 entities.SaveChanges();
-            absence = Get(absence.ParticipantId);
-            return absence;
+            return absence; //automatically returns last entry including Id
         }
 
         /// <summary>
@@ -24,8 +23,7 @@ namespace Logic
         public Absence Put(Absence absence)
         {
             entities.Absences.Add(absence);
-            entities.SaveChanges();
-            absence = Get(absence.ParticipantId);
+            entities.SaveChanges();     
             return absence;
         }
 
