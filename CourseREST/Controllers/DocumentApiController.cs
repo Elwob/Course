@@ -22,12 +22,18 @@ namespace CourseREST.Controllers
             var documents = entities.Documents.ToList();
             return documents;
         }
+
+
+        [HttpGet("{id}/{class}")]
+        public List<Document> GetVariousDocuments(int id, EDocumentType className)
+
         [HttpGet("{id}/{className}")]
      
         public List<Document> GetVariousDocuments(int id, EClass className)
+
         {
-            var documents = documentController.GetDocumentsNeeded(id, className);
-            return documents;
+            var document = new List<Document>();
+            return document;
         }
         [HttpPost]
         public Document Post([FromBody] Document recDocument)

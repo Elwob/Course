@@ -1,9 +1,9 @@
-using Data.Entities;
-using Data.Models;
 using Microsoft.AspNetCore.Mvc;
+
 using System.Collections.Generic;
 using System.Linq;
 using Logic;
+
 
 
 namespace CourseREST.Controllers
@@ -13,6 +13,8 @@ namespace CourseREST.Controllers
     [ApiController]
     public class ContentApiController : ControllerBase
     {
+
+
         ContentController contentController = ContentController.GetInstance();
 
         [HttpGet]
@@ -40,5 +42,6 @@ namespace CourseREST.Controllers
         {
             contentController.DeleteContent(id);
         }
+
     }
 }
