@@ -14,7 +14,7 @@ namespace Data.Models
         /// id in DB (is assigned by DB as autoIncrement)
         /// </summary>
         [Column("id")]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// a absences' start date

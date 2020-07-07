@@ -54,6 +54,7 @@ namespace CourseREST
             {
                 endpoints.MapControllers();
             });
+            app.UseCors("Policy1");
         }
     }
 }

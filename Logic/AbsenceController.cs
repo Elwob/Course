@@ -12,6 +12,7 @@ namespace Logic
         public Absence Post(Absence absence)
         {
             entities.Absences.Add(absence);
+                entities.SaveChanges();
             absence = Get(absence.ParticipantId);
             return absence;
         }
@@ -23,6 +24,7 @@ namespace Logic
         public Absence Put(Absence absence)
         {
             entities.Absences.Add(absence);
+            entities.SaveChanges();
             absence = Get(absence.ParticipantId);
             return absence;
         }
