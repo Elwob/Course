@@ -27,38 +27,13 @@ namespace Logic
         }
         public Document CreateNewDocument(Document recDocument)
         {
-            Document document = new Document();
-            document.Url = recDocument.Url;
-            document.Name = recDocument.Name;
-            document.Comment = recDocument.Comment;
-            document.CreatedAt = DateTime.Now;
-            document.Type = recDocument.Type;
-            document.CourseId = recDocument.CourseId;
-            document.PersonId = recDocument.PersonId;
+            recDocument.CreatedAt = DateTime.Now;
+            recDocument.ModifiedAt = DateTime.Now;
 
-            entities.Documents.Add(document);
+            entities.Documents.Attach(recDocument);
+            recDocument.CreateRelation();
             entities.SaveChanges();
-            Document latestDocument = entities.Documents.LastOrDefault();
-
-            if(recDocument.CourseId != null)
-            {
-                RelDocumentClass relDocumentClass = new RelDocumentClass();
-                relDocumentClass.DocId = latestDocument.Id;
-                relDocumentClass.Class = EClass.Course.ToString();
-                relDocumentClass.ClassId = (int)recDocument.PersonId;
-                entities.RelDocumentClasses.Add(relDocumentClass);
-                entities.SaveChanges();
-            }
-            if (recDocument.PersonId != null)
-            {
-                RelDocumentClass relDocumentClass = new RelDocumentClass();
-                relDocumentClass.DocId = latestDocument.Id;
-                relDocumentClass.Class = EClass.Person.ToString();
-                relDocumentClass.ClassId = (int)recDocument.PersonId;
-                entities.SaveChanges();
-            }
-
-            return entities.Documents.LastOrDefault();
+            return recDocument;
         }
 
 
