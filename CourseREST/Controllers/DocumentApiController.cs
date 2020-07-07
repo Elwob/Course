@@ -29,6 +29,7 @@ namespace CourseREST.Controllers
         [HttpGet("{id}/{className}")]
      
         public List<JObject> GetVariousDocuments(int id, EClass className)
+
         {
             var documents = documentController.GetDocumentsNeeded(id, className);
             

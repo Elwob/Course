@@ -1,4 +1,5 @@
-﻿using Data.Models;
+
+using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,6 @@ namespace Logic
 {
     public class DocumentController : MainController
     {
-
         public static DocumentController instance = null;
 
         public static DocumentController GetInstance()
@@ -22,9 +22,10 @@ namespace Logic
 
         public List<Document> GetDocumentsNeeded(int id, EClass className)
         {
-            List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList(); 
+            List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList();
             return documents;
         }
+
         public Document CreateNewDocument(Document recDocument)
         {
             recDocument.CreatedAt = DateTime.Now;

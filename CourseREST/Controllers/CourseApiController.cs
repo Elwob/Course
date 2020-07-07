@@ -1,9 +1,8 @@
-﻿using Data.Entities;
-using Data.Models;
+﻿using Data.Models;
+using Data.Models.JSONModels;
+using Logic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CourseREST.Controllers
 {
@@ -12,13 +11,18 @@ namespace CourseREST.Controllers
     [ApiController]
     public class CourseApiController : ControllerBase
     {
-        private CourseEntities entities = CourseEntities.GetInstance();
+        private CourseController courseController = CourseController.GetInstance();
+
+        //[HttpGet]
+        //public List<Course> getAll()
+        //{
+        //    return courseController.GetAll();
+        //}
 
         [HttpGet]
-        public List<Course> get()
+        public List<Course> getFiltered([FromBody] CourseFilter filter)
         {
-            var courses = entities.Courses.Include(c => c.CourseContents).ThenInclude(x => x.Content).Include(x => x.CourseSubventions).ThenInclude(x => x.Subvention).ToList();
-            return courses;
+            return courseController.GetFilteredCourses(filter);
         }
     }
 }

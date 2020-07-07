@@ -1,23 +1,35 @@
-﻿using Data.Entities;
-using Data.Models;
+﻿using Data.Models;
+using Logic;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace CourseREST.Controllers
 {
     [Route("Absence")]
-    [Route("[controller]")]
-    [Route("Api")]
+    [ApiController]
     public class AbsenceApiController : ControllerBase
     {
-        private CourseEntities entitie = CourseEntities.GetInstance();
+        private AbsenceController absenceController = new AbsenceController();
 
-        [HttpGet]
-        public List<Absence> Get()
+        [HttpPost]
+        public Absence Post(Absence absence)
         {
-            List<Absence> absence = entitie.Absences.ToList();
+            absence = absenceController.Post(absence);
+
+            return absence;
+        }
+
+        [HttpPut]
+        public Absence Put(Absence absence)
+        {
+            absence = absenceController.Put(absence);
+            return absence;
+        }
+
+        [HttpGet("{id}")]
+        public Absence Get(int id)
+        {
+            Absence absence = absenceController.Get(id);
             return absence;
         }
     }

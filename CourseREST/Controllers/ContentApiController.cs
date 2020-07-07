@@ -1,9 +1,7 @@
-using Data.Entities;
-using Data.Models;
+using Logic;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using Logic;
+using Data.Models;
 
 
 namespace CourseREST.Controllers
@@ -13,7 +11,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class ContentApiController : ControllerBase
     {
-        ContentController contentController = ContentController.GetInstance();
+        private ContentController contentController = ContentController.GetInstance();
 
         [HttpGet]
         public List<Content> Get()
@@ -32,7 +30,6 @@ namespace CourseREST.Controllers
         public Content Put(int id, [FromBody] Content content)
         {
             return contentController.PutContent(id, content);
-            
         }
 
         [HttpDelete("{id}")]

@@ -3,7 +3,6 @@ using DocumentFormat.OpenXml.Drawing.ChartDrawing;
 using Microsoft.Azure.Management.DataFactory.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
@@ -21,6 +20,7 @@ namespace Data.Models
         {
             DocumentClasses = new List<RelDocumentClass>();
         }
+
         /// <summary>
         /// id in DB (is assigned by DB as autoIncrement)
         /// </summary>
@@ -82,6 +82,7 @@ namespace Data.Models
         [NotMapped]
         [Document(typeof(Course))]
         public int? CourseId { get; set; }
+
         /// <summary>
         /// temporarily needed for building the right relationships in RelDocumentClass
         /// </summary>

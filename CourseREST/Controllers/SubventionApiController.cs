@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Data.Models;
+﻿using Data.Models;
 using Logic;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CourseREST.Controllers
 {
@@ -14,7 +10,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class SubventionApiController : ControllerBase
     {
-        SubventionController subventionController = SubventionController.GetInstance();
+        private SubventionController subventionController = SubventionController.GetInstance();
 
         [HttpGet]
         public List<Subvention> Get()
