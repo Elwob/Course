@@ -8,7 +8,6 @@ namespace Logic
 {
     public class DocumentController : MainController
     {
-
         public static DocumentController instance = null;
 
         public static DocumentController GetInstance()
