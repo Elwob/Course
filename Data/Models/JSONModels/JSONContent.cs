@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Data.Models.ReceiveModels
+namespace Data.Models.JSONModels
 {
-    public class ReceivedContent
+    public class JSONContent
     {
         /// <summary>
         /// the main topic of a certain teaching content
