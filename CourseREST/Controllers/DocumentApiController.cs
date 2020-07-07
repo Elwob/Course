@@ -24,10 +24,8 @@ namespace CourseREST.Controllers
 
         [HttpGet("{id}/{class}")]
         public List<Document> GetVariousDocuments(int id, EDocumentType className)
-        {
-            return List<Document>;
-        }
-
+      
+   
 
         [HttpGet("{id}/{className}")]
         public List<Document> GetVariousDocuments(int id, EClass className)
