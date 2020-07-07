@@ -198,8 +198,7 @@ namespace Data.Entities
             {
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.DocumentType).IsRequired();
-                entity.Property(x => x.CourseId).IsRequired();
-                entity.Property(x => x.PersonIds).IsRequired();
+            
             });
         }
 
