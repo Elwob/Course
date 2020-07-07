@@ -1,5 +1,4 @@
 ﻿using Data.Models;
-using Data.Models.JSONModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,24 @@ namespace Logic
 {
     public class ContentController : MainController
     {
+        /// <summary>
+        /// singleton instance
+        /// </summary>
+        public static ContentController instance = null;
+
+        /// <summary>
+        /// returns existing singleton instance or new instance if none exists
+        /// </summary>
+        /// <returns></returns>
+        public static ContentController GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new ContentController();
+            }
+            return instance;
+        }
+
         /// <summary>
         /// returns all Contents from DB
         /// </summary>
@@ -27,29 +44,31 @@ namespace Logic
         /// </summary>
         /// <param name="recContent"></param>
         /// <returns></returns>
-        public Content PostContent(JSONContent recContent)
+        public Content PostContent(Content recContent)
         {
-            entities.Contents.Add(new Content(recContent.Topic, recContent.Description, recContent.UnitEstimation));
+            //entities.Contents.Add(new Content(recContent.Topic, recContent.Description, recContent.UnitEstimation));
+            entities.Contents.Add(recContent);
             entities.SaveChanges();
-            return entities.Contents.OrderByDescending(x => x.Id).FirstOrDefault();
+            return recContent;
         }
 
         /// <summary>
-        /// updates a content in DB
+        /// updates a Content in DB
         /// </summary>
         /// <param name="id"></param>
         /// <param name="content"></param>
-        public void PutContent(int id, JSONContent content)
+        public Content PutContent(int id, Content content)
         {
             var putContent = entities.Contents.Where(x => x.Id == id).FirstOrDefault();
             putContent.Topic = content.Topic;
             putContent.Description = content.Description;
             putContent.UnitEstimation = content.UnitEstimation;
             entities.SaveChanges();
+            return entities.Contents.Where(x => x.Id == id).FirstOrDefault();
         }
 
         /// <summary>
-        /// deletes a content in DB
+        /// deletes a Content in DB
         /// </summary>
         /// <param name="id"></param>
         public void DeleteContent(int id)

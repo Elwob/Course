@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using Logic;
-using Data.Models.ReceiveModels;
 
 
 namespace CourseREST.Controllers
@@ -14,7 +13,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class ContentApiController : ControllerBase
     {
-        ContentController contentController = new ContentController();
+        ContentController contentController = ContentController.GetInstance();
 
         [HttpGet]
         public List<Content> Get()
@@ -23,15 +22,16 @@ namespace CourseREST.Controllers
         }
 
         [HttpPost]
-        public Content Post([FromBody] ReceivedContent recContent)
+        public Content Post([FromBody] Content recContent)
         {
             return contentController.PostContent(recContent);
+            //return null;
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Content content)
+        public Content Put(int id, [FromBody] Content content)
         {
-            contentController.PutContent(id, content);
+            return contentController.PutContent(id, content);
             
         }
 

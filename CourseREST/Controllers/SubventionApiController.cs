@@ -14,7 +14,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class SubventionApiController : ControllerBase
     {
-        SubventionController subventionController = new SubventionController();
+        SubventionController subventionController = SubventionController.GetInstance();
 
         [HttpGet]
         public List<Subvention> Get()
@@ -23,15 +23,15 @@ namespace CourseREST.Controllers
         }
 
         [HttpPost]
-        public Subvention Post([FromBody] ReceivedSubvention recSubvention)
+        public Subvention Post([FromBody] Subvention recSubvention)
         {
             return subventionController.PostSubvention(recSubvention);
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ReceivedSubvention recSubvention)
+        public Subvention Put(int id, [FromBody] Subvention recSubvention)
         {
-            subventionController.PutSubvention(id, recSubvention);
+            return subventionController.PutSubvention(id, recSubvention);
         }
 
         [HttpDelete("{id}")]
