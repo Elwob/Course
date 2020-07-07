@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Logic
-{
-    class RelCourseTrainerController
+﻿namespace Logic
+{/// <summary>
+/// Adds & Updates Trainers in a Course
+/// </summary>
+    internal class RelCourseTrainerController
     {
     }
 }

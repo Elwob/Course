@@ -24,14 +24,13 @@ namespace CourseREST
 
             services.AddCors(options =>
             {
-             options.AddPolicy("Policy1",
-                buidler =>
-                {
-                    buidler.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-
-                });
+                options.AddPolicy("Policy1",
+                   buidler =>
+                   {
+                       buidler.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                   });
             });
             services.AddControllers();
         }
