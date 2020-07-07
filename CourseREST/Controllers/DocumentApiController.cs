@@ -2,6 +2,7 @@
 using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,11 +22,19 @@ namespace CourseREST.Controllers
             var documents = entities.Documents.ToList();
             return documents;
         }
-        [HttpGet("{id}/{class}")]
-        public List<Document> GetVariousDocuments(int id, EDocumentType className)
+        [HttpGet("{id}/{className}")]
+     
+        public List<Document> GetVariousDocuments(int id, EClass className)
         {
             var documents = documentController.GetDocumentsNeeded(id, className);
             return documents;
+        }
+        [HttpPost]
+        public Document Post([FromBody] Document recDocument)
+        {
+            Document latestDocument = documentController.CreateNewDocument(recDocument);
+            //course id und person id sind null obwohl von postman geschickt....Master!!!
+            return latestDocument;
         }
     }
 }
