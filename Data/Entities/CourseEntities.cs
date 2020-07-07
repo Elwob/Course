@@ -21,7 +21,7 @@ namespace Data.Entities
         /// <summary>
         /// contains all subventions existing in DB
         /// </summary>
-        public DbSet<Content> Subventions { get; set; }
+        public DbSet<Subvention> Subventions { get; set; }
 
         /// <summary>
         /// contains all documents existing in DB

@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Data.Attributes;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Reflection;
 
 namespace Data.Models
 {
@@ -10,9 +14,14 @@ namespace Data.Models
     [Table("documents")]
     public class Document
     {
+        public Document()
+        {
+            DocumentClasses = new List<RelDocumentClass>();
+        }
         /// <summary>
         /// id in DB (is assigned by DB as autoIncrement)
         /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public int Id { get; set; }
 
@@ -65,9 +74,51 @@ namespace Data.Models
         public Absence Absence { get; set; }
 
         /// <summary>
+        /// temporarily needed for building the right relationships in RelDocumentClass
+        /// </summary>
+        [NotMapped]
+        [Document(typeof(Course))]
+        public int? CourseId { get; set; }
+        /// <summary>
+        /// temporarily needed for building the right relationships in RelDocumentClass
+        /// </summary>
+        [NotMapped]
+        [Document(typeof(Person))]
+        public int? PersonId { get; set; }
+
+        /// <summary>
         /// contains relations to "classes" (e.g. Persons or Courses)
         /// </summary>
         [NotMapped]
         public List<RelDocumentClass> DocumentClasses { get; set; }
+
+        public void CreateRelation()
+        {
+            var properties = this.GetType().GetProperties().Where(c => c.GetCustomAttribute<DocumentAttribute>() != null);
+
+            foreach (var property in properties)
+            {
+                CreateRelation(property);
+            }
+        }
+
+        private void CreateRelation(PropertyInfo prop)
+        {
+            var documentAttr = prop.GetCustomAttribute<DocumentAttribute>();
+
+            if (prop != null)
+            {
+                var id = prop.GetValue(this) as int?;
+                if (id.HasValue)
+                {
+                    RelDocumentClass relDocumentClass = new RelDocumentClass();
+                    //relDocumentClass.DocId = latestDocument.Id;
+                    relDocumentClass.Document = this;
+                    relDocumentClass.Class = documentAttr.ClassName;
+                    relDocumentClass.ClassId = id.Value;
+                    this.DocumentClasses.Add(relDocumentClass);
+                }
+            }
+        }
     }
 }

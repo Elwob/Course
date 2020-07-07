@@ -38,5 +38,12 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public List<RelCourseSubvention> CourseSubventions { get; set; }
+
+        public Subvention(string name, double? percentage, double? amount)
+        {
+            Name = name;
+            Percentage = percentage;
+            Amount = amount;
+        }
     }
 }
