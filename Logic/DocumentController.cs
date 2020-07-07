@@ -1,14 +1,10 @@
-
-﻿namespace Logic
-
-﻿using Data.Models;
+using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Logic
-
 {
     public class DocumentController : MainController
     {
@@ -22,7 +18,6 @@ namespace Logic
             }
             return instance;
         }
-
 
         public List<Document> GetDocumentsNeeded(int id, EClass className)
         {
@@ -39,6 +34,5 @@ namespace Logic
             entities.SaveChanges();
             return recDocument;
         }
-
     }
 }
