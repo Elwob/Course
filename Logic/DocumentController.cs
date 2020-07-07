@@ -1,3 +1,4 @@
+
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,9 +22,10 @@ namespace Logic
 
         public List<Document> GetDocumentsNeeded(int id, EClass className)
         {
-            List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList(); 
+            List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList();
             return documents;
         }
+
         public Document CreateNewDocument(Document recDocument)
         {
             recDocument.CreatedAt = DateTime.Now;

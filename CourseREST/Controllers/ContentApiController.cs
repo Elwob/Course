@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-
-using System.Collections.Generic;
 using Logic;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Data.Models;
+
 
 namespace CourseREST.Controllers
 {
@@ -11,9 +11,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class ContentApiController : ControllerBase
     {
-
-
-        ContentController contentController = ContentController.GetInstance();
+        private ContentController contentController = ContentController.GetInstance();
 
         [HttpGet]
         public List<Content> Get()
@@ -39,6 +37,5 @@ namespace CourseREST.Controllers
         {
             contentController.DeleteContent(id);
         }
-
     }
 }

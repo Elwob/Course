@@ -2,7 +2,6 @@
 using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,13 +21,14 @@ namespace CourseREST.Controllers
             var documents = entities.Documents.ToList();
             return documents;
         }
-        [HttpGet("{id}/{className}")]
 
+        [HttpGet("{id}/{className}")]
         public List<Document> GetVariousDocuments(int id, EClass className)
         {
             var documents = documentController.GetDocumentsNeeded(id, className);
             return documents;
         }
+
         [HttpPost]
         public Document Post([FromBody] Document recDocument)
         {
