@@ -1,4 +1,6 @@
 ﻿using Data.Attributes;
+using DocumentFormat.OpenXml.Drawing.ChartDrawing;
+using Microsoft.Azure.Management.DataFactory.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,6 +12,7 @@ namespace Data.Models
     /// <summary>
     /// contains information to a certain document
     /// </summary>
+    
     [Table("documents")]
     public class Document
     {
