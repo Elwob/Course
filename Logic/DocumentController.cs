@@ -1,8 +1,5 @@
 
-﻿namespace Logic
-
-﻿using Data.Models;
-using Microsoft.EntityFrameworkCore;
+using Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +20,12 @@ namespace Logic
             return instance;
         }
 
-
         public List<Document> GetDocumentsNeeded(int id, EClass className)
         {
-            List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList(); 
+            List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList();
             return documents;
         }
+
         public Document CreateNewDocument(Document recDocument)
         {
             recDocument.CreatedAt = DateTime.Now;
@@ -39,6 +36,5 @@ namespace Logic
             entities.SaveChanges();
             return recDocument;
         }
-
     }
 }

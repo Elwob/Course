@@ -2,7 +2,6 @@
 using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,18 +22,21 @@ namespace CourseREST.Controllers
             return documents;
         }
 
-
         [HttpGet("{id}/{class}")]
         public List<Document> GetVariousDocuments(int id, EDocumentType className)
+        {
+            return List<Document>;
+        }
+
 
         [HttpGet("{id}/{className}")]
-     
         public List<Document> GetVariousDocuments(int id, EClass className)
 
         {
             var document = new List<Document>();
             return document;
         }
+
         [HttpPost]
         public Document Post([FromBody] Document recDocument)
         {

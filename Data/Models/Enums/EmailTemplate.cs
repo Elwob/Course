@@ -25,5 +25,16 @@ namespace Data.Models
         /// </summary>
         [Column("text", TypeName = "text(4000)")]
         public string Text { get; set; }
+
+        /// <summary>
+        /// Person id`s for Diplomas...
+        /// </summary>
+        [NotMapped]
+        public int[] PersonIds;
+
+        /// Course id for Communication Entry
+        /// </summary>
+        [NotMapped]
+        public int CourseId;
     }
 }

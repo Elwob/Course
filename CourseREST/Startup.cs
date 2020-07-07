@@ -60,7 +60,7 @@ namespace CourseREST
             app.UseAuthorization();
 
             app.UseCors("Policy1");
-          
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
