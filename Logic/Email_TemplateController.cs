@@ -5,7 +5,7 @@ namespace Logic
     public class Email_TemplateController
     {
         public EmailTemplate FillDocuments(EmailTemplate emailTemplate)
-        {
+        {         
            
             for (int i = 0; i < emailTemplate.PersonIds.Length; i++)
             {
