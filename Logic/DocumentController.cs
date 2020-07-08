@@ -1,6 +1,8 @@
 
+using Data.Entities;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +38,33 @@ namespace Logic
             entities.SaveChanges();
             return recDocument;
         }
+        public string DeleteById(int id)
+        {
+            ///delete the Relations from Documents to Classes
+            List<RelDocumentClass> relationList = entities.RelDocumentClasses.Where(x => x.DocId == id).ToList();
+            foreach(var item in relationList)
+            {
+                entities.RelDocumentClasses.Remove(item);
+            }
+            ///set the affected Absences - DocumentId to null
+            List<Absence> absenceList = entities.Absences.Where(x => x.DocumentId == id).ToList();
+            foreach (var item in absenceList)
+            {
+                item.DocumentId = null;
+                entities.Absences.Update(item);
+            }
+            ///set the affected Communications - DocumentId to null
+            List<Communication> communicationList = entities.Communications.Where(x => x.DocumentId == id).ToList();
+            foreach (var item in communicationList)
+            {
+                item.DocumentId = null;
+                entities.Communications.Update(item);
+            }
+            entities.Documents.Remove(entities.Documents.Single(x => x.Id == id));        
+            entities.SaveChanges();
+            return "Record has successfully Deleted";
+        }
 
-       
+
     }
 }
