@@ -1,19 +1,22 @@
-﻿using Logic;
+﻿using Data.Models;
+using Logic;
 using Microsoft.AspNetCore.Mvc;
-using RouteAttribute = Microsoft.AspNetCore.Components.RouteAttribute;
+using Microsoft.Graph;
 
 namespace CourseREST.Controllers
 {
     [Route("EmailTemplate")]
+  //  [Route("[controller]")]
     [ApiController]
     public class Email_TemplateApiController : ControllerBase
     {
         private Email_TemplateController email_TemplateController = new Email_TemplateController();
 
-     /*   [HttpPost]
-        public void FillDocuments(Email_TemplateController email_TemplateController)
+       [HttpPost]
+        public EmailTemplate FillDocuments(EmailTemplate emailTemplate )
         {
-            email_TemplateController.FillDocuments(email_TemplateController);
-        }*/
+            var lullu =  email_TemplateController.FillDocuments(emailTemplate);
+            return lullu;
+        }
     }
 }
