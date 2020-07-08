@@ -19,12 +19,6 @@ namespace CourseREST.Controllers
         private DocumentController documentController = new DocumentController();
         private CourseEntities entities = CourseEntities.GetInstance();
 
-        [HttpGet]
-        public List<Document> Get()
-        {
-            var documents = entities.Documents.ToList();
-            return documents;
-        }
 
         [HttpGet("{id}/{className}")]
      
@@ -59,7 +53,6 @@ namespace CourseREST.Controllers
             return jsons;
         }
 
-
         [Route("getDocumentTypes")]
         [HttpGet]
         public List<string> GetEnumsDocumentType()
@@ -74,6 +67,11 @@ namespace CourseREST.Controllers
             Document latestDocument = documentController.CreateNewDocument(recDocument);
 
             return latestDocument;
+        }
+        [HttpDelete ("{id}")]
+        public string DeleteById(int id)
+        {
+            return documentController.DeleteById(id);  
         }
     }
 }
