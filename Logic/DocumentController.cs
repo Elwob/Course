@@ -1,7 +1,4 @@
-
-using Data.Entities;
 using Data.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
@@ -38,11 +35,12 @@ namespace Logic
             entities.SaveChanges();
             return recDocument;
         }
+
         public string DeleteById(int id)
         {
             ///delete the Relations from Documents to Classes
             List<RelDocumentClass> relationList = entities.RelDocumentClasses.Where(x => x.DocId == id).ToList();
-            foreach(var item in relationList)
+            foreach (var item in relationList)
             {
                 entities.RelDocumentClasses.Remove(item);
             }
@@ -60,11 +58,9 @@ namespace Logic
                 item.DocumentId = null;
                 entities.Communications.Update(item);
             }
-            entities.Documents.Remove(entities.Documents.Single(x => x.Id == id));        
+            entities.Documents.Remove(entities.Documents.Single(x => x.Id == id));
             entities.SaveChanges();
             return "Record has successfully Deleted";
         }
-
-
     }
 }

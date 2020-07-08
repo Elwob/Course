@@ -2,16 +2,15 @@
 using Data.Models;
 using Data.Models.JSONModels;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Logic
 {
     public class CourseController
     {
         private CourseEntities entities = CourseEntities.GetInstance();
+
         /// <summary>
         /// singleton instance
         /// </summary>
@@ -41,14 +40,12 @@ namespace Logic
             var courses = GetAll();
             courses = FilterStatus(courses, filter);
 
-
             return courses;
         }
 
         public List<Course> FilterStatus(List<Course> courses, CourseFilter filter)
         {
             //var filteredCourses = courses.Where(x => )
-
 
             return courses;
         }
