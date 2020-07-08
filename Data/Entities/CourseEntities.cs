@@ -377,15 +377,15 @@ namespace Data.Entities
             {
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.CourseId).IsRequired();
-                entity.Property(x => x.TrainerID).IsRequired();
+                entity.Property(x => x.TrainerId).IsRequired();
                 // connection to n courses
                 entity.HasOne(c => c.Course)
                 .WithMany(r => r.CourseTrainers)
                 .HasForeignKey(r => r.CourseId);
                 // connection to n trainers (Person)
-                entity.HasOne(p => p.Person)
+                entity.HasOne(t => t.Trainer)
                 .WithMany(r => r.RelCourseTrainers)
-                .HasForeignKey(r => r.TrainerID);
+                .HasForeignKey(t => t.TrainerId);
             });
         }
     }

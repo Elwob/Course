@@ -9,7 +9,7 @@ namespace Logic
     {
         public void CreateRelation(int courseId, int trainerId)
         {
-            entities.RelCourseTrainers.Add(new RelCourseTrainer() { CourseId = courseId, TrainerID = trainerId});
+            entities.RelCourseTrainers.Add(new RelCourseTrainer() { CourseId = courseId, TrainerId = trainerId});
             entities.SaveChanges();
         }
     }

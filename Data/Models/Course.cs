@@ -1,6 +1,9 @@
+using Data.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Reflection;
 
 namespace Data.Models
 {
@@ -115,12 +118,6 @@ namespace Data.Models
 
         [NotMapped]
         public List<Absence> Absences { get; set; }
-
-        [NotMapped]
-        public List<Person> TrainerArr { get; set; }
-
-        [NotMapped]
-        public List<Content> ContentArr { get; set; }
 
         /// <summary>
         /// needed for linking

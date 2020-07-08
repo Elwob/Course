@@ -14,7 +14,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class CourseApiController : ControllerBase
     {
-        private CourseController courseController = CourseController.GetInstance();
+        private CourseController courseController = new CourseController();
 
         [HttpGet]
         public List<Course> GetFiltered([FromBody] CourseFilter filter)

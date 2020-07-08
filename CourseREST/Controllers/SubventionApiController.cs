@@ -10,7 +10,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class SubventionApiController : ControllerBase
     {
-        private SubventionController subventionController = SubventionController.GetInstance();
+        private SubventionController subventionController = new SubventionController();
 
         [HttpGet]
         public List<Subvention> Get()

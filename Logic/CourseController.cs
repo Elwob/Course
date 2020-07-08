@@ -11,28 +11,9 @@ namespace Logic
     public class CourseController
     {
         private CourseEntities entities = CourseEntities.GetInstance();
-        /// <summary>
-        /// singleton instance
-        /// </summary>
-        /// 
 
         RelCourseContentController relCourseContentController = new RelCourseContentController();
         RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
-
-        public static CourseController instance = null;
-
-        /// <summary>
-        /// returns existing singleton instance or new instance if none exists
-        /// </summary>
-        /// <returns></returns>
-        public static CourseController GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new CourseController();
-            }
-            return instance;
-        }
 
         /// <summary>
         /// returns a list of all courses in DB
@@ -41,8 +22,11 @@ namespace Logic
         public List<Course> GetAll()
         {
             var courses = entities.Courses
-                .Include(c => c.CourseContents).ThenInclude(x => x.Content)
+                .Include(x => x.CourseContents).ThenInclude(x => x.Content)
                 .Include(x => x.CourseSubventions).ThenInclude(x => x.Subvention)
+                .Include(x => x.CourseTrainers).ThenInclude(x => x.Trainer)
+                // include classroom doesn't work yet
+                .Include(x => x.Classroom).ThenInclude(x => x.Courses)
                 .ToList();
             return courses;
         }
@@ -96,10 +80,10 @@ namespace Logic
         /// <returns></returns>
         public List<Course> FilterTrainer(List<Course> courses, CourseFilter filter)
         {
-            if (filter.trainer_id != 0)
+            if (filter.trainer_id != null && filter.trainer_id != 0)
             {
                 // get all course-trainer relations where a certain trainer exists
-                var relations = entities.RelCourseTrainers.Where(x => x.TrainerID == filter.trainer_id).ToList();
+                var relations = entities.RelCourseTrainers.Where(x => x.TrainerId == filter.trainer_id).ToList();
                 // filter courses for existing course-trainer relations
                 courses = courses.Where(x => relations.Any(z => x.Id == z.CourseId)).ToList();
             }
@@ -181,8 +165,6 @@ namespace Logic
             course.MinParticipants = jC.MinParticipants;
             course.CreatedAt = DateTime.Now;
             course.ModifiedAt = DateTime.Now;
-            course.TrainerArr = entities.Persons.Where(x => jC.TrainerArr.Any(y => x.Id == y)).ToList();
-            course.ContentArr = jC.ContentArr;
             return course;
         }
     }    

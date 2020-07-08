@@ -7,24 +7,6 @@ namespace Logic
     public class ContentController : MainController
     {
         /// <summary>
-        /// singleton instance
-        /// </summary>
-        public static ContentController instance = null;
-
-        /// <summary>
-        /// returns existing singleton instance or new instance if none exists
-        /// </summary>
-        /// <returns></returns>
-        public static ContentController GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new ContentController();
-            }
-            return instance;
-        }
-
-        /// <summary>
         /// returns all Contents from DB
         /// </summary>
         /// <returns></returns>
