@@ -156,6 +156,10 @@ namespace Data.Entities
                 entity.Property(x => x.Title).IsRequired();
                 entity.Property(x => x.Category).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
+                // connection to a classroom
+                entity.HasOne(x => x.Classroom).
+                WithMany(c => c.Courses).
+                HasForeignKey(x => x.Id);
             });
             // represents the model Subvention
             modelBuilder.Entity<Subvention>(entity =>
@@ -198,7 +202,12 @@ namespace Data.Entities
             {
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.DocumentType).IsRequired();
-            
+            });
+            // represents the modelClassroom
+            modelBuilder.Entity<Classroom>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Room).IsRequired();
             });
         }
 
@@ -325,7 +334,7 @@ namespace Data.Entities
                 entity.Property(x => x.Completed).IsRequired();
                 // connection to n courses
                 entity.HasOne(c => c.Course)
-                .WithMany(r => r.RelCourseParticipants)
+                .WithMany(r => r.CourseParticipants)
                 .HasForeignKey(r => r.CourseId);
                 // connection to n participants (Person)
                 entity.HasOne(p => p.Person)
@@ -371,7 +380,7 @@ namespace Data.Entities
                 entity.Property(x => x.TrainerID).IsRequired();
                 // connection to n courses
                 entity.HasOne(c => c.Course)
-                .WithMany(r => r.RelCourseTrainers)
+                .WithMany(r => r.CourseTrainers)
                 .HasForeignKey(r => r.CourseId);
                 // connection to n trainers (Person)
                 entity.HasOne(p => p.Person)

@@ -1,131 +1,90 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection.Metadata.Ecma335;
+using System.Text;
 
-namespace Data.Models
+namespace Data.Models.JSONModels
 {
-    /// <summary>
-    /// contains information to a certain course
-    /// </summary>
-    [Table("course")]
-    public class Course
+    public class JSONCourse
     {
         /// <summary>
         /// id in DB (is assigned by DB as autoIncrement)
         /// </summary>
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
         public int Id { get; set; }
 
         /// <summary>
         /// the courses' title
         /// </summary>
-        [Column("title", TypeName = "varchar(250)")]
         public string Title { get; set; }
 
         /// <summary>
         /// the courses number (can contain letters)
         /// </summary>
-        [Column("course_number", TypeName = "varchar(15)")]
         public string? CourseNumber { get; set; }
 
         /// <summary>
         /// a short description for the course
         /// </summary>
-        [Column("description")]
         public string? Description { get; set; }
 
         /// <summary>
         /// the category the course belongs to
         /// </summary>
-        [Column("category", TypeName = "varchar(100)")]
-        public ECourseCategory Category { get; set; }
+        public string Category { get; set; }
 
         /// <summary>
         /// the courses' start date
         /// </summary>
-        [Column("start")]
-        public DateTime? Start { get; set; }
+        public string? Start { get; set; }
 
         /// <summary>
         /// the courses' end date
         /// </summary>
-        [Column("end")]
-        public DateTime? End { get; set; }
+        public string? End { get; set; }
 
         /// <summary>
         /// the amount a teaching units of the course
         /// </summary>
-        [Column("unit")]
         public int? Unit { get; set; }
 
         /// <summary>
         /// the price of the course
         /// </summary>
-        [Column("price")]
         public double? Price { get; set; }
 
         /// <summary>
         /// the id of the classromm the course is held in
         /// </summary>
-        [Column("classroom_id")]
         public int? ClassroomId { get; set; }
 
         /// <summary>
         /// the amount of maximum participants
         /// </summary>
-        [Column("participant_max")]
         public int? MaxParticipants { get; set; }
 
         /// <summary>
         /// the amount of minimum participants
         /// </summary>
-        [Column("participant_min")]
         public int? MinParticipants { get; set; }
 
         /// <summary>
         /// the date the course was created at
         /// </summary>
-        [Column("created@")]
-        public DateTime CreatedAt { get; set; }
+        public string? CreatedAt { get; set; }
 
         /// <summary>
         /// the date the course was modified at
         /// </summary>
-        [Column("modified@")]
-        public DateTime? ModifiedAt { get; set; }
+        public string? ModifiedAt { get; set; }
 
         /// <summary>
-        /// a list of relations to the courses' contents
+        /// contains all trainerIds
         /// </summary>
-        [NotMapped]
-        public List<RelCourseContent> CourseContents { get; set; }
+        public List<int> TrainerArr { get; set; }
 
         /// <summary>
-        /// a list of relations to the courses' subventions
+        /// contains all contentIds
         /// </summary>
-        [NotMapped]
-        public List<RelCourseSubvention> CourseSubventions { get; set; }
-
-        [NotMapped]
-        public List<RelCourseParticipant> CourseParticipants { get; set; }
-
-        [NotMapped]
-        public List<RelCourseTrainer> CourseTrainers { get; set; }
-
-        [NotMapped]
-        public List<Absence> Absences { get; set; }
-
-        [NotMapped]
-        public List<Person> TrainerArr { get; set; }
-
-        [NotMapped]
         public List<Content> ContentArr { get; set; }
-
-        /// <summary>
-        /// needed for linking
-        /// </summary>
-        [NotMapped]
-        public Classroom Classroom { get; set; }
     }
 }

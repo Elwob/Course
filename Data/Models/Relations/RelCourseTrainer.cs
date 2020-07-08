@@ -5,7 +5,7 @@ namespace Data.Models
     /// <summary>
     /// intermediate data used to create relations between courses and trainers (Persons)
     /// </summary>
-    [Table("RelCourseTrainer")]
+    [Table("course_trainer")]
     public class RelCourseTrainer
     {
         /// <summary>

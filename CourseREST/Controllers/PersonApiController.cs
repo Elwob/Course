@@ -15,7 +15,6 @@ namespace CourseREST.Controllers
 
         [HttpGet]
         public List<Person> get()
-
         {
             var persons = entities.Persons.ToList();
             return persons;

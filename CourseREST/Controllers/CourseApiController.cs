@@ -2,7 +2,10 @@
 using Data.Models.JSONModels;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CourseREST.Controllers
 {
@@ -13,16 +16,16 @@ namespace CourseREST.Controllers
     {
         private CourseController courseController = CourseController.GetInstance();
 
-        //[HttpGet]
-        //public List<Course> getAll()
-        //{
-        //    return courseController.GetAll();
-        //}
-
         [HttpGet]
-        public List<Course> getFiltered([FromBody] CourseFilter filter)
+        public List<Course> GetFiltered([FromBody] CourseFilter filter)
         {
             return courseController.GetFilteredCourses(filter);
+        }
+
+        [HttpPost]
+        public Course Post([FromBody] JSONCourse course)
+        {
+            return courseController.PostCourse(course);
         }
     }
 }

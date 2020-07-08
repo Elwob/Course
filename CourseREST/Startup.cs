@@ -22,16 +22,6 @@ namespace CourseREST
                 AddNewtonsoftJson(x =>
                 x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("Policy1",
-                   buidler =>
-                   {
-                       buidler.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader();
-                   });
-            });
             services.AddControllers();
             services.AddCors(options =>
             {

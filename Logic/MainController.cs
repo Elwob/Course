@@ -1,5 +1,6 @@
 ﻿using Data.Entities;
 using Data.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 
@@ -20,4 +21,6 @@ namespace Logic
             return enumsList;
         }
     }
+
+    
 }
