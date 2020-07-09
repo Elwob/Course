@@ -103,7 +103,7 @@ namespace Data.Models
         /// <summary>
         /// the date the person was modified on
         /// </summary>
-        [Column("modify@")]
+        [Column("modified@")]
         public DateTime? ModifiedAt { get; set; }
 
         /// <summary>
