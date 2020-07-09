@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Data.Entities;
-using Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Logic;
+using Data.Models.JSONModels;
 
 namespace CourseREST.Controllers
 {
@@ -15,11 +12,12 @@ namespace CourseREST.Controllers
     public class ClassroomApiController : ControllerBase
     {
         private CourseEntities entities = CourseEntities.GetInstance();
+        ClassroomController classroomController = new ClassroomController();
 
         [HttpGet]
-        public List<Classroom> get()
+        public List<JSONClassroom> get()
         {
-            return entities.Classrooms.ToList();
+            return classroomController.GetRooms();
         }
     }
 }
