@@ -13,6 +13,11 @@ namespace Data.Models
     [Table("communication")]
     public class Communication
     {
+        public Communication()
+        {
+            CommunicationClasses = new List<RelCommunicationClass>();
+        }
+
         /// <summary>
         /// /// id in DB (is assigned by DB as autoIncrement)
         /// </summary>

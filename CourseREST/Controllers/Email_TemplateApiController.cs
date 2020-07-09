@@ -12,10 +12,10 @@ namespace CourseREST.Controllers
         private Email_TemplateController email_TemplateController = new Email_TemplateController();
 
         [HttpPost]
-        public EmailTemplate FillDocuments(EmailTemplate emailTemplate)
+        public Communication FillDocuments(EmailTemplate emailTemplate)
         {
-            var lullu = email_TemplateController.FillDocuments(emailTemplate);
-            return lullu;
+            var communication =  email_TemplateController.FillDocuments(emailTemplate);
+            return communication;
         }
     }
 }
