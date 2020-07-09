@@ -1,6 +1,7 @@
 ﻿
 using Data.Models;
-using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using DocumentFormat.OpenXml.Spreadsheet;
 using iText.IO.Font;
 using iText.IO.Source;
 using iText.Kernel.Font;
@@ -12,6 +13,7 @@ using iText.StyledXmlParser.Jsoup.Nodes;
 using System;
 
 using Document = iText.Layout.Document;
+using Paragraph = DocumentFormat.OpenXml.Drawing.Paragraph;
 
 namespace Logic
 {
@@ -43,7 +45,7 @@ namespace Logic
                     PdfReader reader = new PdfReader(sourceFile);
                     PdfDocument pdf = new PdfDocument(reader);
                     Document doc = new Document(pdf);
-                    doc.Add(new Header)
+        //            doc.Add(new Element("hallöle",Header));
 
 
                      PdfWriter writer = new PdfWriter(destFile);
