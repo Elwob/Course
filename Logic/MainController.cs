@@ -8,6 +8,7 @@ namespace Logic
 {
     public class MainController
     {
+        public string documentMainPath = "\\LAPTOP-HM9V9LIQ\\courseRest\\Documents";
         public CourseEntities entities = CourseEntities.GetInstance();
 
         public List<string> GetEnums<T>()

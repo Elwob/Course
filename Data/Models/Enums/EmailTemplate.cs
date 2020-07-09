@@ -30,11 +30,11 @@ namespace Data.Models
         /// Person id`s for Diplomas...
         /// </summary>
         [NotMapped]
-        public int[] PersonIds;
+        public int[] PersonIds { get; set; }
 
         /// Course id for Communication Entry
         /// </summary>
         [NotMapped]
-        public int CourseId;
+        public int CourseId { get; set; }
     }
 }
