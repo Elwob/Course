@@ -39,7 +39,7 @@ namespace Logic
 
                     // Use Path class to manipulate file and directory paths. For Testing
                     string sourcePath = @"C:\DcvDokumente";
-                    string targetPath = @"C:\DcvDokumente\CopiedVersion";
+                   //  string targetPath = @"C:\DcvDokumente\CopiedVersion";
 
                     //    System.IO.File.Copy(sourceFile, destFile, false);
                     string sourceFile = System.IO.Path.Combine(sourcePath, "Diploma.pdf");
