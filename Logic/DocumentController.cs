@@ -83,7 +83,7 @@ namespace Logic
                 Console.WriteLine(e);
             }
         }
-        public void CreateDocumentFromTemplate(string url, EDocumentType Type, Person person, int courseId)
+        public void CreateDocumentFromTemplate(string url, EDocumentType Type, Person person, int courseId, int? employeeId, string comment, int reminderId)
         {
             Document newDoc = new Document();
             newDoc.Url = url;
@@ -94,7 +94,10 @@ namespace Logic
             newDoc.CourseId = courseId;
             newDoc.PersonId = person.Id;
             Document document = CreateNewDocument(newDoc);
-            ///jetzt document der Communication hinzufügen
+            ///
+            ///in this case Date = DateTime.Now, but can be different if we would make an entry about last weeks phone call
+            DateTime date = DateTime.Now;
+            Communication communication = CommunicationController.CreateCommunication(newDoc, employeeId, comment, date, reminderId);
         }
     }
 }

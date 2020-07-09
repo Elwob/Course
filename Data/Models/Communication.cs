@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Data.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Reflection;
 
 namespace Data.Models
 {
@@ -77,9 +80,51 @@ namespace Data.Models
         public DateTime? ModifiedAt { get; set; }
 
         /// <summary>
+        /// temporarily needed for building the right relationships in RelCommunicationClass
+        /// </summary>
+        [NotMapped]
+        [Communication(typeof(Course))]
+        public int? CourseId { get; set; }
+
+        /// <summary>
+        /// temporarily needed for building the right relationships in RelCommunicationClass
+        /// </summary>
+        [NotMapped]
+        [Communication(typeof(Person))]
+        public int? EmployeeId { get; set; }
+
+        /// <summary>
         /// list of all relations between communications and classes
         /// </summary>
         [NotMapped]
         public List<RelCommunicationClass> CommunicationClasses { get; set; }
+
+        public void CreateRelation()
+        {
+            var properties = this.GetType().GetProperties().Where(c => c.GetCustomAttribute<CommunicationAttribute>() != null);
+
+            foreach (var property in properties)
+            {
+                CreateRelation(property);
+            }
+        }
+        private void CreateRelation(PropertyInfo prop)
+        {
+            var communicationAttr = prop.GetCustomAttribute<CommunicationAttribute>();
+
+            if (prop != null)
+            {
+                var id = prop.GetValue(this) as int?;
+                if (id.HasValue)
+                {
+                    RelCommunicationClass relCommunicationClass = new RelCommunicationClass();
+                    
+                    relCommunicationClass.Communication = this;
+                    relCommunicationClass.Class = communicationAttr.ClassName;
+                    relCommunicationClass.ClassId = id.Value;
+                    this.CommunicationClasses.Add(relCommunicationClass);
+                }
+            }
+        }
     }
 }
