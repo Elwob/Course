@@ -1,4 +1,5 @@
 ﻿using Data.Attributes;
+using PersonData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,19 +13,12 @@ namespace Data.Models
     /// </summary>
 
     [Table("documents")]
-    public class Document
+    public class Document : BaseClassCreatedModify
     {
         public Document()
         {
             DocumentClasses = new List<RelDocumentClass>();
         }
-
-        /// <summary>
-        /// id in DB (is assigned by DB as autoIncrement)
-        /// </summary>
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
-        public int Id { get; set; }
 
         /// <summary>
         /// the filePath where the document is placed
@@ -49,18 +43,6 @@ namespace Data.Models
         /// </summary>
         [Column("reminder_id")]
         public int? ReminderId { get; set; }
-
-        /// <summary>
-        /// the date the document was created at
-        /// </summary>
-        [Column("created@")]
-        public DateTime CreatedAt { get; set; }
-
-        /// <summary>
-        /// the date the document was modified at
-        /// </summary>
-        [Column("modified@")]
-        public DateTime? ModifiedAt { get; set; }
 
         /// <summary>
         /// the documents' type
