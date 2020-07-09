@@ -3,7 +3,7 @@ using iText.IO.Font;
 using iText.IO.Source;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
-using iTextSharp.text.pdf;
+
 using System;
 
 namespace Logic
