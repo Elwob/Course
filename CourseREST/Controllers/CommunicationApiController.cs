@@ -14,7 +14,6 @@ namespace CourseREST.Controllers
     public class CommunicationApiController : ControllerBase
     {
         private CommunicationController communicationController = new CommunicationController();
-        private CourseEntities entities = CourseEntities.GetInstance();
 
         [HttpGet("{id}/{className}")]
         public List<JObject> GetVariousCommunications(int id, EClass className)
