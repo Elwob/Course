@@ -1,11 +1,20 @@
-﻿using Data.Models;
+﻿
+using Data.Models;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using DocumentFormat.OpenXml.Spreadsheet;
 using iText.IO.Font;
 using iText.IO.Source;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
-
+using iText.Kernel.Utils;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.StyledXmlParser.Jsoup.Nodes;
 using System;
 using System.Collections.Generic;
+
+using Document = iText.Layout.Document;
+using Paragraph = DocumentFormat.OpenXml.Drawing.Paragraph;
 
 namespace Logic
 {
@@ -27,12 +36,35 @@ namespace Logic
                     string targetPath = @"C:\DcvDokumente\CopiedVersion";
 
                     // Use Path class to manipulate file and directory paths.
-                    string sourceFile = System.IO.Path.Combine(sourcePath, "bill.pdf");
+                    string sourceFile = System.IO.Path.Combine(sourcePath, "Diploma.pdf");
                     string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", person.FirstName);
                     //    string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
 
                     //    System.IO.File.Copy(sourceFile, destFile, false);
+                    //         PdfReader reader = new PdfReader(sourceFile);
+
                     PdfReader reader = new PdfReader(sourceFile);
+
+                    PdfDocument pdf = new PdfDocument(reader);
+                    Document doc = new Document(pdf);
+        //            doc.Add(new Element("hallöle",Header));
+
+
+                     PdfWriter writer = new PdfWriter(destFile);
+
+               
+
+
+
+                    //  PdfMerger merger = new PdfMerger(pdf);
+                    //Document doc =new Document(pdf);
+                    //   doc.Add(Paragraph("hallöle"));
+                    //   doc.Close();
+              //      PdfDocument pdf = new PdfDocument();
+
+              //      PdfWriter pdfWriter = new PdfWriter("gugi.pdf",pdf);
+                    
+
 
                     Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, null, null);
                     communications.Add(communication);
@@ -51,6 +83,11 @@ namespace Logic
                 }
             }
             return communications;
+        }
+
+        private AreaBreak Paragraph(string v)
+        {
+            throw new NotImplementedException();
         }
     }
 }
