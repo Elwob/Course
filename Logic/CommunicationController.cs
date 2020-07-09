@@ -17,7 +17,7 @@ namespace Logic
 
             return communications;
         }
-        public Communication CreateNewCommunication(Communication communication)
+        public Communication CreateRelationAndAddToDatabase(Communication communication)
         {
             communication.CreatedAt = DateTime.Now;
             communication.ModifiedAt = DateTime.Now;
@@ -27,17 +27,19 @@ namespace Logic
             entities.SaveChanges();
             return communication;
         }
-        public static Communication CreateCommunication(Document document, int? employeeId, string comment, DateTime date, int reminderId)
+        public Communication CreateCommunication(Document document, int? courseId, int? employeeId, string comment, DateTime date, int? reminderId)
         {
             Communication communication = new Communication();
             communication.Channel = EChannel.Email;
             communication.PersonId = (int)document.PersonId;
             communication.Date = date;
             communication.Comment = comment;
+            communication.CourseId = courseId;
+            communication.EmployeeId = employeeId;
             communication.DocumentId = document.Id;
             communication.ReminderId = reminderId;
-            //fill in communication properties, then CreateNewCommunication and return communication
-            return null;
+            communication = CreateRelationAndAddToDatabase(communication);
+            return communication;
         }
     }
 }
