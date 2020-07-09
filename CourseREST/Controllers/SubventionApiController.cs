@@ -5,12 +5,15 @@ using System.Collections.Generic;
 
 namespace CourseREST.Controllers
 {
+    /// <summary>
+    /// contains all requests concerning subventions
+    /// </summary>
     [Route("subvention")]
     [Route("[controller]")]
     [ApiController]
     public class SubventionApiController : ControllerBase
     {
-        private SubventionController subventionController = SubventionController.GetInstance();
+        private SubventionController subventionController = new SubventionController();
 
         [HttpGet]
         public List<Subvention> Get()

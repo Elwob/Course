@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,32 +8,14 @@ namespace Logic
     public class ContentController : MainController
     {
         /// <summary>
-        /// singleton instance
-        /// </summary>
-        public static ContentController instance = null;
-
-        /// <summary>
-        /// returns existing singleton instance or new instance if none exists
-        /// </summary>
-        /// <returns></returns>
-        public static ContentController GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new ContentController();
-            }
-            return instance;
-        }
-
-        /// <summary>
         /// returns all Contents from DB
         /// </summary>
         /// <returns></returns>
         public List<Content> GetAllContents()
         {
-            var content = entities.Contents.ToList();
+            //var content = entities.Contents.ToList();
             // use following line if you want to return relations to courses (where a content is teached in) as well:
-            // var content = entities.Contents.Include(c => c.CourseContents).ThenInclude(x => x.Course).ToList();
+            var content = entities.Contents.Include(c => c.ContentCourse).ThenInclude(x => x.Course).ToList();
             return content;
         }
 

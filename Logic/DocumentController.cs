@@ -105,6 +105,5 @@ namespace Logic
             string name = Type.ToString() + "_" + person.LastName + "_" + DateTime.Now.ToFileTime() + fileExtension;
             return name;
         }
-
     }
 }

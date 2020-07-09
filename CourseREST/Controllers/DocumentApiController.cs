@@ -25,7 +25,6 @@ namespace CourseREST.Controllers
 
             ///that Enums will be shown correctly in JSON
             List<JObject> jsons = SerializeAndCreateJsonObject<Document>(documents);
-
             return jsons;
         }
 
@@ -45,7 +44,6 @@ namespace CourseREST.Controllers
                 JObject json = JObject.Parse(jasonString);
                 jsons.Add(json);
             }
-
             return jsons;
         }
 
@@ -61,7 +59,6 @@ namespace CourseREST.Controllers
         public Document Post([FromBody] Document recDocument)
         {
             Document latestDocument = documentController.CreateNewDocument(recDocument);
-
             return latestDocument;
         }
 

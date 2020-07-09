@@ -3,6 +3,7 @@ using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using Logic;
 
 namespace CourseREST.Controllers
 {
@@ -11,14 +12,26 @@ namespace CourseREST.Controllers
     [ApiController]
     public class PersonApiController : ControllerBase
     {
-        private CourseEntities entities = CourseEntities.GetInstance();
+        public PersonController personController = new PersonController();
 
         [HttpGet]
         public List<Person> get()
-
         {
-            var persons = entities.Persons.ToList();
-            return persons;
+            return personController.FindAll();
+        }
+    }
+
+    [Route("trainer")]
+    [Route("[controller]")]
+    [ApiController]
+    public class TrainerApiController : ControllerBase
+    {
+        public PersonController personController = new PersonController();
+
+        [HttpGet]
+        public List<Person> get()
+        {
+            return personController.FindAllTrainers();
         }
     }
 }

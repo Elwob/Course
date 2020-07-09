@@ -1,6 +1,11 @@
+using Data.Attributes;
+using Newtonsoft.Json;
+using PersonData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Reflection;
 
 namespace Data.Models
 {
@@ -8,14 +13,8 @@ namespace Data.Models
     /// contains information to a certain course
     /// </summary>
     [Table("course")]
-    public class Course
+    public class Course : BaseClassCreatedModify
     {
-        /// <summary>
-        /// id in DB (is assigned by DB as autoIncrement)
-        /// </summary>
-        [Column("id")]
-        public int Id { get; set; }
-
         /// <summary>
         /// the courses' title
         /// </summary>
@@ -68,7 +67,7 @@ namespace Data.Models
         /// the id of the classromm the course is held in
         /// </summary>
         [Column("classroom_id")]
-        public int? ClassroomID { get; set; }
+        public int? ClassroomId { get; set; }
 
         /// <summary>
         /// the amount of maximum participants
@@ -83,18 +82,6 @@ namespace Data.Models
         public int? MinParticipants { get; set; }
 
         /// <summary>
-        /// the date the course was created at
-        /// </summary>
-        [Column("created@")]
-        public DateTime CreatedAt { get; set; }
-
-        /// <summary>
-        /// the date the course was modified at
-        /// </summary>
-        [Column("modified@")]
-        public DateTime? ModifiedAt { get; set; }
-
-        /// <summary>
         /// a list of relations to the courses' contents
         /// </summary>
         [NotMapped]
@@ -107,12 +94,19 @@ namespace Data.Models
         public List<RelCourseSubvention> CourseSubventions { get; set; }
 
         [NotMapped]
-        public List<RelCourseParticipant> RelCourseParticipants { get; set; }
+        public List<RelCourseParticipant> CourseParticipants { get; set; }
 
         [NotMapped]
-        public List<RelCourseTrainer> RelCourseTrainers { get; set; }
+        public List<RelCourseTrainer> CourseTrainers { get; set; }
 
         [NotMapped]
         public List<Absence> Absences { get; set; }
+
+        /// <summary>
+        /// needed for linking
+        /// </summary>
+        [NotMapped]
+        public Classroom Classroom { get; set; }
+
     }
 }

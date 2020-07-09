@@ -5,7 +5,7 @@ namespace Data.Models
     /// <summary>
     /// intermediate data used to create relations between courses and trainers (Persons)
     /// </summary>
-    [Table("RelCourseTrainer")]
+    [Table("course_trainer")]
     public class RelCourseTrainer
     {
         /// <summary>
@@ -24,10 +24,10 @@ namespace Data.Models
         /// the trainers' id
         /// </summary>
         [Column("trainer_id", TypeName = "int")]
-        public int TrainerID { get; set; }
+        public int TrainerId { get; set; }
 
         [NotMapped]
-        public Person Person { get; set; }
+        public Person Trainer { get; set; }
 
         [NotMapped]
         public Course Course { get; set; }

@@ -15,7 +15,6 @@ namespace CourseREST.Controllers
         public Absence Post(Absence absence)
         {
             absence = absenceController.Post(absence);
-
             return absence;
         }
 
