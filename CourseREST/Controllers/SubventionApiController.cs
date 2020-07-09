@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace CourseREST.Controllers
 {
+    /// <summary>
+    /// contains all requests concerning subventions
+    /// </summary>
     [Route("subvention")]
     [Route("[controller]")]
     [ApiController]

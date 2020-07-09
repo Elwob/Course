@@ -9,6 +9,7 @@ namespace Data.Models
     [Table("content")]
     public class Content
     {
+        public static bool ShouldIgnoreRelation = false;
         /// <summary>
         /// id in DB (is assigned by DB as autoIncrement)
         /// </summary>
@@ -36,8 +37,26 @@ namespace Data.Models
         /// <summary>
         /// contains relations to all courses the content is teached in
         /// </summary>
+        private List<RelCourseContent> _contenCourses;
         [NotMapped]
-        public List<RelCourseContent> CourseContents { get; set; }
+        public List<RelCourseContent> ContentCourse 
+        { 
+            get
+            {
+                if (ShouldIgnoreRelation)
+                {
+                    return new List<RelCourseContent>();
+                }
+                else
+                {
+                    return _contenCourses;
+                }
+            }
+            set
+            {
+                _contenCourses = value;
+            } 
+        }
 
         public Content(string topic, string description, int? unitEstimation)
         {

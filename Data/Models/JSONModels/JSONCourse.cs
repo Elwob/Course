@@ -1,17 +1,13 @@
-﻿using System;
+﻿using PersonData;
+using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace Data.Models.JSONModels
 {
-    public class JSONCourse
+    public class JSONCourse : BaseClassCreatedModify
     {
-        /// <summary>
-        /// id in DB (is assigned by DB as autoIncrement)
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// the courses' title
         /// </summary>
@@ -66,16 +62,6 @@ namespace Data.Models.JSONModels
         /// the amount of minimum participants
         /// </summary>
         public int? MinParticipants { get; set; }
-
-        /// <summary>
-        /// the date the course was created at
-        /// </summary>
-        public string? CreatedAt { get; set; }
-
-        /// <summary>
-        /// the date the course was modified at
-        /// </summary>
-        public string? ModifiedAt { get; set; }
 
         /// <summary>
         /// contains all trainerIds

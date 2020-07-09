@@ -358,7 +358,7 @@ namespace Data.Entities
                 .HasForeignKey(c => c.CourseId);
                 // connection to n contents
                 entity.HasOne(co => co.Content)
-                .WithMany(c => c.CourseContents)
+                .WithMany(c => c.ContentCourse)
                 .HasForeignKey(co => co.ContentId);
             });
             // represents the n:m relation between courses and subventions

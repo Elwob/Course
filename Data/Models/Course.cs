@@ -1,4 +1,6 @@
 using Data.Attributes;
+using Newtonsoft.Json;
+using PersonData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,15 +13,8 @@ namespace Data.Models
     /// contains information to a certain course
     /// </summary>
     [Table("course")]
-    public class Course
+    public class Course : BaseClassCreatedModify
     {
-        /// <summary>
-        /// id in DB (is assigned by DB as autoIncrement)
-        /// </summary>
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
-        public int Id { get; set; }
-
         /// <summary>
         /// the courses' title
         /// </summary>
@@ -87,18 +82,6 @@ namespace Data.Models
         public int? MinParticipants { get; set; }
 
         /// <summary>
-        /// the date the course was created at
-        /// </summary>
-        [Column("created@")]
-        public DateTime CreatedAt { get; set; }
-
-        /// <summary>
-        /// the date the course was modified at
-        /// </summary>
-        [Column("modified@")]
-        public DateTime? ModifiedAt { get; set; }
-
-        /// <summary>
         /// a list of relations to the courses' contents
         /// </summary>
         [NotMapped]
@@ -124,5 +107,6 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public Classroom Classroom { get; set; }
+
     }
 }

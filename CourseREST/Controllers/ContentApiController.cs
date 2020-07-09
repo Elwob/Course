@@ -6,12 +6,19 @@ using Data.Models;
 
 namespace CourseREST.Controllers
 {
+    /// <summary>
+    /// contains all requests concerning contents
+    /// </summary>
     [Route("content")]
     [Route("[controller]")]
     [ApiController]
     public class ContentApiController : ControllerBase
     {
         private ContentController contentController = new ContentController();
+        public ContentApiController()
+        {
+            Data.Models.Content.ShouldIgnoreRelation = false;
+        }
 
         [HttpGet]
         public List<Content> Get()

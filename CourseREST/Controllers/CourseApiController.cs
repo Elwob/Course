@@ -11,12 +11,19 @@ using System.Text.Json.Serialization;
 
 namespace CourseREST.Controllers
 {
+    /// <summary>
+    /// contains all requests concerning courses
+    /// </summary>
     [Route("course")]
     [Route("[controller]")]
     [ApiController]
     public class CourseApiController : ControllerBase
     {
         private CourseController courseController = new CourseController();
+        public CourseApiController()
+        {
+            Data.Models.Content.ShouldIgnoreRelation = true;
+        }
 
         [HttpGet]
         public List<Course> Get([FromBody] CourseFilter filter)
@@ -31,6 +38,9 @@ namespace CourseREST.Controllers
         }
     }
 
+    /// <summary>
+    /// contains all requests concerning CourseCategories
+    /// </summary>
     [Route("category")]
     [Route("[controller]")]
     [ApiController]
