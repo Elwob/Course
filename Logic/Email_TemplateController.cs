@@ -36,21 +36,21 @@ namespace Logic
                     string targetPath = @"C:\DcvDokumente\CopiedVersion";
 
                     // Use Path class to manipulate file and directory paths.
-                    string sourceFile = System.IO.Path.Combine(sourcePath, "Diploma.pdf");
+                    string sourceFile = System.IO.Path.Combine(templateMainPath, "Diploma.pdf");
                     string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", person.FirstName);
                     //    string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
 
                     //    System.IO.File.Copy(sourceFile, destFile, false);
                     //         PdfReader reader = new PdfReader(sourceFile);
 
-                    PdfReader reader = new PdfReader(sourceFile);
+        //            PdfReader reader = new PdfReader(sourceFile);
 
-                    PdfDocument pdf = new PdfDocument(reader);
-                    Document doc = new Document(pdf);
-        //            doc.Add(new Element("hallöle",Header));
+        //            PdfDocument pdf = new PdfDocument(reader);
+        //            Document doc = new Document(pdf);
+        ////          doc.Add(new Element("hallöle",Header));
 
 
-                     PdfWriter writer = new PdfWriter(destFile);
+        //             PdfWriter writer = new PdfWriter(destFile);
 
                
 

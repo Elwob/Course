@@ -29,7 +29,7 @@ namespace Data.Models
         /// <summary>
         /// the filePath where the document is placed
         /// </summary>
-        [Column("url", TypeName = "varchar(200)")]
+        [Column("url", TypeName = "varchar(1000)")]
         public string Url { get; set; }
 
         /// <summary>
@@ -114,7 +114,6 @@ namespace Data.Models
                 if (id.HasValue)
                 {
                     RelDocumentClass relDocumentClass = new RelDocumentClass();
-                    //relDocumentClass.DocId = latestDocument.Id;
                     relDocumentClass.Document = this;
                     relDocumentClass.Class = documentAttr.ClassName;
                     relDocumentClass.ClassId = id.Value;

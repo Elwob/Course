@@ -97,7 +97,7 @@ namespace Logic
             Document document = CreateNewDocument(newDoc);
             ///in this case Date = DateTime.Now, but can be different if we would make an entry about last weeks phone call
             DateTime date = DateTime.Now;
-            Communication communication = communicationController.CreateCommunication(newDoc, template.CourseId, employeeId, comment, date, reminderId);
+            Communication communication = communicationController.CreateCommunication(document, template.CourseId, employeeId, comment, date, reminderId);
             return communication;
         }
         public string CreateFileName(EDocumentType Type, Person person, string fileExtension)
