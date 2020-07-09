@@ -1,6 +1,7 @@
 ﻿using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CourseREST.Controllers
 {
@@ -12,10 +13,10 @@ namespace CourseREST.Controllers
         private Email_TemplateController email_TemplateController = new Email_TemplateController();
 
         [HttpPost]
-        public EmailTemplate FillDocuments(EmailTemplate emailTemplate)
+        public List<Communication> FillDocuments(EmailTemplate emailTemplate)
         {
-            var lullu = email_TemplateController.FillDocuments(emailTemplate);
-            return lullu;
+            var communications =  email_TemplateController.FillDocuments(emailTemplate);
+            return communications;
         }
     }
 }

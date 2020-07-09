@@ -11,6 +11,7 @@ using iText.Layout;
 using iText.Layout.Element;
 using iText.StyledXmlParser.Jsoup.Nodes;
 using System;
+using System.Collections.Generic;
 
 using Document = iText.Layout.Document;
 using Paragraph = DocumentFormat.OpenXml.Drawing.Paragraph;
@@ -19,12 +20,12 @@ namespace Logic
 {
     public class Email_TemplateController : MainController
     {
+        private DocumentController documentController = new DocumentController();
         private PersonController personController = new PersonController();
+        public List<Communication> FillDocuments(EmailTemplate emailTemplate)
 
-        public EmailTemplate FillDocuments(EmailTemplate emailTemplate)
-
-        {         
-           
+        {
+            List<Communication> communications = new List<Communication>();
 
             for (int i = 0; i < emailTemplate.PersonIds.Length; i++)
             {
@@ -43,6 +44,7 @@ namespace Logic
                     //         PdfReader reader = new PdfReader(sourceFile);
 
                     PdfReader reader = new PdfReader(sourceFile);
+
                     PdfDocument pdf = new PdfDocument(reader);
                     Document doc = new Document(pdf);
         //            doc.Add(new Element("hallöle",Header));
@@ -63,6 +65,9 @@ namespace Logic
               //      PdfWriter pdfWriter = new PdfWriter("gugi.pdf",pdf);
                     
 
+
+                    Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, null, null);
+                    communications.Add(communication);
                     //                    14 // Add ListItem objects
                     // list.add(new ListItem("Never gonna give you up"))
                     //add(new ListItem("Never gonna let you down"))
@@ -77,7 +82,7 @@ namespace Logic
 
                 }
             }
-            return emailTemplate;
+            return communications;
         }
 
         private AreaBreak Paragraph(string v)

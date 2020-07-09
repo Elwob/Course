@@ -14,8 +14,8 @@ using Document = Data.Models.Document;
 namespace Logic
 {
     public class DocumentController : MainController
-    {     
-
+    {
+        CommunicationController communicationController = new CommunicationController();
         public List<Document> GetDocumentsNeeded(int id, EClass className)
         {
             List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList();
@@ -84,18 +84,26 @@ namespace Logic
                 Console.WriteLine(e);
             }
         }
-        public void CreateDocumentFromTemplate(string url, EDocumentType Type, Person person, int courseId)
+        public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? employeeId, string comment, int? reminderId)
         {
-            Document newDoc = new Document();
-            newDoc.Url = url;
-            ///should cut the path, that we can get the Name
-            newDoc.Name = url.Substring(documentMainPath.Length + 1);
+            Document newDoc = new Document();       
+            newDoc.Name = CreateFileName(template.DocumentType, person, ".pdf");
+            newDoc.Url = documentMainPath + "\\" + template.DocumentType.ToString() + "\\" + newDoc.Name;
+            ///File.Save();
             newDoc.Comment = "Document created from Template";
-            newDoc.Type = Type;
-            newDoc.CourseId = courseId;
+            newDoc.Type = template.DocumentType;
+            newDoc.CourseId = template.CourseId;
             newDoc.PersonId = person.Id;
             Document document = CreateNewDocument(newDoc);
-            ///jetzt document der Communication hinzufügen
+            ///in this case Date = DateTime.Now, but can be different if we would make an entry about last weeks phone call
+            DateTime date = DateTime.Now;
+            Communication communication = communicationController.CreateCommunication(newDoc, template.CourseId, employeeId, comment, date, reminderId);
+            return communication;
+        }
+        public string CreateFileName(EDocumentType Type, Person person, string fileExtension)
+        {
+            string name = Type.ToString() + "_" + person.LastName + "_" + DateTime.Now.ToFileTime() + fileExtension;
+            return name;
         }
 
     }
