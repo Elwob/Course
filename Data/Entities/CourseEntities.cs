@@ -64,6 +64,11 @@ namespace Data.Entities
         public DbSet<Comment> Comments { get; set; }
 
         /// <summary>
+        /// contains all classrooms existing in DB
+        /// </summary>
+        public DbSet<Classroom> Classrooms { get; set; }
+
+        /// <summary>
         /// contains all relations between courses and contents existing in DB
         /// </summary>
         public DbSet<RelCourseContent> RelCourseContents { get; set; }

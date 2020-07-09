@@ -3,7 +3,9 @@ using Data.Models.JSONModels;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -17,7 +19,7 @@ namespace CourseREST.Controllers
         private CourseController courseController = new CourseController();
 
         [HttpGet]
-        public List<Course> GetFiltered([FromBody] CourseFilter filter)
+        public List<Course> Get([FromBody] CourseFilter filter)
         {
             return courseController.GetFilteredCourses(filter);
         }
@@ -28,4 +30,18 @@ namespace CourseREST.Controllers
             return courseController.PostCourse(course);
         }
     }
+
+    [Route("category")]
+    [Route("[controller]")]
+    [ApiController]
+    public class CourseCategoryApiController : ControllerBase
+    {
+        [HttpGet]
+        public List<string> Get()
+        {
+            return Enum.GetNames(typeof(ECourseCategory)).ToList();
+        }
+    }
+
+
 }

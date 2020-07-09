@@ -26,7 +26,7 @@ namespace Logic
                 .Include(x => x.CourseSubventions).ThenInclude(x => x.Subvention)
                 .Include(x => x.CourseTrainers).ThenInclude(x => x.Trainer)
                 // include classroom doesn't work yet
-                .Include(x => x.Classroom).ThenInclude(x => x.Courses)
+                //.Include(x => x.Classroom).ThenInclude(x => x.Courses)
                 .ToList();
             return courses;
         }
