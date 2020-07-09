@@ -14,6 +14,7 @@ namespace Logic
         {
             List<Communication> communications = entities.RelCommunicationClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).
                                                     Select(c => c.Communication).ToList();
+
             return communications;
         }
         public Communication CreateNewCommunication(Communication communication)
