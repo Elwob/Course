@@ -13,7 +13,10 @@ namespace Logic
         private PersonController personController = new PersonController();
 
         public EmailTemplate FillDocuments(EmailTemplate emailTemplate)
-        {
+
+        {         
+           
+
             for (int i = 0; i < emailTemplate.PersonIds.Length; i++)
             {
                 {

@@ -29,7 +29,7 @@ namespace CourseREST.Controllers
             return jsons;
         }
 
-        private static List<JObject> SerializeAndCreateJsonObject<T>(List<T> list)
+        public static List<JObject> SerializeAndCreateJsonObject<T>(List<T> list)
         {
             var jasonString = "";
             List<JObject> jsons = new List<JObject>();

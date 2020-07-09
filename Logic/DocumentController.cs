@@ -1,23 +1,20 @@
 using Data.Models;
+
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Renci.SshNet.Messages;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using Document = Data.Models.Document;
 
 namespace Logic
 {
     public class DocumentController : MainController
-    {
-        public static DocumentController instance = null;
-
-        public static DocumentController GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new DocumentController();
-            }
-            return instance;
-        }
+    {     
 
         public List<Document> GetDocumentsNeeded(int id, EClass className)
         {
@@ -58,9 +55,48 @@ namespace Logic
                 item.DocumentId = null;
                 entities.Communications.Update(item);
             }
-            entities.Documents.Remove(entities.Documents.Single(x => x.Id == id));
+
+            Document documentToDelete = entities.Documents.Single(x => x.Id == id);
+            ///Deletes Document with its Path
+            DeleteRealDocument(documentToDelete);
+            ///Deletes Document entry in Database
+            entities.Documents.Remove(documentToDelete);        
             entities.SaveChanges();
             return "Record has successfully Deleted";
         }
+        public void DeleteRealDocument(Document documentToDelete)
+        {
+            try
+            {
+                string filename = documentToDelete.Url;             
+
+                if (File.Exists(filename))
+                {
+                    File.Delete(filename);
+                }
+                else
+                {
+                    Debug.WriteLine("File does not exist.");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+        public void CreateDocumentFromTemplate(string url, EDocumentType Type, Person person, int courseId)
+        {
+            Document newDoc = new Document();
+            newDoc.Url = url;
+            ///should cut the path, that we can get the Name
+            newDoc.Name = url.Substring(documentMainPath.Length + 1);
+            newDoc.Comment = "Document created from Template";
+            newDoc.Type = Type;
+            newDoc.CourseId = courseId;
+            newDoc.PersonId = person.Id;
+            Document document = CreateNewDocument(newDoc);
+            ///jetzt document der Communication hinzufügen
+        }
+
     }
 }
