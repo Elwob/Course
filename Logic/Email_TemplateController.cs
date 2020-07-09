@@ -3,9 +3,13 @@ using Data.Models;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using DocumentFormat.OpenXml.Spreadsheet;
 using iText.IO.Font;
+using iText.IO.Font.Constants;
 using iText.IO.Source;
 using iText.Kernel.Font;
+using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas;
+using iText.Kernel.Pdf.Extgstate;
 using iText.Kernel.Utils;
 using iText.Layout;
 using iText.Layout.Element;
@@ -30,28 +34,47 @@ namespace Logic
             for (int i = 0; i < emailTemplate.PersonIds.Length; i++)
             {
                 {
-                    string fileName = "text";
+                
                     Person person = personController.FindOne(emailTemplate.PersonIds[i]);
-                    string sourcePath = @"C:\DcvDokumente";
-                    string targetPath = @"C:\DcvDokumente\CopiedVersion";
+              
+                    //// Use Path class to manipulate file and directory paths. For Testing!
+                    //string sourcePath = @"C:\DcvDokumente";
+                    //string targetPath = @"C:\DcvDokumente\CopiedVersion";
+                    //string sourceFile = System.IO.Path.Combine(sourcePath, "Diploma.pdf");
+                    //string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", person.FirstName);
+                    //string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
 
-                    // Use Path class to manipulate file and directory paths.
-                    string sourceFile = System.IO.Path.Combine(templateMainPath, "Diploma.pdf");
-                    string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", person.FirstName);
-                    //    string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
+
 
                     //    System.IO.File.Copy(sourceFile, destFile, false);
-                    //         PdfReader reader = new PdfReader(sourceFile);
+                    string sourceFile = System.IO.Path.Combine(templateMainPath, "Diploma.pdf");
+         
 
-        //            PdfReader reader = new PdfReader(sourceFile);
+                    PdfReader reader = new PdfReader(sourceFile);
+                    PdfWriter writer = new PdfWriter(destFile);
 
-        //            PdfDocument pdf = new PdfDocument(reader);
-        //            Document doc = new Document(pdf);
-        ////          doc.Add(new Element("hallöle",Header));
+                    PdfDocument pdf = new PdfDocument(reader,writer);
+                  Document doc = new Document(pdf);
+                    Rectangle pagesize;
+                    PdfCanvas canvas;
+                    int n = pdf.GetNumberOfPages();
+                    PdfPage pdfPage = pdf.GetPage(1);
+                    canvas = new PdfCanvas(pdfPage);
+                    pagesize = pdfPage.GetPageSize();
+                    canvas.BeginText().SetFontAndSize(
+                        PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN), 12)
+                        .MoveText(pagesize.GetWidth() / 2 - 24, pagesize.GetHeight() - 10)
+                       .ShowText("hallöle")
+                       .EndText();
+                
+                    canvas.SaveState();
+                    pdf.Close();
+                   
+                      
+              
 
 
-        //             PdfWriter writer = new PdfWriter(destFile);
-
+        //           
                
 
 
