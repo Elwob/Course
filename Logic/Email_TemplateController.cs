@@ -68,7 +68,7 @@ namespace Logic
                     canvas.BeginText().SetFontAndSize(
                         PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN), 12)
                         .MoveText(pagesize.GetWidth() / 2 - 24, pagesize.GetHeight() - 10)
-                       .ShowText($"{ person.FirstName}"+","+$"{person.LastName}")
+                       .ShowText($"{ person.FirstName.ToString()}"+","+$"{person.LastName.ToString()}")
                        .EndText();
                 
                     canvas.SaveState();
