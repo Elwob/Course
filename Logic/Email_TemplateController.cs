@@ -36,19 +36,18 @@ namespace Logic
                 {
                 
                     Person person = personController.FindOne(emailTemplate.PersonIds[i]);
-              
-                    //// Use Path class to manipulate file and directory paths. For Testing!
-                    //string sourcePath = @"C:\DcvDokumente";
-                    //string targetPath = @"C:\DcvDokumente\CopiedVersion";
-                    //string sourceFile = System.IO.Path.Combine(sourcePath, "Diploma.pdf");
-                    //string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", person.FirstName);
-                    //string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
 
-
+                    // Use Path class to manipulate file and directory paths. For Testing
+                    string sourcePath = @"C:\DcvDokumente";
+                    string targetPath = @"C:\DcvDokumente\CopiedVersion";
 
                     //    System.IO.File.Copy(sourceFile, destFile, false);
-                    string sourceFile = System.IO.Path.Combine(templateMainPath, "Diploma.pdf");
-         
+                    string sourceFile = System.IO.Path.Combine(sourcePath, "Diploma.pdf");
+                    string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", person.FirstName);
+                    //string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
+                    //         PdfReader reader = new PdfReader(sourceFile);
+
+
 
                     PdfReader reader = new PdfReader(sourceFile);
                     PdfWriter writer = new PdfWriter(destFile);
