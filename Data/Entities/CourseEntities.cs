@@ -1,4 +1,5 @@
 using Data.Models;
+using Data.Models.Relations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Entities
@@ -102,6 +103,11 @@ namespace Data.Entities
         /// contains all relations between addresses and persons existing in DB
         /// </summary>
         public DbSet<RelAddressPerson> RelAddressPersons { get; set; }
+
+        /// <summary>
+        /// contains all relations between classrooms and addresses
+        /// </summary>
+        public DbSet<RelClassroomAddress> RelClassroomAddresses { get; set; }
 
         /// <summary>
         /// the singleton instance handed if method CourseEntities.GetInstance() is called
@@ -279,7 +285,7 @@ namespace Data.Entities
         }
 
         /// <summary>
-        /// creates primarily relations between person models
+        /// creates primarily relations between person models + classroom
         /// </summary>
         /// <param name="modelBuilder"></param>
         private void CreatePersonRelations(ModelBuilder modelBuilder)
@@ -322,6 +328,14 @@ namespace Data.Entities
                 entity.HasOne(co => co.Address)
                 .WithMany(c => c.AddressPersons)
                 .HasForeignKey(co => co.AddressId);
+            });
+            // represents the relations between addresses and classrooms
+            // foreign keys are not built in entity model builder (not needed for our purpose)
+            modelBuilder.Entity<RelClassroomAddress>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.AddressId).IsRequired();
+                entity.Property(x => x.LocationId).IsRequired();
             });
         }
 
