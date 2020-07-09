@@ -3,9 +3,7 @@ using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -19,14 +17,12 @@ namespace CourseREST.Controllers
         private DocumentController documentController = new DocumentController();
         private CourseEntities entities = CourseEntities.GetInstance();
 
-
         [HttpGet("{id}/{className}")]
-     
         public List<JObject> GetVariousDocuments(int id, EClass className)
 
         {
             var documents = documentController.GetDocumentsNeeded(id, className);
-            
+
             ///that Enums will be shown correctly in JSON
             List<JObject> jsons = SerializeAndCreateJsonObject<Document>(documents);
 
@@ -68,10 +64,11 @@ namespace CourseREST.Controllers
 
             return latestDocument;
         }
-        [HttpDelete ("{id}")]
+
+        [HttpDelete("{id}")]
         public string DeleteById(int id)
         {
-            return documentController.DeleteById(id);  
+            return documentController.DeleteById(id);
         }
     }
 }

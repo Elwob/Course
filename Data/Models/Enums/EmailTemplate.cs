@@ -6,7 +6,6 @@ namespace Data.Models
     /// contains information to a certain email template
     /// </summary>
     [Table("EmailTemplate")]
-
     public class EmailTemplate
     {
         /// <summary>
@@ -36,6 +35,6 @@ namespace Data.Models
         /// Course id for Communication Entry
         /// </summary>
         [NotMapped]
-        public int CourseId  { get; set; }
+        public int CourseId { get; set; }
     }
 }

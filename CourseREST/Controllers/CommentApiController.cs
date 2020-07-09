@@ -11,7 +11,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class CommentApiController : ControllerBase
     {
-        private CourseEntities entities = CourseEntities.GetInstance(); 
+        private CourseEntities entities = CourseEntities.GetInstance();
 
         [HttpGet]
         public List<Comment> get()

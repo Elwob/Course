@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Data.Models.JSONModels
+﻿namespace Data.Models.JSONModels
 {
     public class CourseFilter
     {
@@ -10,14 +6,17 @@ namespace Data.Models.JSONModels
         /// filters planned / active / completed courses
         /// </summary>
         public string status { get; set; }
+
         /// <summary>
         /// filters courses of a specific trainer
         /// </summary>
         public int trainer_id { get; set; }
+
         /// <summary>
         /// filters course.Name for a string
         /// </summary>
         public string search { get; set; }
+
         /// <summary>
         /// filters a certain course.Category
         /// </summary>
