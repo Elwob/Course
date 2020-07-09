@@ -1,6 +1,5 @@
-
-using Data.Entities;
 using Data.Models;
+
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
@@ -33,11 +32,12 @@ namespace Logic
             entities.SaveChanges();
             return recDocument;
         }
+
         public string DeleteById(int id)
         {
             ///delete the Relations from Documents to Classes
             List<RelDocumentClass> relationList = entities.RelDocumentClasses.Where(x => x.DocId == id).ToList();
-            foreach(var item in relationList)
+            foreach (var item in relationList)
             {
                 entities.RelDocumentClasses.Remove(item);
             }
@@ -55,6 +55,7 @@ namespace Logic
                 item.DocumentId = null;
                 entities.Communications.Update(item);
             }
+
             Document documentToDelete = entities.Documents.Single(x => x.Id == id);
             ///Deletes Document with its Path
             DeleteRealDocument(documentToDelete);
@@ -94,10 +95,12 @@ namespace Logic
             newDoc.CourseId = courseId;
             newDoc.PersonId = person.Id;
             Document document = CreateNewDocument(newDoc);
-            ///
             ///in this case Date = DateTime.Now, but can be different if we would make an entry about last weeks phone call
             DateTime date = DateTime.Now;
             Communication communication = CommunicationController.CreateCommunication(newDoc, employeeId, comment, date, reminderId);
+            ///jetzt document der Communication hinzufügen
+
         }
+
     }
 }

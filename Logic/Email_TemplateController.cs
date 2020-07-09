@@ -1,66 +1,54 @@
 ﻿using Data.Models;
+using iText.IO.Font;
+using iText.IO.Source;
+using iText.Kernel.Font;
+using iText.Kernel.Pdf;
+
+using System;
 
 namespace Logic
 {
-    public class Email_TemplateController
+    public class Email_TemplateController : MainController
     {
+        private PersonController personController = new PersonController();
+
         public EmailTemplate FillDocuments(EmailTemplate emailTemplate)
+
         {         
            
+
             for (int i = 0; i < emailTemplate.PersonIds.Length; i++)
             {
+                {
+                    string fileName = "text";
+                    Person person = personController.FindOne(emailTemplate.PersonIds[i]);
+                    string sourcePath = @"C:\DcvDokumente";
+                    string targetPath = @"C:\DcvDokumente\CopiedVersion";
 
-                //{
+                    // Use Path class to manipulate file and directory paths.
+                    string sourceFile = System.IO.Path.Combine(sourcePath, "bill.pdf");
+                    string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", person.FirstName);
+                    //    string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
 
-                //    string sourcePath = @"C:\DcvDokumente";
-                //    string targetPath = @"C:\DcvDokumente\CopiedVersion";
+                    //    System.IO.File.Copy(sourceFile, destFile, false);
+                    PdfReader reader = new PdfReader(sourceFile);
+                   
 
-                //    // Use Path class to manipulate file and directory paths.
-                //    string sourceFile = System.IO.Path.Combine(sourcePath,emailTemplate.DocumentType.ToString());
-                //    string destFile = System.IO.Path.Combine(targetPath, C:\DcvDokumente\CopiedVersion);
+                    //                    14 // Add ListItem objects
+                    // list.add(new ListItem("Never gonna give you up"))
+                    //add(new ListItem("Never gonna let you down"))
+                    //add(new ListItem("Never gonna run around and desert you"))
+                    //add(new ListItem("Never gonna make you cry"))
+                    //add(new ListItem("Never gonna say goodbye"))
+                    //add(new ListItem("Never gonna tell a lie and hurt you"));
+                    //                    21 // Add the list
+                    // document.add(list);
+                    //                    23 document.close();
 
-                //    // To copy a folder's contents to a new location:
-                //    // Create a new target folder.
-                //    // If the directory already exists, this method does not create a new directory.
-                //    System.IO.Directory.CreateDirectory(targetPath);
 
-                //    // To copy a file to another location and
-                //    // overwrite the destination file if it already exists.
-                //    System.IO.File.Copy(sourceFile, destFile, true);
-
-                //    // To copy all the files in one directory to another directory.
-                //    // Get the files in the source folder. (To recursively iterate through
-                //    // all subfolders under the current directory, see
-                //    // "How to: Iterate Through a Directory Tree.")
-                //    // Note: Check for target path was performed previously
-                //    //       in this code example.
-                //    if (System.IO.Directory.Exists(sourcePath))
-                //    {
-                //        string[] files = System.IO.Directory.GetFiles(sourcePath);
-
-                //        // Copy the files and overwrite destination files if they already exist.
-                //        foreach (string s in files)
-                //        {
-                //            // Use static Path methods to extract only the file name from the path.
-                //            fileName = System.IO.Path.GetFileName(s);
-                //            destFile = System.IO.Path.Combine(targetPath, fileName);
-                //            System.IO.File.Copy(s, destFile, true);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        Console.WriteLine("Source path does not exist!");
-                //    }
-
-                //    // Keep console window open in debug mode.
-                //    Console.WriteLine("Press any key to exit.");
-                //    Console.ReadKey();
-                //}
-               
-            
-        }
+                }
+            }
             return emailTemplate;
-
         }
     }
 }
