@@ -76,7 +76,6 @@ namespace Logic
                     Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null,destFile,docName);
                     communications.Add(communication);
             
-
                 }
             }
             return communications;
