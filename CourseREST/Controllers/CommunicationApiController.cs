@@ -25,6 +25,7 @@ namespace CourseREST.Controllers
             return jsons;
         }
 
+
         [HttpDelete("{id}")]
         public string DeleteById(int id)
         {

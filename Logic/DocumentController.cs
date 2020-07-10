@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Renci.SshNet.Messages;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Document = Data.Models.Document;
@@ -62,7 +61,16 @@ namespace Logic
             ///Deletes Document entry in Database
             entities.Documents.Remove(documentToDelete);        
             entities.SaveChanges();
-            return "Record has successfully Deleted";
+
+            if (fileFound)
+            {
+                return "Record has successfully Deleted";
+            }
+            else
+            {
+                return "File not found.";
+            }
+
         }
         public void DeleteRealDocument(Document documentToDelete)
         {
@@ -86,10 +94,11 @@ namespace Logic
         }
         public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? employeeId, string comment, int? reminderId)
         {
-            Document newDoc = new Document();       
-            newDoc.Name = CreateFileName(template.DocumentType, person, ".pdf");
-            newDoc.Url = documentMainPath + "\\" + template.DocumentType.ToString() + "\\" + newDoc.Name;
-            ///File.Save();
+
+            Document newDoc = new Document();
+            newDoc.Name = name;
+            newDoc.Url = url;
+
             newDoc.Comment = "Document created from Template";
             newDoc.Type = template.DocumentType;
             newDoc.CourseId = template.CourseId;

@@ -1,8 +1,9 @@
-﻿using Data.Models;
+using Data.Models;
 using Data.Models.JSONModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 
 namespace Logic
 {

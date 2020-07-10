@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+
 using Data.Entities;
-using Microsoft.AspNetCore.Mvc;
-using Logic;
 using Data.Models.JSONModels;
+using Logic;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+
 
 namespace CourseREST.Controllers
 {
@@ -12,7 +14,7 @@ namespace CourseREST.Controllers
     public class ClassroomApiController : ControllerBase
     {
         private CourseEntities entities = CourseEntities.GetInstance();
-        ClassroomController classroomController = new ClassroomController();
+        private ClassroomController classroomController = new ClassroomController();
 
         [HttpGet]
         public List<JSONClassroom> get()

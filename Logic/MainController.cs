@@ -1,4 +1,4 @@
-﻿using Data.Entities;
+using Data.Entities;
 using Data.Models;
 using Newtonsoft.Json.Linq;
 using System;
@@ -7,6 +7,7 @@ using System.Collections.Generic;
 namespace Logic
 {
     public class MainController
+
     {
         public string documentMainPath = "\\LAPTOP-HM9V9LIQ\\courseRest\\Documents";
         public string templateMainPath = "\\LAPTOP-HM9V9LIQ\\courseRest\\DcvDokumente";
