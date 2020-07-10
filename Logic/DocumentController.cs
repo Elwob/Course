@@ -57,7 +57,7 @@ namespace Logic
 
             Document documentToDelete = entities.Documents.Single(x => x.Id == id);
             ///Deletes Document with its Path
-            DeleteRealDocument(documentToDelete);
+            bool fileFound = DeleteRealDocument(documentToDelete);
             ///Deletes Document entry in Database
             entities.Documents.Remove(documentToDelete);        
             entities.SaveChanges();
@@ -72,8 +72,9 @@ namespace Logic
             }
 
         }
-        public void DeleteRealDocument(Document documentToDelete)
+        public bool DeleteRealDocument(Document documentToDelete)
         {
+            bool fileFound = true;
             try
             {
                 string filename = documentToDelete.Url;             
@@ -84,21 +85,20 @@ namespace Logic
                 }
                 else
                 {
-                    Debug.WriteLine("File does not exist.");
+                    fileFound = false;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
+            return fileFound;
         }
-        public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? employeeId, string comment, int? reminderId)
+        public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? reminderId, string url, string name)
         {
-
             Document newDoc = new Document();
             newDoc.Name = name;
             newDoc.Url = url;
-
             newDoc.Comment = "Document created from Template";
             newDoc.Type = template.DocumentType;
             newDoc.CourseId = template.CourseId;
@@ -106,7 +106,7 @@ namespace Logic
             Document document = CreateNewDocument(newDoc);
             ///in this case Date = DateTime.Now, but can be different if we would make an entry about last weeks phone call
             DateTime date = DateTime.Now;
-            Communication communication = communicationController.CreateCommunication(document, template.CourseId, employeeId, comment, date, reminderId);
+            Communication communication = communicationController.CreateCommunication(document, template, date, reminderId);
             return communication;
         }
         public string CreateFileName(EDocumentType Type, Person person, string fileExtension)
