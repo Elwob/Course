@@ -46,7 +46,7 @@ namespace Logic
                     string folderName = $"{emailTemplate.DocumentType.ToString()}" + ".pdf";
                     //    string sourceFile = System.IO.Path.Combine(sourcePath, folderName);
                     //    string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", docName);
-                    ////  string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
+                    ///  string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
                 
 
                     string sourceFile = System.IO.Path.Combine(templateMainPath, folderName);
