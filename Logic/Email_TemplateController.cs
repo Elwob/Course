@@ -1,10 +1,13 @@
 ﻿
 using Data.Models;
+using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using DocumentFormat.OpenXml.Spreadsheet;
 using iText.IO.Font;
 using iText.IO.Source;
 using iText.Kernel.Font;
+using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Utils;
 using iText.Layout;
@@ -36,49 +39,24 @@ namespace Logic
                     string targetPath = @"C:\DcvDokumente\CopiedVersion";
 
                     // Use Path class to manipulate file and directory paths.
-                    string sourceFile = System.IO.Path.Combine(templateMainPath, "Diploma.pdf");
-                    string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", person.FirstName);
-                    //    string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
-
-                    //    System.IO.File.Copy(sourceFile, destFile, false);
-                    //         PdfReader reader = new PdfReader(sourceFile);
-
-        //            PdfReader reader = new PdfReader(sourceFile);
-
-        //            PdfDocument pdf = new PdfDocument(reader);
-        //            Document doc = new Document(pdf);
-        ////          doc.Add(new Element("hallöle",Header));
-
-
-        //             PdfWriter writer = new PdfWriter(destFile);
-
-               
+                    string sourceFile = "\\" + templateMainPath + "\\TestDocument.pdf";
 
 
 
-                    //  PdfMerger merger = new PdfMerger(pdf);
-                    //Document doc =new Document(pdf);
-                    //   doc.Add(Paragraph("hallöle"));
-                    //   doc.Close();
-              //      PdfDocument pdf = new PdfDocument();
+                    //PdfReader reader = new PdfReader(sourceFile);
+                    //PdfWriter writer = new PdfWriter(targetPath);
 
-              //      PdfWriter pdfWriter = new PdfWriter("gugi.pdf",pdf);
-                    
+                    //PdfDocument pdf = new PdfDocument(reader, writer);
+                    //Document doc = new Document(pdf);
+                    //PageSize pageSize = new PageSize(210, 297);
+                    //var area = doc.GetPageEffectiveArea(pageSize);
+
+                 
+
 
 
                     Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, null, null);
-                    communications.Add(communication);
-                    //                    14 // Add ListItem objects
-                    // list.add(new ListItem("Never gonna give you up"))
-                    //add(new ListItem("Never gonna let you down"))
-                    //add(new ListItem("Never gonna run around and desert you"))
-                    //add(new ListItem("Never gonna make you cry"))
-                    //add(new ListItem("Never gonna say goodbye"))
-                    //add(new ListItem("Never gonna tell a lie and hurt you"));
-                    //                    21 // Add the list
-                    // document.add(list);
-                    //                    23 document.close();
-
+                    communications.Add(communication);              
 
                 }
             }
@@ -89,5 +67,7 @@ namespace Logic
         {
             throw new NotImplementedException();
         }
+
     }
+
 }
