@@ -15,7 +15,7 @@ namespace CourseREST.Controllers
         [HttpPost]
         public List<Communication> FillDocuments(EmailTemplate emailTemplate)
         {
-            var communications = email_TemplateController.FillDocuments(emailTemplate);
+            var communications =  email_TemplateController.FillDocuments(emailTemplate);
             return communications;
         }
     }
