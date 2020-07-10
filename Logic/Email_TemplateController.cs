@@ -18,6 +18,7 @@ using Paragraph = DocumentFormat.OpenXml.Drawing.Paragraph;
 
 namespace Logic
 {
+
     public class Email_TemplateController : MainController
     {
         private DocumentController documentController = new DocumentController();
