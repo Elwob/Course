@@ -12,9 +12,8 @@ namespace Logic
     {
         private CourseEntities entities = CourseEntities.GetInstance();
 
-        private RelCourseContentController relCourseContentController = new RelCourseContentController();
-        private RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
-
+        RelCourseContentController relCourseContentController = new RelCourseContentController();
+        RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
         /// <summary>
         /// returns a list of all courses in DB
         /// </summary>
@@ -25,8 +24,7 @@ namespace Logic
                 .Include(x => x.CourseContents).ThenInclude(x => x.Content)
                 .Include(x => x.CourseSubventions).ThenInclude(x => x.Subvention)
                 .Include(x => x.CourseTrainers).ThenInclude(x => x.Trainer)
-                // include classroom doesn't work yet
-                //.Include(x => x.Classroom).ThenInclude(x => x.Courses)
+                .Include(x => x.Classroom)
                 .ToList();
             return courses;
         }
@@ -43,6 +41,7 @@ namespace Logic
             courses = FilterTrainer(courses, filter);
             courses = FilterCategory(courses, filter);
             courses = FilterSearch(courses, filter);
+            courses = FilterContent(courses, filter);
             return courses;
         }
 
@@ -66,7 +65,7 @@ namespace Logic
                 }
                 else if (filter.status == "completed")
                 {
-                    courses = courses.Where(x => x.End > DateTime.Now).ToList();
+                    courses = courses.Where(x => x.Start < DateTime.Now && x.End < DateTime.Now).ToList();
                 }
             }
             return courses;
@@ -98,6 +97,7 @@ namespace Logic
         /// <returns></returns>
         public List<Course> FilterCategory(List<Course> courses, CourseFilter filter)
         {
+
             if (filter.category != null && filter.category.Length > 0)
             {
                 Enum.TryParse(filter.category, out ECourseCategory category);
@@ -114,9 +114,41 @@ namespace Logic
         /// <returns></returns>
         public List<Course> FilterSearch(List<Course> courses, CourseFilter filter)
         {
+            // not the best looking code but working...
             if (filter.search != null && filter.search.Length > 0)
             {
-                courses = courses.Where(x => x.Title.Contains(filter.search.ToLower())).ToList();
+                var filteredCourses = new List<Course>();
+                foreach (var course in courses)
+                {
+                    var title = course.Title.ToLower();
+                    var search = filter.search.ToLower();
+                    if (title.Contains(search))
+                    {
+                        filteredCourses.Add(course);
+                    }
+                }
+                return filteredCourses;
+            }
+            else
+            {
+                return courses;
+            }
+        }
+
+        /// <summary>
+        /// filters 
+        /// </summary>
+        /// <param name="courses"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public List<Course> FilterContent(List<Course> courses, CourseFilter filter)
+        {
+            if (filter.content_id != null && filter.content_id != 0)
+            {
+                // get all course-content relations where a certain content exists
+                var relations = entities.RelCourseContents.Where(x => x.ContentId == filter.content_id).ToList();
+                // filter courses for existing course-content relations
+                courses = courses.Where(x => relations.Any(z => x.Id == z.CourseId)).ToList();
             }
             return courses;
         }
@@ -167,5 +199,5 @@ namespace Logic
             course.ModifiedAt = DateTime.Now;
             return course;
         }
-    }
+    }    
 }
