@@ -10,6 +10,8 @@ namespace Data.Models
     [Table("person")]
     public class Person
     {
+        public static bool ShouldIgnoreRelation = false;
+
         /// <summary>
         /// id in DB (is assigned by DB as autoIncrement)
         /// </summary>
@@ -38,7 +40,7 @@ namespace Data.Models
         /// the persons' social security number
         /// </summary>
         [Column("sv_nr")]
-        public long? InsuranceNumber { get; set; }
+        public decimal? InsuranceNumber { get; set; }
 
         /// <summary>
         /// the persons' birth date
@@ -130,11 +132,30 @@ namespace Data.Models
         [NotMapped]
         public List<RelCourseParticipant> RelCourseParticipants { get; set; }
 
+        private List<RelCourseTrainer> _trainerCourses;
+
         /// <summary>
         /// list of all relations between courses and trainers
         /// </summary>
         [NotMapped]
-        public List<RelCourseTrainer> RelCourseTrainers { get; set; }
+        public List<RelCourseTrainer> RelCourseTrainers
+        {
+            get
+            {
+                if (ShouldIgnoreRelation)
+                {
+                    return new List<RelCourseTrainer>();
+                }
+                else
+                {
+                    return _trainerCourses;
+                }
+            }
+            set
+            {
+                _trainerCourses = value;
+            }
+        }
 
         /// <summary>
         /// list of all absences

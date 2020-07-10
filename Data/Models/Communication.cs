@@ -96,7 +96,7 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         [Communication(typeof(Person))]
-        public int? TrainerId { get; set; }
+        public int? EmployeeId { get; set; }
 
         /// <summary>
         /// list of all relations between communications and classes
@@ -113,7 +113,6 @@ namespace Data.Models
                 CreateRelation(property);
             }
         }
-
         private void CreateRelation(PropertyInfo prop)
         {
             var communicationAttr = prop.GetCustomAttribute<CommunicationAttribute>();
@@ -124,7 +123,7 @@ namespace Data.Models
                 if (id.HasValue)
                 {
                     RelCommunicationClass relCommunicationClass = new RelCommunicationClass();
-
+                    
                     relCommunicationClass.Communication = this;
                     relCommunicationClass.Class = communicationAttr.ClassName;
                     relCommunicationClass.ClassId = id.Value;

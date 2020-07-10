@@ -16,12 +16,5 @@ namespace Logic
             entities.SaveChanges();
             return relCourseParticipant;
         }
-        public RelCourseParticipant Delete(RelCourseParticipant relCourseParticipant)
-        {
-            entities.RelCourseParticipants.Remove(relCourseParticipant);
-            entities.SaveChanges();
-            return relCourseParticipant;
-        }
-
     }
 }
