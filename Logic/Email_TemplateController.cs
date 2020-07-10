@@ -1,4 +1,4 @@
-﻿
+
 using Data.Models;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -40,45 +40,43 @@ namespace Logic
                     string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", person.FirstName);
                     //    string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
 
-                    //    System.IO.File.Copy(sourceFile, destFile, false);
-                    //         PdfReader reader = new PdfReader(sourceFile);
 
-        //            PdfReader reader = new PdfReader(sourceFile);
+                    ////    System.IO.File.Copy(sourceFile, destFile, false);  For Testing !
+                    string folderName = $"{emailTemplate.DocumentType.ToString()}" + ".pdf";
+                    //    string sourceFile = System.IO.Path.Combine(sourcePath, folderName);
+                    //    string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", docName);
+                    ////  string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
+                
 
-        //            PdfDocument pdf = new PdfDocument(reader);
-        //            Document doc = new Document(pdf);
-        ////          doc.Add(new Element("hallöle",Header));
+                    string sourceFile = System.IO.Path.Combine(templateMainPath, folderName);
+                    string destFile = $"{ documentMainPath}" + "\\" + $"{emailTemplate.DocumentType.ToString()}" + "\\" + docName;
 
+                    PdfReader reader = new PdfReader(sourceFile);
+                    PdfWriter writer = new PdfWriter(destFile);
 
-        //             PdfWriter writer = new PdfWriter(destFile);
+                    PdfDocument pdf = new PdfDocument(reader, writer);
+                    Document doc = new Document(pdf);
+                   Rectangle pagesize;
+                    PdfCanvas canvas;
+                    int n = pdf.GetNumberOfPages();
+                    PdfPage pdfPage = pdf.GetPage(1);
+                    canvas = new PdfCanvas(pdfPage);
+                    pagesize = pdfPage.GetPageSize();
+                    canvas.BeginText().SetFontAndSize(
+                        PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN), 12)
+                        .MoveText(pagesize.GetWidth() / 2 - 24, pagesize.GetHeight() - 10)
+                       .ShowText($"{ person.FirstName.ToString()}" + "," + $"{person.LastName.ToString()}")
+                       .EndText();
 
-               
+                    canvas.SaveState();
+                    pdf.Close();
+                     
+                
+                    Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null,destFile,docName);
 
+ communications.Add(communication);
 
-
-                    //  PdfMerger merger = new PdfMerger(pdf);
-                    //Document doc =new Document(pdf);
-                    //   doc.Add(Paragraph("hallöle"));
-                    //   doc.Close();
-              //      PdfDocument pdf = new PdfDocument();
-
-              //      PdfWriter pdfWriter = new PdfWriter("gugi.pdf",pdf);
-                    
-
-
-                    Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, null, null);
-                    communications.Add(communication);
-                    //                    14 // Add ListItem objects
-                    // list.add(new ListItem("Never gonna give you up"))
-                    //add(new ListItem("Never gonna let you down"))
-                    //add(new ListItem("Never gonna run around and desert you"))
-                    //add(new ListItem("Never gonna make you cry"))
-                    //add(new ListItem("Never gonna say goodbye"))
-                    //add(new ListItem("Never gonna tell a lie and hurt you"));
-                    //                    21 // Add the list
-                    // document.add(list);
-                    //                    23 document.close();
-
+                  
 
                 }
             }
