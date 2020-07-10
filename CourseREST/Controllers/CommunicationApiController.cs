@@ -22,6 +22,12 @@ namespace CourseREST.Controllers
             List<JObject> jsons = DocumentApiController.SerializeAndCreateJsonObject<Communication>(communications);
             return jsons;
         }
-        
+        [HttpDelete("{id}")]
+        public string DeleteById(int id)
+        {
+            return communicationController.DeleteById(id);
+        }
+
+
     }
 }
