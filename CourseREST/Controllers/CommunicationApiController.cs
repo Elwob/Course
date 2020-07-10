@@ -24,5 +24,6 @@ namespace CourseREST.Controllers
             List<JObject> jsons = DocumentApiController.SerializeAndCreateJsonObject<Communication>(communications);
             return jsons;
         }
+        
     }
 }
