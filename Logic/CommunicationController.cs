@@ -41,9 +41,9 @@ namespace Logic
             communication = CreateRelationAndAddToDatabase(communication);
             return communication;
         }
-        public void DeleteById(int id)
+        public string DeleteById(int id)
         {
-
+            return null;
         }
     }
 }
