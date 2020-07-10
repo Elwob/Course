@@ -168,9 +168,9 @@ namespace Data.Entities
                 entity.Property(x => x.Category).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
                 // connection to a classroom
-                entity.HasOne(x => x.Classroom).
-                WithMany(c => c.Courses).
-                HasForeignKey(x => x.Id);
+                entity.HasOne(x => x.Classroom)
+                .WithMany(x => x.Courses)
+                .HasForeignKey(x => x.ClassroomId);
             });
             // represents the model Subvention
             modelBuilder.Entity<Subvention>(entity =>
@@ -311,8 +311,8 @@ namespace Data.Entities
                 entity.Property(x => x.ClassId).IsRequired();
                 // connection between communication and different classes (e.g. Person, Course)
                 entity.HasOne(x => x.Communication)
-                        .WithMany(x => x.CommunicationClasses)
-                        .HasForeignKey(x => x.CommunicationId);
+                .WithMany(x => x.CommunicationClasses)
+                .HasForeignKey(x => x.CommunicationId);
             });
             // represents the n:m relation between addresses and persons
             modelBuilder.Entity<RelAddressPerson>(entity =>

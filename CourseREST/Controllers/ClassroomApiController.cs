@@ -1,10 +1,8 @@
-
 ﻿using System.Collections.Generic;
 using Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Logic;
 using Data.Models.JSONModels;
-
 
 namespace CourseREST.Controllers
 {

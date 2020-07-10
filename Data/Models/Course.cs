@@ -1,7 +1,12 @@
+using Data.Attributes;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using PersonData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Reflection;
 
 namespace Data.Models
 {
@@ -32,6 +37,8 @@ namespace Data.Models
         /// <summary>
         /// the category the course belongs to
         /// </summary>
+        /// 
+        [JsonConverter(typeof(StringEnumConverter))]
         [Column("category", TypeName = "varchar(100)")]
         public ECourseCategory Category { get; set; }
 
@@ -103,5 +110,6 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public Classroom Classroom { get; set; }
+
     }
 }
