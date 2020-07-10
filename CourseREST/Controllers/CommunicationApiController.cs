@@ -20,8 +20,8 @@ namespace CourseREST.Controllers
 
             ///that Enums will be shown correctly in JSON
             List<JObject> jsons = DocumentApiController.SerializeAndCreateJsonObject<Communication>(communications);
-
             return jsons;
         }
+        
     }
 }

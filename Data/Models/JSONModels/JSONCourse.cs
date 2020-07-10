@@ -68,6 +68,6 @@ namespace Data.Models.JSONModels
         /// <summary>
         /// contains all contentIds
         /// </summary>
-        public List<Content> ContentArr { get; set; }
+        public List<JSONContent> ContentArr { get; set; }
     }
 }

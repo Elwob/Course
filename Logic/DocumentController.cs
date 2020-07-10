@@ -83,20 +83,20 @@ namespace Logic
             }
         }
 
-        public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? employeeId, string comment, int? reminderId)
+        public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? reminderId, string url, string name)
         {
             Document newDoc = new Document();
-            newDoc.Name = CreateFileName(template.DocumentType, person, ".pdf");
-            newDoc.Url = documentMainPath + "\\" + template.DocumentType.ToString() + "\\" + newDoc.Name;
-            ///File.Save();
-            newDoc.Comment = "Document created from Template";
+            newDoc.Name = name;
+            newDoc.Url = url;
+            newDoc.Comment = "Document created from Template";                 
+
             newDoc.Type = template.DocumentType;
             newDoc.CourseId = template.CourseId;
             newDoc.PersonId = person.Id;
             Document document = CreateNewDocument(newDoc);
             ///in this case Date = DateTime.Now, but can be different if we would make an entry about last weeks phone call
             DateTime date = DateTime.Now;
-            Communication communication = communicationController.CreateCommunication(document, template.CourseId, employeeId, comment, date, reminderId);
+            Communication communication = communicationController.CreateCommunication(document, template, date, reminderId);
             return communication;
         }
 

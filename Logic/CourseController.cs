@@ -148,21 +148,21 @@ namespace Logic
         /// converts a JSONCourse to Course
         /// </summary>
         /// <returns></returns>
-        private Course ConvertToCourse(JSONCourse jC)
+        private Course ConvertToCourse(JSONCourse jasonCourse)
         {
             var course = new Course();
-            course.Title = jC.Title;
-            course.CourseNumber = jC.CourseNumber;
-            course.Description = jC.Description;
-            Enum.TryParse(jC.Category, out ECourseCategory courseCategory);
+            course.Title = jasonCourse.Title;
+            course.CourseNumber = jasonCourse.CourseNumber;
+            course.Description = jasonCourse.Description;
+            Enum.TryParse(jasonCourse.Category, out ECourseCategory courseCategory);
             course.Category = courseCategory;
-            course.Start = DateTime.ParseExact(jC.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
-            course.End = DateTime.ParseExact(jC.End.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
-            course.Unit = jC.Unit;
-            course.Price = jC.Price;
-            course.ClassroomId = jC.ClassroomId;
-            course.MaxParticipants = jC.MaxParticipants;
-            course.MinParticipants = jC.MinParticipants;
+            course.Start = DateTime.ParseExact(jasonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
+            course.End = DateTime.ParseExact(jasonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
+            course.Unit = jasonCourse.Unit;
+            course.Price = jasonCourse.Price;
+            course.ClassroomId = jasonCourse.ClassroomId;
+            course.MaxParticipants = jasonCourse.MaxParticipants;
+            course.MinParticipants = jasonCourse.MinParticipants;
             course.CreatedAt = DateTime.Now;
             course.ModifiedAt = DateTime.Now;
             return course;

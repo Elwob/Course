@@ -38,7 +38,7 @@ namespace Data.Models
         /// the persons' social security number
         /// </summary>
         [Column("sv_nr")]
-        public decimal? InsuranceNumber { get; set; }
+        public long? InsuranceNumber { get; set; }
 
         /// <summary>
         /// the persons' birth date

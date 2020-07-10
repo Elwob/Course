@@ -16,7 +16,7 @@ namespace Data.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// ???
+        /// name of the room
         /// </summary>
         [Column("room")]
         public string Room { get; set; }

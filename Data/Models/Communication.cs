@@ -96,7 +96,7 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         [Communication(typeof(Person))]
-        public int? EmployeeId { get; set; }
+        public int? TrainerId { get; set; }
 
         /// <summary>
         /// list of all relations between communications and classes

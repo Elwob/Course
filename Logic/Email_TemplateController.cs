@@ -1,5 +1,12 @@
-﻿using Data.Models;
+
 using iText.IO.Font.Constants;
+using Data.Models;
+using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using DocumentFormat.OpenXml.Spreadsheet;
+using iText.IO.Font;
+using iText.IO.Source;
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
@@ -26,6 +33,7 @@ namespace Logic
             {
                 {
                     Person person = personController.FindOne(emailTemplate.PersonIds[i]);
+
 
                     string docName = documentController.CreateFileName(emailTemplate.DocumentType, person, ".pdf");
 
@@ -67,6 +75,7 @@ namespace Logic
                     Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null,destFile,docName);
                     communications.Add(communication);
             
+
                 }
             }
             return communications;
@@ -76,5 +85,7 @@ namespace Logic
         {
             throw new NotImplementedException();
         }
+
     }
+
 }
