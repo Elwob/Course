@@ -41,7 +41,7 @@ namespace Logic
                
 
                     string sourceFile = System.IO.Path.Combine(templateMainPath, folderName);
-                    string destFile = $"{ documentMainPath}"+"\\"+$"{emailTemplate.DocumentType.ToString()}"+docName;
+                    string destFile = $"{ documentMainPath}" + "\\" + $"{emailTemplate.DocumentType.ToString()}" + "\\" + docName;
 
                     PdfReader reader = new PdfReader(sourceFile);
                     PdfWriter writer = new PdfWriter(destFile);
@@ -64,7 +64,7 @@ namespace Logic
                     pdf.Close();
 
                 
-                    Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, null, null);
+                    Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null,destFile,docName);
                     communications.Add(communication);
             
                 }
