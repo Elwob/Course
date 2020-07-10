@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
 {
@@ -37,6 +37,7 @@ namespace Data.Models
         [NotMapped]
         public int CourseId { get; set; }
 
+
         /// <summary>
         /// An Id from whom the messages are send
         /// </summary>
@@ -48,5 +49,6 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public string Comment { get; set; }
+
     }
 }

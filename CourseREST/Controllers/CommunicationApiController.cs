@@ -1,8 +1,10 @@
-﻿using Data.Models;
+using Data.Entities;
+using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CourseREST.Controllers
 {
@@ -22,5 +24,13 @@ namespace CourseREST.Controllers
             List<JObject> jsons = DocumentApiController.SerializeAndCreateJsonObject<Communication>(communications);
             return jsons;
         }
+
+
+        [HttpDelete("{id}")]
+        public string DeleteById(int id)
+        {
+            return communicationController.DeleteById(id);
+        }
+
     }
 }

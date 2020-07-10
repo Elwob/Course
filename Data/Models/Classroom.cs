@@ -12,6 +12,7 @@ namespace Data.Models
         /// <summary>
         /// id in DB (is assigned by DB as autoIncrement)
         /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public int Id { get; set; }
 

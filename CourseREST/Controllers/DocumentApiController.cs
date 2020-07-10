@@ -14,6 +14,7 @@ namespace CourseREST.Controllers
     public class DocumentApiController : ControllerBase
     {
         private DocumentController documentController = new DocumentController();
+        private CourseEntities entities = CourseEntities.GetInstance();
 
         [HttpGet("{id}/{className}")]
         public List<JObject> GetVariousDocuments(int id, EClass className)

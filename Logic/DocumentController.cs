@@ -1,5 +1,9 @@
 using Data.Models;
+
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Renci.SshNet.Messages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,8 +14,7 @@ namespace Logic
 {
     public class DocumentController : MainController
     {
-        private CommunicationController communicationController = new CommunicationController();
-
+        CommunicationController communicationController = new CommunicationController();
         public List<Document> GetDocumentsNeeded(int id, EClass className)
         {
             List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList();
@@ -54,10 +57,11 @@ namespace Logic
 
             Document documentToDelete = entities.Documents.Single(x => x.Id == id);
             ///Deletes Document with its Path
-            bool fileFound = DeleteRealDocument(documentToDelete);
+            DeleteRealDocument(documentToDelete);
             ///Deletes Document entry in Database
-            entities.Documents.Remove(documentToDelete);
+            entities.Documents.Remove(documentToDelete);        
             entities.SaveChanges();
+
             if (fileFound)
             {
                 return "Record has successfully Deleted";
@@ -66,14 +70,13 @@ namespace Logic
             {
                 return "File not found.";
             }
-        }
 
-        public bool DeleteRealDocument(Document documentToDelete)
+        }
+        public void DeleteRealDocument(Document documentToDelete)
         {
-            bool fileFound = true;
             try
             {
-                string filename = documentToDelete.Url;
+                string filename = documentToDelete.Url;             
 
                 if (File.Exists(filename))
                 {
@@ -81,21 +84,21 @@ namespace Logic
                 }
                 else
                 {
-                    fileFound = false;
+                    Debug.WriteLine("File does not exist.");
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            return fileFound;
         }
-
-        public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? reminderId, string url, string name)
+        public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? employeeId, string comment, int? reminderId)
         {
+
             Document newDoc = new Document();
             newDoc.Name = name;
             newDoc.Url = url;
+
             newDoc.Comment = "Document created from Template";
             newDoc.Type = template.DocumentType;
             newDoc.CourseId = template.CourseId;
@@ -103,10 +106,9 @@ namespace Logic
             Document document = CreateNewDocument(newDoc);
             ///in this case Date = DateTime.Now, but can be different if we would make an entry about last weeks phone call
             DateTime date = DateTime.Now;
-            Communication communication = communicationController.CreateCommunication(document, template, date, reminderId);
+            Communication communication = communicationController.CreateCommunication(document, template.CourseId, employeeId, comment, date, reminderId);
             return communication;
         }
-
         public string CreateFileName(EDocumentType Type, Person person, string fileExtension)
         {
             string name = Type.ToString() + "_" + person.LastName + "_" + DateTime.Now.ToFileTime() + fileExtension;
