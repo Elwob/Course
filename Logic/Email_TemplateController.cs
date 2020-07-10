@@ -1,20 +1,11 @@
-
-using iText.IO.Font.Constants;
 using Data.Models;
-using DocumentFormat.OpenXml.Drawing;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using DocumentFormat.OpenXml.Spreadsheet;
-using iText.IO.Font;
-using iText.IO.Source;
+using iText.IO.Font.Constants;
 using iText.Kernel.Font;
-using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
 using iText.Layout.Element;
 using System;
 using System.Collections.Generic;
-
 using Document = iText.Layout.Document;
 using Rectangle = iText.Kernel.Geom.Rectangle;
 
@@ -35,7 +26,6 @@ namespace Logic
                 {
                     Person person = personController.FindOne(emailTemplate.PersonIds[i]);
 
-
                     string docName = documentController.CreateFileName(emailTemplate.DocumentType, person, ".pdf");
 
                     // Use Path class to manipulate file and directory paths. For Testing !
@@ -47,7 +37,6 @@ namespace Logic
                     //    string sourceFile = System.IO.Path.Combine(sourcePath, folderName);
                     //    string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", docName);
                     ///  string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
-                
 
                     string sourceFile = System.IO.Path.Combine(templateMainPath, folderName);
                     string destFile = $"{ documentMainPath}" + "\\" + $"{emailTemplate.DocumentType.ToString()}" + "\\" + docName;
@@ -57,7 +46,7 @@ namespace Logic
 
                     PdfDocument pdf = new PdfDocument(reader, writer);
                     Document doc = new Document(pdf);
-                   Rectangle pagesize;
+                    Rectangle pagesize;
                     PdfCanvas canvas;
                     int n = pdf.GetNumberOfPages();
                     PdfPage pdfPage = pdf.GetPage(1);
@@ -72,10 +61,8 @@ namespace Logic
                     canvas.SaveState();
                     pdf.Close();
 
-                
-                    Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null,destFile,docName);
+                    Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
                     communications.Add(communication);
-            
                 }
             }
             return communications;
@@ -85,7 +72,5 @@ namespace Logic
         {
             throw new NotImplementedException();
         }
-
     }
-
 }

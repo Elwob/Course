@@ -42,11 +42,11 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public int? TrainerId { get; set; }
+
         /// <summary>
         /// Comment for Communication
         /// </summary>
         [NotMapped]
         public string Comment { get; set; }
-
     }
 }

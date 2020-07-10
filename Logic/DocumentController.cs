@@ -2,7 +2,6 @@ using Data.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Document = Data.Models.Document;
@@ -67,7 +66,6 @@ namespace Logic
             {
                 return "File not found.";
             }
-            
         }
 
         public bool DeleteRealDocument(Document documentToDelete)
@@ -98,7 +96,7 @@ namespace Logic
             Document newDoc = new Document();
             newDoc.Name = name;
             newDoc.Url = url;
-            newDoc.Comment = "Document created from Template";                 
+            newDoc.Comment = "Document created from Template";
             newDoc.Type = template.DocumentType;
             newDoc.CourseId = template.CourseId;
             newDoc.PersonId = person.Id;
