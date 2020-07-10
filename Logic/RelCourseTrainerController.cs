@@ -11,5 +11,6 @@ namespace Logic
             entities.RelCourseTrainers.Add(new RelCourseTrainer() { CourseId = courseId, TrainerId = trainerId });
             entities.SaveChanges();
         }
+    
     }
 }
