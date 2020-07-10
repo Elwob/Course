@@ -14,7 +14,6 @@ using iText.Kernel.Pdf.Canvas;
 using iText.Layout.Element;
 using System;
 using System.Collections.Generic;
-
 using Document = iText.Layout.Document;
 using Rectangle = iText.Kernel.Geom.Rectangle;
 
