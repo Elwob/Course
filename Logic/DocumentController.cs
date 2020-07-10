@@ -55,15 +55,24 @@ namespace Logic
 
             Document documentToDelete = entities.Documents.Single(x => x.Id == id);
             ///Deletes Document with its Path
-            DeleteRealDocument(documentToDelete);
+            bool fileFound = DeleteRealDocument(documentToDelete);
             ///Deletes Document entry in Database
             entities.Documents.Remove(documentToDelete);
             entities.SaveChanges();
-            return "Record has successfully Deleted";
+            if (fileFound)
+            {
+                return "Record has successfully Deleted";
+            }
+            else
+            {
+                return "File not found.";
+            }
+            
         }
 
-        public void DeleteRealDocument(Document documentToDelete)
+        public bool DeleteRealDocument(Document documentToDelete)
         {
+            bool fileFound = true;
             try
             {
                 string filename = documentToDelete.Url;
@@ -74,13 +83,14 @@ namespace Logic
                 }
                 else
                 {
-                    Debug.WriteLine("File does not exist.");
+                    fileFound = false;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
+            return fileFound;
         }
 
         public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? reminderId, string url, string name)
@@ -89,7 +99,6 @@ namespace Logic
             newDoc.Name = name;
             newDoc.Url = url;
             newDoc.Comment = "Document created from Template";                 
-
             newDoc.Type = template.DocumentType;
             newDoc.CourseId = template.CourseId;
             newDoc.PersonId = person.Id;
