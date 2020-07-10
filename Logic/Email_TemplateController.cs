@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 
 using Document = iText.Layout.Document;
+using Rectangle = iText.Kernel.Geom.Rectangle;
 
 namespace Logic
 {
@@ -56,7 +57,7 @@ namespace Logic
 
                     PdfDocument pdf = new PdfDocument(reader, writer);
                     Document doc = new Document(pdf);
-                    Rectangle pagesize;
+                   Rectangle pagesize;
                     PdfCanvas canvas;
                     int n = pdf.GetNumberOfPages();
                     PdfPage pdfPage = pdf.GetPage(1);
