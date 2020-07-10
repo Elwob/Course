@@ -1,9 +1,5 @@
 using Data.Models;
-
-using DocumentFormat.OpenXml.Wordprocessing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Renci.SshNet.Messages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,7 +11,8 @@ namespace Logic
 {
     public class DocumentController : MainController
     {
-        CommunicationController communicationController = new CommunicationController();
+        private CommunicationController communicationController = new CommunicationController();
+
         public List<Document> GetDocumentsNeeded(int id, EClass className)
         {
             List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList();
@@ -60,15 +57,16 @@ namespace Logic
             ///Deletes Document with its Path
             DeleteRealDocument(documentToDelete);
             ///Deletes Document entry in Database
-            entities.Documents.Remove(documentToDelete);        
+            entities.Documents.Remove(documentToDelete);
             entities.SaveChanges();
             return "Record has successfully Deleted";
         }
+
         public void DeleteRealDocument(Document documentToDelete)
         {
             try
             {
-                string filename = documentToDelete.Url;             
+                string filename = documentToDelete.Url;
 
                 if (File.Exists(filename))
                 {
@@ -84,12 +82,14 @@ namespace Logic
                 Console.WriteLine(e);
             }
         }
+
         public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? reminderId, string url, string name)
         {
             Document newDoc = new Document();
             newDoc.Name = name;
             newDoc.Url = url;
             newDoc.Comment = "Document created from Template";                 
+
             newDoc.Type = template.DocumentType;
             newDoc.CourseId = template.CourseId;
             newDoc.PersonId = person.Id;
@@ -99,6 +99,7 @@ namespace Logic
             Communication communication = communicationController.CreateCommunication(document, template, date, reminderId);
             return communication;
         }
+
         public string CreateFileName(EDocumentType Type, Person person, string fileExtension)
         {
             string name = Type.ToString() + "_" + person.LastName + "_" + DateTime.Now.ToFileTime() + fileExtension;

@@ -1,5 +1,4 @@
-﻿using Data.Entities;
-using Data.Models;
+﻿using Data.Models;
 
 namespace Logic
 {/// <summary>
@@ -9,7 +8,7 @@ namespace Logic
     {
         public void CreateRelation(int courseId, int trainerId)
         {
-            entities.RelCourseTrainers.Add(new RelCourseTrainer() { CourseId = courseId, TrainerId = trainerId});
+            entities.RelCourseTrainers.Add(new RelCourseTrainer() { CourseId = courseId, TrainerId = trainerId });
             entities.SaveChanges();
         }
     }

@@ -1,11 +1,7 @@
-using Data.Attributes;
-using Newtonsoft.Json;
 using PersonData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Reflection;
 
 namespace Data.Models
 {
@@ -107,6 +103,5 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public Classroom Classroom { get; set; }
-
     }
 }

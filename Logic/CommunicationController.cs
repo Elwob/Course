@@ -1,10 +1,7 @@
 ﻿using Data.Models;
-using DocumentFormat.OpenXml.Office2010.Word;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Logic
 {
@@ -17,6 +14,7 @@ namespace Logic
 
             return communications;
         }
+
         public Communication CreateRelationAndAddToDatabase(Communication communication)
         {
             communication.CreatedAt = DateTime.Now;
@@ -27,7 +25,9 @@ namespace Logic
             entities.SaveChanges();
             return communication;
         }
+
         public Communication CreateCommunication(Document document, EmailTemplate template, DateTime date, int? reminderId)
+
         {
             Communication communication = new Communication();
             communication.Channel = EChannel.Email;

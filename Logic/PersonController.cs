@@ -10,7 +10,7 @@ namespace Logic
         {
             return entities.Persons.FirstOrDefault(x => x.Id == id);
         }
-        
+
         public List<Person> FindAllTrainers()
         {
             return entities.Persons.Where(x => x.Function == "0" || x.Function == "1").ToList();
@@ -22,4 +22,3 @@ namespace Logic
         }
     }
 }
-

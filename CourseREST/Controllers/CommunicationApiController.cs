@@ -1,10 +1,8 @@
-﻿using Data.Entities;
-using Data.Models;
+﻿using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CourseREST.Controllers
 {
