@@ -11,6 +11,7 @@ using Rectangle = iText.Kernel.Geom.Rectangle;
 
 namespace Logic
 {
+
     public class Email_TemplateController : MainController
     {
         private DocumentController documentController = new DocumentController();
