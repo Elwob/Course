@@ -10,6 +10,11 @@ namespace Data.Models
     public class Classroom
     {
         /// <summary>
+        /// says if relations should be displayed when generating jsons
+        /// </summary>
+        public static bool ShouldIgnoreRelation = false;
+
+        /// <summary>
         /// id in DB (is assigned by DB as autoIncrement)
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -58,10 +63,28 @@ namespace Data.Models
         [Column("subtitle")]
         public string? Subtitle { get; set; }
 
+        private List<Course> _classroomCourses;
         /// <summary>
         /// needed for linking
         /// </summary>
         [NotMapped]
-        public List<Course> Courses { get; set; }
+        public List<Course> Courses 
+        {
+            get
+            {
+                if (ShouldIgnoreRelation)
+                {
+                    return new List<Course>();
+                }
+                else
+                {
+                    return _classroomCourses;
+                }
+            }
+            set
+            {
+                _classroomCourses = value;
+            }
+        }
     }
 }

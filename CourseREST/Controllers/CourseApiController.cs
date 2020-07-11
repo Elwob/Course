@@ -23,7 +23,8 @@ namespace CourseREST.Controllers
         public CourseApiController()
         {
             Data.Models.Content.ShouldIgnoreRelation = true;
-            Data.Models.Person.ShouldIgnoreRelation = true;
+            Person.ShouldIgnoreRelation = true;
+            Classroom.ShouldIgnoreRelation = true;
         }
 
         [HttpGet]
