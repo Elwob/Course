@@ -10,6 +10,9 @@ namespace Data.Models
     [Table("person")]
     public class Person
     {
+        /// <summary>
+        /// /// says if relations should be displayed when generating jsons
+        /// </summary>
         public static bool ShouldIgnoreRelation = false;
 
         /// <summary>
