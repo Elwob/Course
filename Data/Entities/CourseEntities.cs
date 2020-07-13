@@ -214,7 +214,7 @@ namespace Data.Entities
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.DocumentType).IsRequired();
             });
-            // represents the modelClassroom
+            // represents the model Classroom
             modelBuilder.Entity<Classroom>(entity =>
             {
                 entity.HasKey(x => x.Id);

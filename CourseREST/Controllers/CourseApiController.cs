@@ -28,7 +28,7 @@ namespace CourseREST.Controllers
         }
 
         [HttpGet]
-        public List<Course> Get([FromBody] CourseFilter filter)
+        public List<JSONCourseSend> Get([FromBody] CourseFilter filter)
         {
             return courseController.GetFilteredCourses(filter);
         }

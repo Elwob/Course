@@ -2,6 +2,7 @@
 using Data.Models;
 using Data.Models.JSONModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Logic
 
         RelCourseContentController relCourseContentController = new RelCourseContentController();
         RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
+        ClassroomController classroomController = new ClassroomController();
         /// <summary>
         /// returns a list of all courses in DB
         /// </summary>
@@ -34,7 +36,7 @@ namespace Logic
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public List<Course> GetFilteredCourses(CourseFilter filter)
+        public List<JSONCourseSend> GetFilteredCourses(CourseFilter filter)
         {
             var courses = GetAll();
             courses = FilterStatus(courses, filter);
@@ -42,7 +44,7 @@ namespace Logic
             courses = FilterCategory(courses, filter);
             courses = FilterSearch(courses, filter);
             courses = FilterContent(courses, filter);
-            return courses;
+            return ConvertCourseToJSON(courses);
         }
 
         /// <summary>
@@ -53,19 +55,32 @@ namespace Logic
         /// <returns></returns>
         public List<Course> FilterStatus(List<Course> courses, CourseFilter filter)
         {
-            if (filter.status != null && filter.status.Length > 0)
+            if (filter.status != null && filter.status.Count > 0)
             {
-                if (filter.status == "active")
+                if (!filter.status.Contains("active"))
                 {
-                    courses = courses.Where(x => x.Start < DateTime.Now && x.End > DateTime.Now).ToList();
+                    var courseRemoveActive = courses.Where(x => x.Start < DateTime.Now && x.End > DateTime.Now).ToList();
+                    foreach (var course in courseRemoveActive)
+                    {
+                        courses.Remove(course);
+                    }
                 }
-                else if (filter.status == "planned")
+                if (!filter.status.Contains("planned"))
                 {
-                    courses = courses.Where(x => x.Start > DateTime.Now).ToList();
+                    var courseRemovePlanned = courses.Where(x => x.Start > DateTime.Now).ToList();
+                    foreach (var course in courseRemovePlanned)
+                    {
+                        courses.Remove(course);
+                    }
+                    
                 }
-                else if (filter.status == "completed")
+                if (!filter.status.Contains("completed"))
                 {
-                    courses = courses.Where(x => x.Start < DateTime.Now && x.End < DateTime.Now).ToList();
+                    var courseRemoveCompleted = courses.Where(x => x.Start < DateTime.Now && x.End < DateTime.Now).ToList();
+                    foreach (var course in courseRemoveCompleted)
+                    {
+                        courses.Remove(course);
+                    }
                 }
             }
             return courses;
@@ -160,7 +175,7 @@ namespace Logic
         /// <returns></returns>
         public Course PostCourse(JSONCourseReceive jsonCourse)
         {
-            Course course = ConvertToCourse(jsonCourse);
+            Course course = ConvertJSONToCourse(jsonCourse);
             entities.Courses.Add(course);
             entities.SaveChanges();
             // create trainer relations
@@ -180,7 +195,7 @@ namespace Logic
         /// converts a JSONCourseReceive to Course
         /// </summary>
         /// <returns></returns>
-        private Course ConvertToCourse(JSONCourseReceive jasonCourse)
+        private Course ConvertJSONToCourse(JSONCourseReceive jasonCourse)
         {
             var course = new Course();
             course.Title = jasonCourse.Title;
@@ -199,5 +214,70 @@ namespace Logic
             course.ModifiedAt = DateTime.Now;
             return course;
         }
-    }    
+
+        private List<JSONCourseSend> ConvertCourseToJSON(List<Course> courses)
+        {
+            var jsonCourses = new List<JSONCourseSend>();
+            foreach (var course in courses)
+            {
+                var jC = new JSONCourseSend();
+                jC.Id = course.Id;
+                jC.Title = course.Title;
+                jC.CourseNumber = course.CourseNumber;
+                jC.Description = course.Description;
+                jC.Category = course.Category.ToString();
+                jC.Start = course.Start.ToString();
+                jC.End = course.End.ToString();
+                jC.Content = CreateContentArr(course.Id);
+                jC.Units = course.Unit;
+                jC.Price = course.Price;
+                jC.Classroom = classroomController.ConvertClassroomToJSON(course.Classroom);
+                jC.participant_max = course.MaxParticipants;
+                jC.participant_min = course.MinParticipants;
+                jC.TrainerArr = CreateTrainerArr(course.Id);
+                jC.CreatedAt = course.CreatedAt;
+                jC.ModifiedAt = course.ModifiedAt;
+                jsonCourses.Add(jC);
+            }
+            return jsonCourses;
+        }
+
+        private List<JSONContentSend> CreateContentArr(int courseId)
+        {
+            var jsonContents = new List<JSONContentSend>();
+            // get all course-content relations where a certain course exists
+            var relations = entities.RelCourseContents.Where(x => x.CourseId == courseId).ToList();
+            // filter contents for existing course-content relations
+            var c = entities.Contents.ToList();
+            var contents = c.Where(x => relations.Any(z => x.Id == z.ContentId)).ToList();
+            // convert to JSONContentSend
+            foreach (var content in contents)
+            {
+                // get correct units (in a specific course, not estimation)
+                var units = relations.Where(x => x.CourseId == courseId && x.ContentId == content.Id).FirstOrDefault().Units;
+                // create and add jContent
+                jsonContents.Add(new JSONContentSend(content.Id, content.Topic, content.Description, units));
+            }
+            return jsonContents;
+        }
+
+        private List<JSONTrainer> CreateTrainerArr(int courseId)
+        {
+            var jsonTrainers = new List<JSONTrainer>();
+            // get all belonging trainers
+            var relations = entities.RelCourseTrainers.Where(x => x.CourseId == courseId).ToList();
+            var t = entities.Persons.Where(x => x.Function == "0" || x.Function == "1").ToList();
+            var trainers = t.Where(x => relations.Any(z => x.Id == z.TrainerId)).ToList();
+            //Convert to JSONTrainer
+            foreach (var trainer in trainers)
+            {
+                jsonTrainers.Add(new JSONTrainer(trainer.Id, trainer.FirstName, trainer.LastName));
+            }
+            return jsonTrainers;
+        }
+    }
+    //// get all course-trainer relations where a certain trainer exists
+    //var relations = entities.RelCourseTrainers.Where(x => x.TrainerId == filter.trainer_id).ToList();
+    //// filter courses for existing course-trainer relations
+    //courses = courses.Where(x => relations.Any(z => x.Id == z.CourseId)).ToList();
 }
