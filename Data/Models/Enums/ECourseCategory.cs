@@ -8,7 +8,7 @@ namespace Data.Models
     /// different kinds of course categories
     /// </summary>
 
-    //needs to be converted to DB-solution
+    //needs to be converted to DB-solution test
 
     /// that Enums will be shown correctly in JSON
     [JsonConverter(typeof(StringEnumConverter))]
