@@ -17,6 +17,8 @@ using System.Collections.Generic;
 
 using Document = iText.Layout.Document;
 using Rectangle = iText.Kernel.Geom.Rectangle;
+using System.Net.Mail;
+using Renci.SshNet.Messages;
 
 namespace Logic
 {
@@ -74,8 +76,16 @@ namespace Logic
                     canvas.SaveState();
                     pdf.Close();
 
+            //        MailMessage message = new MailMessage("dcv@dcv.at", { person.Contacts );
+            //// message.Subject = "Using the SmtpClient class.";
+            //Message.Subject = "Using the SmtpClient class.";
+            //message.Body = @"Using this feature, you can send an email message from an application very easily.";
+            //message.Attachments.Add(new Attachment("C:\\invoice_engleder.pdf"));
+            //SmtpClient client = new SmtpClient("dcvmailserver");
+            //client.Send(message);
 
-                    Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
+
+            Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
                     communications.Add(communication);
 
                 }
