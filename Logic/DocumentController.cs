@@ -111,7 +111,12 @@ namespace Logic
         }
         public string CreateFileName(EDocumentType Type, Person person, string fileExtension)
         {
-            string name = Type.ToString() + "_" + person.LastName + "_" + DateTime.Now.ToFileTime() + fileExtension;
+            string name = null;
+            if(person != null)
+            {
+                name = Type.ToString() + "_" + person.LastName + "_" + DateTime.Now.ToFileTime() + fileExtension;
+                
+            }
             return name;
         }
     }

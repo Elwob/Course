@@ -2,6 +2,7 @@
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -16,35 +17,15 @@ namespace CourseREST.Controllers
         private DocumentController documentController = new DocumentController();
 
         [HttpGet("{id}/{className}")]
-        public List<JObject> GetVariousDocuments(int id, EClass className)
+        public List<Document> GetVariousDocuments(int id, EClass className)
 
         {
             var documents = documentController.GetDocumentsNeeded(id, className);
 
-            ///that Enums will be shown correctly in JSON
-            List<JObject> jsons = SerializeAndCreateJsonObject<Document>(documents);
-            return jsons;
+            return documents;
         }
 
-        public static List<JObject> SerializeAndCreateJsonObject<T>(List<T> list)
-        {
-            var jasonString = "";
-            List<JObject> jsons = new List<JObject>();
-
-            var options = new JsonSerializerOptions();
-            options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-            options.WriteIndented = true;
-
-            foreach (var item in list)
-            {
-                jasonString = JsonSerializer.Serialize(item, options);
-                ///Parse into JSON - Objects for better usability in Frontend
-                JObject json = JObject.Parse(jasonString);
-                jsons.Add(json);
-            }
-            return jsons;
-        }
-
+       
         [Route("getDocumentTypes")]
         [HttpGet]
         public List<string> GetEnumsDocumentType()
