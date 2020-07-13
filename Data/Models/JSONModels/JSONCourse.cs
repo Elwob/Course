@@ -41,7 +41,7 @@ namespace Data.Models.JSONModels
         /// <summary>
         /// the amount a teaching units of the course
         /// </summary>
-        public int? Unit { get; set; }
+        public int? Units { get; set; }
 
         /// <summary>
         /// the price of the course

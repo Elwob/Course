@@ -190,7 +190,7 @@ namespace Logic
             course.Category = courseCategory;
             course.Start = DateTime.ParseExact(jasonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
             course.End = DateTime.ParseExact(jasonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
-            course.Unit = jasonCourse.Unit;
+            course.Unit = jasonCourse.Units;
             course.Price = jasonCourse.Price;
             course.ClassroomId = jasonCourse.ClassroomId;
             course.MaxParticipants = jasonCourse.MaxParticipants;
