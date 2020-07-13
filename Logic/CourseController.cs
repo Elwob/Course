@@ -158,7 +158,7 @@ namespace Logic
         /// </summary>
         /// <param name="jsonCourse"></param>
         /// <returns></returns>
-        public Course PostCourse(JSONCourse jsonCourse)
+        public Course PostCourse(JSONCourseReceive jsonCourse)
         {
             Course course = ConvertToCourse(jsonCourse);
             entities.Courses.Add(course);
@@ -177,10 +177,10 @@ namespace Logic
         }
 
         /// <summary>
-        /// converts a JSONCourse to Course
+        /// converts a JSONCourseReceive to Course
         /// </summary>
         /// <returns></returns>
-        private Course ConvertToCourse(JSONCourse jasonCourse)
+        private Course ConvertToCourse(JSONCourseReceive jasonCourse)
         {
             var course = new Course();
             course.Title = jasonCourse.Title;
