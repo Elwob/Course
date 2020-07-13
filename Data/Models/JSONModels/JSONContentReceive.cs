@@ -1,6 +1,6 @@
 ﻿namespace Data.Models.JSONModels
 {
-    public class JSONContent
+    public class JSONContentReceive
     {
         /// <summary>
         /// the contents' id

@@ -1,5 +1,7 @@
 ﻿using Data.Entities;
+using Data.Models;
 using Data.Models.JSONModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,11 +18,33 @@ namespace Logic
             {
                 var jId = room.Id;
                 var jRoom = room.Room;
-                var addressId = entities.RelClassroomAddresses.Where(x => x.LocationId == room.Id).DefaultIfEmpty().FirstOrDefault().AddressId;
-                var jPlace = entities.Addresses.Where(x => x.Id == addressId).DefaultIfEmpty().FirstOrDefault().Place;
-                rooms.Add(new JSONClassroom(jId, jRoom, jPlace));
+                string jPlace = "unknown";
+                try
+                {
+                    if (entities.RelClassroomAddresses.Where(x => x.LocationId == room.Id).FirstOrDefault() != null)
+                    {
+                        int addressId = entities.RelClassroomAddresses.Where(x => x.LocationId == room.Id).FirstOrDefault().AddressId;
+                        jPlace = entities.Addresses.Where(x => x.Id == addressId).DefaultIfEmpty().FirstOrDefault().Place;
+                    }
+                    
+                } catch (NullReferenceException ex)
+                {
+                    Console.WriteLine("Classroom doesn't have an address");
+                }
+                finally
+                {
+                    rooms.Add(new JSONClassroom(jId, jRoom, jPlace));
+                }
+                
             }
             return rooms;
+        }
+
+        public JSONClassroom ConvertClassroomToJSON(Classroom classroom)
+        {
+            var rel = entities.RelClassroomAddresses.Where(x => x.LocationId == classroom.Id).FirstOrDefault();
+            string place = entities.Addresses.Where(x => x.Id == rel.AddressId).FirstOrDefault().Place;
+            return new JSONClassroom(classroom.Id, classroom.Room, place);
         }
     }
 }
