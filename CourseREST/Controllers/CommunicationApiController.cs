@@ -16,13 +16,11 @@ namespace CourseREST.Controllers
         private CommunicationController communicationController = new CommunicationController();
 
         [HttpGet("{id}/{className}")]
-        public List<JObject> GetVariousCommunications(int id, EClass className)
+        public List<Communication> GetVariousCommunications(int id, EClass className)
         {
             var communications = communicationController.GetCommunicationsNeeded(id, className);
 
-            ///that Enums will be shown correctly in JSON
-            List<JObject> jsons = DocumentApiController.SerializeAndCreateJsonObject<Communication>(communications);
-            return jsons;
+            return communications;
         }
 
 
@@ -30,6 +28,12 @@ namespace CourseREST.Controllers
         public string DeleteById(int id)
         {
             return communicationController.DeleteById(id);
+        }
+
+        [HttpPut("{id}")]
+        public Communication Put(int id, [FromBody] Communication communication)
+        {
+            return communicationController.ChangeCommunication(id, communication);
         }
 
     }

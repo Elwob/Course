@@ -44,7 +44,52 @@ namespace Logic
         }
         public string DeleteById(int id)
         {
-            return null;
+            ///deletes the Relations from Communication to Classes
+            List<RelCommunicationClass> relationList = entities.RelCommunicationClasses.Where(x => x.CommunicationId == id).ToList();
+            foreach (var item in relationList)
+            {
+                entities.RelCommunicationClasses.Remove(item);
+            }
+
+            Communication communicationToDelete = entities.Communications.SingleOrDefault(x => x.Id == id);
+            
+            if(communicationToDelete == null)
+            {
+                return "The Communication you want to delete could not be found.";
+            }
+            else
+            {
+                entities.Communications.Remove(communicationToDelete);
+                entities.SaveChanges();
+                Communication communication = entities.Communications.SingleOrDefault(x => x.Id == id);
+                if(communication == null)
+                {
+                    return "Communication has been successfully deleted.";
+                }
+                else
+                {
+                    return "Communication could not be deleted.";
+                }
+                
+            }
+        }
+
+        public Communication ChangeCommunication(int id, Communication communication)
+        {
+            var communicationToChange = entities.Communications.Where(x => x.Id == id).FirstOrDefault();
+            if (communicationToChange != null)
+            {
+                communicationToChange.Comment = communication.Comment;
+                communicationToChange.ModifiedAt = DateTime.Now;
+                entities.SaveChanges();
+                return entities.Communications.Where(x => x.Id == id).FirstOrDefault();
+            }
+            else
+            {
+                return null;
+            }
+           
+
         }
     }
 }
