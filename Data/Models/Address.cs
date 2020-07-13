@@ -40,17 +40,17 @@ namespace Data.Models
         [Column("country", TypeName = "varchar(200)")]
         public string? Country { get; set; }
 
-        /// <summary>
-        /// contains the ContactType
-        /// </summary>
-        [Column("contact_type", TypeName = "varchar(200)")]
-        public string? ContactType { get; set; }
+        ///// <summary>
+        ///// contains the ContactType (not used in DB anymore)
+        ///// </summary>
+        //[Column("contact_type", TypeName = "varchar(200)")]
+        //public string? ContactType { get; set; }
 
-        /// <summary>
-        /// says if address is a billing address or not
-        /// </summary>
-        [Column("billing_address")]
-        public bool? BillingAddress { get; set; }
+        ///// <summary>
+        ///// says if address is a billing address or not (not used in DB anymore)
+        ///// </summary>
+        //[Column("billing_address")]
+        //public bool? BillingAddress { get; set; }
 
         /// <summary>
         /// date when the address was created

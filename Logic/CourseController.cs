@@ -158,7 +158,7 @@ namespace Logic
         /// </summary>
         /// <param name="jsonCourse"></param>
         /// <returns></returns>
-        public Course PostCourse(JSONCourse jsonCourse)
+        public Course PostCourse(JSONCourseReceive jsonCourse)
         {
             Course course = ConvertToCourse(jsonCourse);
             entities.Courses.Add(course);
@@ -177,10 +177,10 @@ namespace Logic
         }
 
         /// <summary>
-        /// converts a JSONCourse to Course
+        /// converts a JSONCourseReceive to Course
         /// </summary>
         /// <returns></returns>
-        private Course ConvertToCourse(JSONCourse jasonCourse)
+        private Course ConvertToCourse(JSONCourseReceive jasonCourse)
         {
             var course = new Course();
             course.Title = jasonCourse.Title;
@@ -190,7 +190,7 @@ namespace Logic
             course.Category = courseCategory;
             course.Start = DateTime.ParseExact(jasonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
             course.End = DateTime.ParseExact(jasonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
-            course.Unit = jasonCourse.Unit;
+            course.Unit = jasonCourse.Units;
             course.Price = jasonCourse.Price;
             course.ClassroomId = jasonCourse.ClassroomId;
             course.MaxParticipants = jasonCourse.MaxParticipants;

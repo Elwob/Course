@@ -34,7 +34,7 @@ namespace CourseREST.Controllers
         }
 
         [HttpPost]
-        public Course Post([FromBody] JSONCourse course)
+        public Course Post([FromBody] JSONCourseReceive course)
         {
             return courseController.PostCourse(course);
         }
