@@ -15,14 +15,14 @@ namespace CourseREST.Controllers
         public PersonController personController = new PersonController();
 
         [HttpGet]
-        public List<Person> get()
+        public List<Person> Get()
         {
             return personController.FindAll();
         }
 
         [Route("getParticipants/{courseId}")]
         [HttpGet]
-        public List<Person> getParticipants(int courseId)
+        public List<Person> GetParticipants(int courseId)
         {
             return personController.FindAllParticipantsOfOneCourse(courseId);
         }
@@ -36,7 +36,7 @@ namespace CourseREST.Controllers
         public PersonController personController = new PersonController();
 
         [HttpGet]
-        public List<Person> get()
+        public List<Person> Get()
         {
             return personController.FindAllTrainers();
         }

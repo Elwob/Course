@@ -3,6 +3,7 @@ using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -74,15 +75,31 @@ namespace Logic
 
                     message.Body = @"Using this feature, you can send an email message from an application very easily.";
                     message.Attachments.Add(new Attachment(destFile));
-                    SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)
-                    {
-                        Credentials = new NetworkCredential("sendermartin00@yahoo.com", "12344321klaus"),
-                        EnableSsl = true
-                        
-                    };
+                    //SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)587
+                    //{
+                    //    Credentials = new NetworkCredential("sendermartin00@yahoo.com", "12344321klaus"),
+                    //    EnableSsl = false
 
-              
-                    //             client.Send(message);
+                    //};
+
+                    //      MailMessage oMail = new MailMessage(new MailAddress("sendermartin00@yahoo.com"), new MailAddress("username@yahoo.com"));
+                    SmtpClient oSmtp = new SmtpClient("https://mail.yahoo.com/");
+                    oSmtp.Host = "smtp.mail.yahoo.com";
+                    oSmtp.Credentials = new NetworkCredential("sendermartin00@yahoo.com", "12344321klaus!");
+                    oSmtp.EnableSsl =false;
+                    oSmtp.Port =587;
+
+                    System.Net.ServicePointManager.Expect100Continue = false;
+
+                    try
+                    {
+                        oSmtp.Send(message);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Exception caught in CreateTestMessage2(): {0}",
+                            ex.ToString());
+                    }
 
                     Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
                     communications.Add(communication);
