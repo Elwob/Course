@@ -1,4 +1,4 @@
-﻿using Data.Attributes;
+using Data.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

@@ -36,5 +36,12 @@ namespace CourseREST.Controllers
             return communicationController.ChangeCommunication(id, communication);
         }
 
+        [HttpPost]
+        public Communication Post([FromBody] Communication communication)
+        {
+            Communication latestCommunication = communicationController.CreateRelationAndAddToDatabase(communication);
+            return latestCommunication;
+        }
+
     }
 }

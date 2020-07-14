@@ -1,4 +1,4 @@
-﻿using Data.Models;
+using Data.Models;
 using Data.Models.JSONModels;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +27,9 @@ namespace CourseREST.Controllers
             Classroom.ShouldIgnoreRelation = true;
         }
 
-        [HttpGet]
-        public List<JSONCourseSend> Get([FromBody] CourseFilter filter)
+        [Route("search")]
+        [HttpPost]
+        public List<Course> Get([FromBody] CourseFilter filter)
         {
             return courseController.GetFilteredCourses(filter);
         }

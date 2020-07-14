@@ -48,7 +48,7 @@ namespace Data.Models
         /// <summary>
         /// date when the address was modified
         /// </summary>
-        [Column("modify@")]
+        [Column("modified@")]
         public DateTime? ModifiedAt { get; set; }
     }
 }
