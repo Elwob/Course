@@ -19,6 +19,11 @@ namespace Logic
         }
         public Communication CreateRelationAndAddToDatabase(Communication communication)
         {
+            communication = CheckIfIdToConnectWithExists(communication);
+            if (communication == null)
+            {
+                return null;
+            }
             communication.CreatedAt = DateTime.Now;
             communication.ModifiedAt = DateTime.Now;
 
@@ -27,6 +32,7 @@ namespace Logic
             entities.SaveChanges();
             return communication;
         }
+
         public Communication CreateCommunication(Document document, EmailTemplate template, DateTime date, int? reminderId)
 
         {
@@ -89,7 +95,32 @@ namespace Logic
                 return null;
             }
            
-
+        }
+        /// <summary>
+        /// prevents wrong entries, because of not existing CourseId or PersonId
+        /// </summary>
+        /// <param name="communication"></param>
+        /// <returns>communication</returns>
+        public Communication CheckIfIdToConnectWithExists(Communication communication)
+        {
+            var person = entities.Persons.FirstOrDefault(c => c.Id == communication.PersonId);
+            var course = entities.Courses.FirstOrDefault(c => c.Id == communication.CourseId);
+            if (person == null && course == null)
+            {
+                return null;
+            }
+            else if (person == null && course != null)
+            {
+                ///because a communication must always be assigned to a person, we return null although course is not null
+                return null;
+                
+            }
+            else if (course == null && person != null)
+            {
+                communication.CourseId = null;
+                return communication;
+            }
+            else return communication;
         }
     }
 }

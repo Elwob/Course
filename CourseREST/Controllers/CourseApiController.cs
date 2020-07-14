@@ -26,8 +26,8 @@ namespace CourseREST.Controllers
             Person.ShouldIgnoreRelation = true;
             Classroom.ShouldIgnoreRelation = true;
         }
-
-        [HttpGet]
+        [Route("search")]
+        [HttpPost]
         public List<Course> Get([FromBody] CourseFilter filter)
         {
             return courseController.GetFilteredCourses(filter);

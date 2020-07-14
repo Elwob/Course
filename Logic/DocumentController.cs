@@ -23,6 +23,11 @@ namespace Logic
 
         public Document CreateNewDocument(Document recDocument)
         {
+            recDocument = CheckIfIdToConnectWithExists(recDocument);
+            if(recDocument == null)
+            {
+                return null;
+            }
             recDocument.CreatedAt = DateTime.Now;
             recDocument.ModifiedAt = DateTime.Now;
 
@@ -55,7 +60,11 @@ namespace Logic
                 entities.Communications.Update(item);
             }
 
-            Document documentToDelete = entities.Documents.Single(x => x.Id == id);
+            Document documentToDelete = entities.Documents.SingleOrDefault(x => x.Id == id);
+            if(documentToDelete == null)
+            {
+                return "The Document you want to delete could not be found.";
+            }
             ///Deletes Document with its Path
             bool fileFound = DeleteRealDocument(documentToDelete);
             ///Deletes Document entry in Database
@@ -64,7 +73,7 @@ namespace Logic
 
             if (fileFound)
             {
-                return "Record has successfully Deleted";
+                return "Record has been successfully deleted";
             }
             else
             {
@@ -118,6 +127,31 @@ namespace Logic
                 
             }
             return name;
+        }
+        /// <summary>
+        /// prevents wrong entries, because of not existing CourseId or PersonId
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns>document</returns>
+        public Document CheckIfIdToConnectWithExists(Document document)
+        {
+            var person = entities.Persons.FirstOrDefault(c => c.Id == document.PersonId);
+            var course = entities.Courses.FirstOrDefault(c => c.Id == document.CourseId);
+            if (person == null && course == null)
+            {
+                return null;
+            }
+            else if (person == null && course != null)
+            {
+                document.PersonId = null;
+                return document;
+            }
+            else if (course == null && person != null)
+            {
+                document.CourseId = null;
+                return document;
+            }
+            else return document;
         }
     }
 }

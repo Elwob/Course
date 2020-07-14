@@ -123,7 +123,6 @@ namespace Data.Models
                 if (id.HasValue)
                 {
                     RelCommunicationClass relCommunicationClass = new RelCommunicationClass();
-                    
                     relCommunicationClass.Communication = this;
                     relCommunicationClass.Class = communicationAttr.ClassName;
                     relCommunicationClass.ClassId = id.Value;

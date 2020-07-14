@@ -19,6 +19,13 @@ namespace CourseREST.Controllers
         {
             return personController.FindAll();
         }
+
+        [Route("getParticipants/{courseId}")]
+        [HttpGet]
+        public List<Person> getParticipants(int courseId)
+        {
+            return personController.FindAllParticipantsOfOneCourse(courseId);
+        }
     }
 
     [Route("trainer")]
