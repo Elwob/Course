@@ -1,9 +1,5 @@
 using Data.Models;
-
-using DocumentFormat.OpenXml.Wordprocessing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Renci.SshNet.Messages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +10,8 @@ namespace Logic
 {
     public class DocumentController : MainController
     {
-        CommunicationController communicationController = new CommunicationController();
+        private CommunicationController communicationController = new CommunicationController();
+
         public List<Document> GetDocumentsNeeded(int id, EClass className)
         {
             List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList();
@@ -59,7 +56,7 @@ namespace Logic
             ///Deletes Document with its Path
             bool fileFound = DeleteRealDocument(documentToDelete);
             ///Deletes Document entry in Database
-            entities.Documents.Remove(documentToDelete);        
+            entities.Documents.Remove(documentToDelete);
             entities.SaveChanges();
 
             if (fileFound)
@@ -70,14 +67,14 @@ namespace Logic
             {
                 return "File not found.";
             }
-
         }
+
         public bool DeleteRealDocument(Document documentToDelete)
         {
             bool fileFound = true;
             try
             {
-                string filename = documentToDelete.Url;             
+                string filename = documentToDelete.Url;
 
                 if (File.Exists(filename))
                 {
@@ -94,6 +91,7 @@ namespace Logic
             }
             return fileFound;
         }
+
         public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? reminderId, string url, string name)
         {
             Document newDoc = new Document();
@@ -109,6 +107,7 @@ namespace Logic
             Communication communication = communicationController.CreateCommunication(document, template, date, reminderId);
             return communication;
         }
+
         public string CreateFileName(EDocumentType Type, Person person, string fileExtension)
         {
             string name = null;

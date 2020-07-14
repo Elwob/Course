@@ -16,6 +16,7 @@ namespace Logic
         RelCourseContentController relCourseContentController = new RelCourseContentController();
         RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
         ClassroomController classroomController = new ClassroomController();
+
         /// <summary>
         /// returns a list of all courses in DB
         /// </summary>
@@ -112,7 +113,6 @@ namespace Logic
         /// <returns></returns>
         public List<Course> FilterCategory(List<Course> courses, CourseFilter filter)
         {
-
             if (filter.category != null && filter.category.Length > 0)
             {
                 Enum.TryParse(filter.category, out ECourseCategory category);
@@ -151,7 +151,7 @@ namespace Logic
         }
 
         /// <summary>
-        /// filters 
+        /// filters
         /// </summary>
         /// <param name="courses"></param>
         /// <param name="filter"></param>
@@ -214,6 +214,7 @@ namespace Logic
             course.ModifiedAt = DateTime.Now;
             return course;
         }
+
 
         private List<JSONCourseSend> ConvertCourseToJSON(List<Course> courses)
         {
@@ -280,4 +281,5 @@ namespace Logic
     //var relations = entities.RelCourseTrainers.Where(x => x.TrainerId == filter.trainer_id).ToList();
     //// filter courses for existing course-trainer relations
     //courses = courses.Where(x => relations.Any(z => x.Id == z.CourseId)).ToList();
+
 }
