@@ -37,10 +37,3 @@ namespace Logic
         }
     }
 }
-
-        //public void GetPerson()
-        //{
-        //    entities.Persons.Include(x => x.Contacts);
-        //}
-    }
-}
