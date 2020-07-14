@@ -78,9 +78,11 @@ namespace Logic
                     {
                         Credentials = new NetworkCredential("sendermartin00@yahoo.com", "12344321klaus"),
                         EnableSsl = true
+                        
                     };
 
-       //             client.Send(message);
+              
+                    //             client.Send(message);
 
                     Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
                     communications.Add(communication);
