@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Data.Models.JSONModels
 {
-    public class JSONCourse : BaseClassCreatedModify
+    public class JSONCourseReceive
     {
         /// <summary>
         /// the courses' title
@@ -41,7 +41,7 @@ namespace Data.Models.JSONModels
         /// <summary>
         /// the amount a teaching units of the course
         /// </summary>
-        public int? Unit { get; set; }
+        public int? Units { get; set; }
 
         /// <summary>
         /// the price of the course
@@ -71,6 +71,6 @@ namespace Data.Models.JSONModels
         /// <summary>
         /// contains all contentIds
         /// </summary>
-        public List<JSONContent> ContentArr { get; set; }
+        public List<JSONContentReceive> ContentArr { get; set; }
     }
 }
