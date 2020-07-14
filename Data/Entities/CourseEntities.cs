@@ -257,7 +257,9 @@ namespace Data.Entities
                 entity.Property(x => x.MainContact).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
                 // connection to a person
-                entity.HasOne(x => x.Person);
+                entity.HasOne(x => x.Person)
+                .WithMany(x => x.Contacts)
+                .HasForeignKey(x => x.PersonId);
             });
             // builds model Communication
             modelBuilder.Entity<Communication>(entity =>

@@ -12,8 +12,9 @@ namespace Logic
     {
         private CourseEntities entities = CourseEntities.GetInstance();
 
-        RelCourseContentController relCourseContentController = new RelCourseContentController();
-        RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
+        private RelCourseContentController relCourseContentController = new RelCourseContentController();
+        private RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
+
         /// <summary>
         /// returns a list of all courses in DB
         /// </summary>
@@ -97,7 +98,6 @@ namespace Logic
         /// <returns></returns>
         public List<Course> FilterCategory(List<Course> courses, CourseFilter filter)
         {
-
             if (filter.category != null && filter.category.Length > 0)
             {
                 Enum.TryParse(filter.category, out ECourseCategory category);
@@ -136,7 +136,7 @@ namespace Logic
         }
 
         /// <summary>
-        /// filters 
+        /// filters
         /// </summary>
         /// <param name="courses"></param>
         /// <param name="filter"></param>
@@ -199,5 +199,5 @@ namespace Logic
             course.ModifiedAt = DateTime.Now;
             return course;
         }
-    }    
+    }
 }
