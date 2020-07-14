@@ -1,11 +1,13 @@
-﻿namespace Data.Models.JSONModels
+﻿using System.Collections.Generic;
+
+namespace Data.Models.JSONModels
 {
     public class CourseFilter
     {
         /// <summary>
         /// filters planned / active / completed courses
         /// </summary>
-        public string status { get; set; }
+        public List<string> status { get; set; }
 
         /// <summary>
         /// filters courses of a specific trainer

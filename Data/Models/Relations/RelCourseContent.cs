@@ -30,7 +30,7 @@ namespace Data.Models
         /// the teaching units needed for the content in that particular course
         /// </summary>
         [Column("units")]
-        public int? UnitEstimation { get; set; }
+        public int? Units { get; set; }
 
         /// <summary>
         /// needed for creating link

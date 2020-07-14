@@ -1,29 +1,19 @@
-
-using iText.IO.Font.Constants;
 using Data.Models;
-using DocumentFormat.OpenXml.Drawing;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using DocumentFormat.OpenXml.Spreadsheet;
-using iText.IO.Font;
-using iText.IO.Source;
+using iText.IO.Font.Constants;
 using iText.Kernel.Font;
-using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
-using iText.Layout.Element;
-using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using Document = iText.Layout.Document;
 using Rectangle = iText.Kernel.Geom.Rectangle;
 
 namespace Logic
 {
-
     public class Email_TemplateController : MainController
     {
-
         private DocumentController documentController = new DocumentController();
         private PersonController personController = new PersonController();
 
@@ -35,8 +25,8 @@ namespace Logic
             for (int i = 0; i < emailTemplate.PersonIds.Length; i++)
             {
                 {
+                    //personController.GetPerson();
                     Person person = personController.FindOne(emailTemplate.PersonIds[i]);
-
 
                     string docName = documentController.CreateFileName(emailTemplate.DocumentType, person, ".pdf");
 
@@ -49,7 +39,6 @@ namespace Logic
                     //    string sourceFile = System.IO.Path.Combine(sourcePath, folderName);
                     //    string destFile = String.Format("C:\\DcvDokumente\\CopiedVersion\\{0}.pdf", docName);
                     ////  string n = $"{targetPath}"+"\\" +$"{ person.FirstName}" + ".pdf";
-
 
                     string sourceFile = System.IO.Path.Combine(templateMainPath, folderName);
                     string destFile = $"{ documentMainPath}" + "\\" + $"{emailTemplate.DocumentType.ToString()}" + "\\" + docName;
@@ -68,25 +57,38 @@ namespace Logic
                     canvas.BeginText().SetFontAndSize(
                         PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN), 12)
                         .MoveText(pagesize.GetWidth() / 2 - 24, pagesize.GetHeight() - 10)
-                       .ShowText($"{ person.FirstName.ToString()}" + "," + $"{person.LastName.ToString()}")
-                       .EndText();
+                        .ShowText($"{ person.FirstName.ToString()}" + "," + $"{person.LastName.ToString()}")
+                        .EndText();
 
                     canvas.SaveState();
                     pdf.Close();
 
+                   //SmtpClient client = new SmtpClient("https://mail.yahoo.com/");
+                    //client.Credentials.GetCredential("smtp.mail.yahoo.com", 465, "Basic").UserName = "sendermartin00@yahoo.com";
+                    //client.Credentials.GetCredential("smtp.mail.yahoo.com", 465, "Basic").Password = "12344321klaus";
+
+                    var x = person.Contacts.FirstOrDefault(ArtOfCommunication => ArtOfCommunication.ArtOfCommunication.Equals("1")).ContactValue.ToString();
+
+                    MailMessage message = new MailMessage("sendermartin00@yahoo.com", person.Contacts.FirstOrDefault(ArtOfCommunication => ArtOfCommunication.ArtOfCommunication.Equals("1")).ContactValue.ToString());
+                    message.Subject = "Using the SmtpClient class.";
+
+                    message.Body = @"Using this feature, you can send an email message from an application very easily.";
+                    message.Attachments.Add(new Attachment(destFile));
+                    SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)
+                    {
+                        Credentials = new NetworkCredential("sendermartin00@yahoo.com", "12344321klaus"),
+                        EnableSsl = true
+                        
+                    };
+
+              
+                    //             client.Send(message);
 
                     Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
                     communications.Add(communication);
-
                 }
             }
             return communications;
         }
-
-        private AreaBreak Paragraph(string v)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

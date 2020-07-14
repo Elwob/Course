@@ -13,7 +13,7 @@ namespace Data.Models
         /// <summary>
         /// /// says if relations should be displayed when generating jsons
         /// </summary>
-        public static bool ShouldIgnoreRelation = false;
+        public static bool ShouldIgnoreRelation = true;
 
         /// <summary>
         /// id in DB (is assigned by DB as autoIncrement)
@@ -79,25 +79,25 @@ namespace Data.Models
         /// the persons' current function
         /// </summary>
         [Column("function", TypeName = "varchar(200)")]
-        public string Function { get; set; }
+        public string? Function { get; set; }
 
         /// <summary>
         /// says if a person is an active user ???????
         /// </summary>
         [Column("aktiv")]
-        public bool Active { get; set; }
+        public bool? Active { get; set; }
 
         /// <summary>
         /// says if a person was deleted ???????
         /// </summary>
         [Column("deleted_inaktiv")]
-        public bool Deleted { get; set; }
+        public bool? Deleted { get; set; }
 
         /// <summary>
         /// says if a person wants to recieve newsletters or not
         /// </summary>
         [Column("newsletter_flag")]
-        public bool WantsNewsletter { get; set; }
+        public bool? WantsNewsletter { get; set; }
 
         /// <summary>
         /// Date the person was created on

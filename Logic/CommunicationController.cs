@@ -1,10 +1,7 @@
 ﻿using Data.Models;
-using DocumentFormat.OpenXml.Office2010.Word;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Logic
 {
@@ -17,6 +14,7 @@ namespace Logic
 
             return communications;
         }
+
         public Communication CreateRelationAndAddToDatabase(Communication communication)
         {
             communication = CheckIfIdToConnectWithExists(communication);
@@ -48,6 +46,7 @@ namespace Logic
             communication = CreateRelationAndAddToDatabase(communication);
             return communication;
         }
+
         public string DeleteById(int id)
         {
             ///deletes the Relations from Communication to Classes

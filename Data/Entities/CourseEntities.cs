@@ -214,7 +214,7 @@ namespace Data.Entities
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.DocumentType).IsRequired();
             });
-            // represents the modelClassroom
+            // represents the model Classroom
             modelBuilder.Entity<Classroom>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -257,7 +257,11 @@ namespace Data.Entities
                 entity.Property(x => x.MainContact).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
                 // connection to a person
-                entity.HasOne(x => x.Person).WithMany(x => x.Contacts).HasForeignKey(x => x.PersonId);
+
+                entity.HasOne(x => x.Person)
+                .WithMany(x => x.Contacts)
+                .HasForeignKey(x => x.PersonId);
+
             });
             // builds model Communication
             modelBuilder.Entity<Communication>(entity =>

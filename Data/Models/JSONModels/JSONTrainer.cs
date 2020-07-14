@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data.Models.JSONModels
 {
-    class JSONTrainer
+    public class JSONTrainer
     {
         /// <summary>
         /// the trainers' id in DB
@@ -20,5 +20,12 @@ namespace Data.Models.JSONModels
         /// the trainers' last name
         /// </summary>
         public string LastName { get; set; }
+
+        public JSONTrainer(int id, string firstName, string lastName)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+        }
     }
 }
