@@ -82,13 +82,13 @@ namespace Logic
                     message.Sender = new MailAddress("testsenderc@gmail.com");
                     message.Subject = "emailTemplate.DocumentType.ToString()";
 
-                    int docNrTemplate=(int)
+               //     int docNrTemplate=(int)
 
          
                     
                    
 
-                    string Body = entities.EmailTemplates.FirstOrDefault( );
+              //      string Body = entities.EmailTemplates.FirstOrDefault( );
 
 
                     message.Body = @"Using this feature, you can send an email message from an application very easily.";
