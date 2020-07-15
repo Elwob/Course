@@ -15,10 +15,10 @@ namespace CourseREST.Controllers
     {
         private CommunicationController communicationController = new CommunicationController();
 
-        [HttpGet("{id}/{className}")]
-        public List<Communication> GetVariousCommunications(int id, EClass className)
+        [HttpGet("{courseId}/{personId}")]
+        public List<Communication> GetVariousCommunications(int courseId, int personId)
         {
-            var communications = communicationController.GetCommunicationsNeeded(id, className);
+            var communications = communicationController.GetCommunicationsNeeded<Course>(courseId, personId);
 
             return communications;
         }
