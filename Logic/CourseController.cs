@@ -209,8 +209,8 @@ namespace Logic
             course.Description = jasonCourse.Description;
             Enum.TryParse(jasonCourse.Category, out ECourseCategory courseCategory);
             course.Category = courseCategory;
-            course.Start = DateTime.ParseExact(jasonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
-            course.End = DateTime.ParseExact(jasonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
+            course.Start = DateTime.ParseExact(jasonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
+            course.End = DateTime.ParseExact(jasonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
             course.Unit = jasonCourse.Units;
             course.Price = jasonCourse.Price;
             course.ClassroomId = jasonCourse.ClassroomId;
