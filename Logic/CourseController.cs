@@ -15,12 +15,18 @@ namespace Logic
 
         RelCourseContentController relCourseContentController = new RelCourseContentController();
         RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
+        RelCourseClassroomController relCourseClassroomController = new RelCourseClassroomController();
         ClassroomController classroomController = new ClassroomController();
 
         public List<JSONCourseSend> GetAllCourses()
         {
             var courses = GetAll();
-            return ConvertCourseToJSON(courses);
+            var jsonCourses = new List<JSONCourseSend>();
+            foreach (var course in courses)
+            {
+                jsonCourses.Add(ConvertCourseToJSON(course));
+            }
+            return jsonCourses;
         }
 
         /// <summary>
@@ -33,7 +39,7 @@ namespace Logic
                 .Include(x => x.CourseContents).ThenInclude(x => x.Content)
                 .Include(x => x.CourseSubventions).ThenInclude(x => x.Subvention)
                 .Include(x => x.CourseTrainers).ThenInclude(x => x.Trainer)
-                .Include(x => x.Classroom)
+                .Include(x => x.CourseClassrooms).ThenInclude(x => x.Classroom)
                 .ToList();
             return courses;
         }
@@ -51,7 +57,12 @@ namespace Logic
             courses = FilterCategory(courses, filter);
             courses = FilterSearch(courses, filter);
             courses = FilterContent(courses, filter);
-            return ConvertCourseToJSON(courses);
+            var jsonCourses = new List<JSONCourseSend>();
+            foreach (var course in courses)
+            {
+                jsonCourses.Add(ConvertCourseToJSON(course));
+            }
+            return jsonCourses;
         }
 
         /// <summary>
@@ -179,7 +190,7 @@ namespace Logic
         /// </summary>
         /// <param name="jsonCourse"></param>
         /// <returns></returns>
-        public Course PostCourse(JSONCourseReceive jsonCourse)
+        public JSONCourseSend PostCourse(JSONCourseReceive jsonCourse)
         {
             Course course = ConvertJSONToCourse(jsonCourse);
             entities.Courses.Add(course);
@@ -194,7 +205,12 @@ namespace Logic
             {
                 relCourseContentController.CreateRelation(course.Id, content);
             }
-            return course;
+            // create classroom relations
+            foreach (var classroom in jsonCourse.ClassroomArr)
+            {
+                relCourseClassroomController.CreateRelation(course.Id, classroom);
+            }
+            return ConvertCourseToJSON(course);
         }
 
         /// <summary>
@@ -213,7 +229,6 @@ namespace Logic
             course.End = DateTime.ParseExact(jasonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
             course.Unit = jasonCourse.Units;
             course.Price = jasonCourse.Price;
-            course.ClassroomId = jasonCourse.ClassroomId;
             course.MaxParticipants = jasonCourse.MaxParticipants;
             course.MinParticipants = jasonCourse.MinParticipants;
             course.CreatedAt = DateTime.Now;
@@ -221,32 +236,30 @@ namespace Logic
             return course;
         }
 
-
-        private List<JSONCourseSend> ConvertCourseToJSON(List<Course> courses)
+        private JSONCourseSend ConvertCourseToJSON(Course course)
         {
-            var jsonCourses = new List<JSONCourseSend>();
-            foreach (var course in courses)
-            {
-                var jC = new JSONCourseSend();
-                jC.Id = course.Id;
-                jC.Title = course.Title;
-                jC.CourseNumber = course.CourseNumber;
-                jC.Description = course.Description;
-                jC.Category = course.Category.ToString();
-                jC.Start = course.Start.ToString();
-                jC.End = course.End.ToString();
-                jC.Content = CreateContentArr(course.Id);
-                jC.Units = course.Unit;
-                jC.Price = course.Price;
-                jC.Classroom = classroomController.ConvertClassroomToJSON(course.Classroom);
-                jC.participant_max = course.MaxParticipants;
-                jC.participant_min = course.MinParticipants;
-                jC.TrainerArr = CreateTrainerArr(course.Id);
-                jC.CreatedAt = course.CreatedAt;
-                jC.ModifiedAt = course.ModifiedAt;
-                jsonCourses.Add(jC);
-            }
-            return jsonCourses;
+            var jC = new JSONCourseSend();
+            jC.Id = course.Id;
+            jC.Title = course.Title;
+            jC.CourseNumber = course.CourseNumber;
+            jC.Description = course.Description;
+            jC.Category = course.Category.ToString();
+            jC.Start = course.Start.ToString();
+            jC.End = course.End.ToString();
+            jC.Content = CreateContentArr(course.Id);
+            jC.Units = course.Unit;
+            jC.Price = course.Price;
+            
+            
+            //jC.ClassroomArr = classroomController.ConvertClassroomToJSON(course.Classroom);
+
+
+            jC.participant_max = course.MaxParticipants;
+            jC.participant_min = course.MinParticipants;
+            jC.TrainerArr = CreateTrainerArr(course.Id);
+            jC.CreatedAt = course.CreatedAt;
+            jC.ModifiedAt = course.ModifiedAt;
+            return jC;
         }
 
         private List<JSONContentSend> CreateContentArr(int courseId)
@@ -289,6 +302,4 @@ namespace Logic
             entities.SaveChanges();
         }
     }
-    
-
 }
