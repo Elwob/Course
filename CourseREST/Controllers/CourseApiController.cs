@@ -46,12 +46,15 @@ namespace CourseREST.Controllers
             return courseController.PostCourse(course);
         }
 
+        //[HttpPut("{id}")]
+        //public Course
+
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
             courseController.DeleteCourse(id);
         }
-    }
+}
 
     /// <summary>
     /// contains all requests concerning CourseCategories
@@ -67,6 +70,4 @@ namespace CourseREST.Controllers
             return Enum.GetNames(typeof(ECourseCategory)).ToList();
         }
     }
-
-
 }
