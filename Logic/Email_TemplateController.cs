@@ -1,8 +1,11 @@
 using Data.Models;
+using DocumentFormat.OpenXml.Bibliography;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,48 +67,39 @@ namespace Logic
                     canvas.SaveState();
                     pdf.Close();
 
-                   //SmtpClient client = new SmtpClient("https://mail.yahoo.com/");
-                    //client.Credentials.GetCredential("smtp.mail.yahoo.com", 465, "Basic").UserName = "sendermartin00@yahoo.com";
-                    //client.Credentials.GetCredential("smtp.mail.yahoo.com", 465, "Basic").Password = "12344321klaus";
 
-                    var x = person.Contacts.FirstOrDefault(ArtOfCommunication => ArtOfCommunication.ArtOfCommunication.Equals("1")).ContactValue.ToString();
 
-                    MailMessage message = new MailMessage("sendermartin00@yahoo.com", person.Contacts.FirstOrDefault(ArtOfCommunication => ArtOfCommunication.ArtOfCommunication.Equals("1")).ContactValue.ToString());
-                    message.Subject = "Using the SmtpClient class.";
+                    SendEmail().Wait();
 
-                    message.Body = @"Using this feature, you can send an email message from an application very easily.";
-                    message.Attachments.Add(new Attachment(destFile));
-                    //SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)587
-                    //{
-                    //    Credentials = new NetworkCredential("sendermartin00@yahoo.com", "12344321klaus"),
-                    //    EnableSsl = false
 
-                    //};
-
-                    //      MailMessage oMail = new MailMessage(new MailAddress("sendermartin00@yahoo.com"), new MailAddress("username@yahoo.com"));
-                    SmtpClient oSmtp = new SmtpClient("https://mail.yahoo.com/");
-                    oSmtp.Host = "smtp.mail.yahoo.com";
-                    oSmtp.Credentials = new NetworkCredential("sendermartin00@yahoo.com", "12344321klaus!");
-                    oSmtp.EnableSsl =false;
-                    oSmtp.Port =587;
-
-                    System.Net.ServicePointManager.Expect100Continue = false;
-
-                    try
-                    {
-                        oSmtp.Send(message);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Exception caught in CreateTestMessage2(): {0}",
-                            ex.ToString());
-                    }
 
                     Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
                     communications.Add(communication);
                 }
             }
             return communications;
+        }
+        public async SendEmail()
+        {
+
+            var apiKey = Environment.GetEnvironmentVariable("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");
+
+            var client = new SendGridClient(apiKey);
+
+            var from = new EmailAddress("sendermartin00@yahoo.com", "sendermartin00");
+
+            var subject = "Sending with SendGrid is Fun";
+
+            var to = new EmailAddress("Martinus_Burtscher@yahoo.de", "Martin Burtscher");
+
+            var plainTextContent = "and easy to do anywhere, even with C#";
+
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            var response = await client.SendEmailAsync(msg);
+
         }
     }
 }
