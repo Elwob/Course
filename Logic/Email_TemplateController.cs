@@ -77,15 +77,28 @@ namespace Logic
         {
             var apiKey = "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";
 
-            var client = new SendGridClient(apiKey);
 
-            var from = new EmailAddress("sendermartin00@DCV.at");
+                    MailMessage message = new MailMessage("testsenderc@gmail.com", x);
+                    message.Sender = new MailAddress("testsenderc@gmail.com");
+                    message.Subject = "Using the SmtpClient class.";
 
-            var subject = "Sending with SendGrid is Fun";
+                    message.Body = @"Using this feature, you can send an email message from an application very easily.";
+                    message.Attachments.Add(new Attachment(destFile));
+                    //SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)oder TLS"587"
 
-            var to = new EmailAddress("Martinus_Burtscher@yahoo.de");
+                    //Todo Remove Testsender !
 
-            var plainTextContent = "and easy to do anywhere, even with C#";
+                    SmtpClient oSmtp = new SmtpClient("smtp.gmail.com");
+                    oSmtp.Host = "smtp.gmail.com";
+                    oSmtp.Credentials = new NetworkCredential("testsenderc@gmail.com", "Uv8ZDFSWfPQVZ6e");
+                    oSmtp.EnableSsl = true;
+                    oSmtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    oSmtp.Port = 587;
+
+
+
+                    oSmtp.Send(message);
+
 
             var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
 
