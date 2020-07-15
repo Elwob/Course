@@ -7,7 +7,7 @@ namespace Data.Models
     /// <summary>
     /// contains information to a certain email template
     /// </summary>
-    [Table("EmailTemplate")]
+    [Table("email_template")]
     public class EmailTemplate
     {
         /// <summary>
