@@ -62,7 +62,7 @@ namespace Logic
                         .MoveText(pagesize.GetWidth() / 2 - 24, pagesize.GetHeight() - 10)
                         .ShowText($"{ person.FirstName.ToString()}" + "," + $"{person.LastName.ToString()}")
                         .EndText();
-
+  
                     canvas.SaveState();
                     pdf.Close();
 
