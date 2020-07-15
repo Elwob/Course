@@ -18,6 +18,10 @@ namespace Logic
             {
                 var jId = room.Id;
                 var jRoom = room.Title;
+                if (room.Title == "" || room.Title == null)
+                {
+                    jRoom = room.Room;
+                }
                 string jPlace = "unknown";
                 try
                 {
@@ -38,6 +42,16 @@ namespace Logic
                 
             }
             return rooms;
+        }
+
+        public List<JSONClassroom> CreateClassroomArr(int courseId)
+        {
+            var jsonClassrooms = new List<JSONClassroom>();
+            // get all course-classroom relations where a certain course exists
+            var relations = entities.RelCourseClassrooms.Where(x => x.CourseId == courseId).ToList();
+            // filter classrooms for existing course-classroom relations
+            var c = GetRooms();
+            return c.Where(x => relations.Any(z => x.Id == z.ClassroomId)).ToList();
         }
 
         public JSONClassroom ConvertClassroomToJSON(Classroom classroom)

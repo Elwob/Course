@@ -212,6 +212,23 @@ namespace Logic
             }
             return ConvertCourseToJSON(course);
         }
+        /// <summary>
+        /// updates an existing course in DB
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="courseReceive"></param>
+        /// <returns></returns>
+        public JSONCourseSend UpdateCourse(int courseId, JSONCourseReceive courseReceive)
+        {
+            Course courseNew = ConvertJSONToCourse(courseReceive);
+            courseNew.Id = courseId;
+            entities.Entry(entities.Courses.FirstOrDefault(x => x.Id == courseId)).CurrentValues.SetValues(courseNew);
+            //var course = entities.Courses.FirstOrDefault(x => x.Id == courseId);
+            //course = courseNew;
+            entities.SaveChanges();
+
+            return ConvertCourseToJSON(entities.Courses.FirstOrDefault(x => x.Id == courseId));
+        }
 
         /// <summary>
         /// converts a JSONCourseReceive to Course
@@ -227,7 +244,7 @@ namespace Logic
             course.Category = courseCategory;
             course.Start = DateTime.ParseExact(jasonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
             course.End = DateTime.ParseExact(jasonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
-            course.Unit = jasonCourse.Units;
+            course.Unit = jasonCourse.Unit;
             course.Price = jasonCourse.Price;
             course.MaxParticipants = jasonCourse.MaxParticipants;
             course.MinParticipants = jasonCourse.MinParticipants;
@@ -249,7 +266,7 @@ namespace Logic
             jC.Content = CreateContentArr(course.Id);
             jC.Units = course.Unit;
             jC.Price = course.Price;
-            
+            jC.ClassroomArr = classroomController.CreateClassroomArr(course.Id);
             
             //jC.ClassroomArr = classroomController.ConvertClassroomToJSON(course.Classroom);
 

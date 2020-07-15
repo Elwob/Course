@@ -46,8 +46,11 @@ namespace CourseREST.Controllers
             return courseController.PostCourse(course);
         }
 
-        //[HttpPut("{id}")]
-        //public Course
+        [HttpPut("{id}")]
+        public JSONCourseSend Put(int id, [FromBody] JSONCourseReceive course)
+        {
+            return courseController.UpdateCourse(id, course);
+        }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
