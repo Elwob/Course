@@ -1,5 +1,4 @@
 ﻿using Data.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,23 +7,12 @@ namespace Logic
 {
     public class CommunicationController : MainController
     {
-        public List<Communication> GetCommunicationsNeeded<T>(int classId, int participantId)
+        public List<Communication> GetCommunicationsNeeded(int id, EClass className)
         {
-            var person = entities.Persons.FirstOrDefault(c => c.Id == participantId);
-            if (person != null)
-            {
-                List<Communication> communicationsFromCourse = entities.RelCommunicationClasses
-                                                                .Where(x => x.ClassId == classId && x.Class == typeof(T).Name)
-                                                                .Include(c => c.Communication).ThenInclude(c => c.Document)
-                                                                .Select(c => c.Communication).ToList();
-                                                                
+            List<Communication> communications = entities.RelCommunicationClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).
+                                                    Select(c => c.Communication).ToList();
 
-                List<Communication> communicationsConcerningOneParticipant = communicationsFromCourse.Where(x => x.PersonId == participantId).ToList();
-                return communicationsConcerningOneParticipant;
-            }
-
-
-            return null;
+            return communications;
         }
 
         public Communication CreateRelationAndAddToDatabase(Communication communication)
@@ -115,26 +103,20 @@ namespace Logic
         public Communication CheckIfIdToConnectWithExists(Communication communication)
         {
             var person = entities.Persons.FirstOrDefault(c => c.Id == communication.PersonId);
-            var trainer = entities.Persons.FirstOrDefault(c => c.Id == communication.TrainerId);
             var course = entities.Courses.FirstOrDefault(c => c.Id == communication.CourseId);
-            if (person == null)
+            if (person == null && course == null)
             {
-                ///because a communication must always be assigned to a person, we return null
                 return null;
             }
-            else if (trainer == null && course == null)
+            else if (person == null && course != null)
             {
-                ///in this case we return null, because otherwise we get no entry in RelCommunicationClass 
-                return null;      
+                ///because a communication must always be assigned to a person, we return null although course is not null
+                return null;
+                
             }
-            else if (course == null && trainer != null)
+            else if (course == null && person != null)
             {
                 communication.CourseId = null;
-                return communication;
-            }
-            else if (trainer == null && course != null)
-            {
-                communication.TrainerId = null;
                 return communication;
             }
             else return communication;
