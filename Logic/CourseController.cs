@@ -17,6 +17,12 @@ namespace Logic
         RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
         ClassroomController classroomController = new ClassroomController();
 
+        public List<JSONCourseSend> GetAllCourses()
+        {
+            var courses = GetAll();
+            return ConvertCourseToJSON(courses);
+        }
+
         /// <summary>
         /// returns a list of all courses in DB
         /// </summary>
@@ -276,10 +282,13 @@ namespace Logic
             }
             return jsonTrainers;
         }
+
+        public void DeleteCourse(int id)
+        {
+            entities.Courses.Remove(entities.Courses.Single(x => x.Id == id));
+            entities.SaveChanges();
+        }
     }
-    //// get all course-trainer relations where a certain trainer exists
-    //var relations = entities.RelCourseTrainers.Where(x => x.TrainerId == filter.trainer_id).ToList();
-    //// filter courses for existing course-trainer relations
-    //courses = courses.Where(x => relations.Any(z => x.Id == z.CourseId)).ToList();
+    
 
 }

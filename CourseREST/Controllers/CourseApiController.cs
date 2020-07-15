@@ -27,6 +27,12 @@ namespace CourseREST.Controllers
             Classroom.ShouldIgnoreRelation = true;
         }
 
+        [HttpGet]
+        public List<JSONCourseSend> GetAll()
+        {
+            return courseController.GetAllCourses();
+        }
+
         [Route("search")]
         [HttpPost]
         public List<JSONCourseSend> Get([FromBody] CourseFilter filter)
@@ -38,6 +44,12 @@ namespace CourseREST.Controllers
         public Course Post([FromBody] JSONCourseReceive course)
         {
             return courseController.PostCourse(course);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            courseController.DeleteCourse(id);
         }
     }
 
