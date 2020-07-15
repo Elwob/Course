@@ -110,6 +110,11 @@ namespace Data.Entities
         public DbSet<RelClassroomAddress> RelClassroomAddresses { get; set; }
 
         /// <summary>
+        /// contains all relations between courses and classrooms
+        /// </summary>
+        public DbSet<RelCourseClassroom> RelCourseClassrooms { get; set; }
+
+        /// <summary>
         /// the singleton instance handed if method CourseEntities.GetInstance() is called
         /// </summary>
         private static CourseEntities instance = null;
@@ -167,10 +172,6 @@ namespace Data.Entities
                 entity.Property(x => x.Title).IsRequired();
                 entity.Property(x => x.Category).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
-                // connection to a classroom
-                entity.HasOne(x => x.Classroom)
-                .WithMany(x => x.Courses)
-                .HasForeignKey(x => x.ClassroomId);
             });
             // represents the model Subvention
             modelBuilder.Entity<Subvention>(entity =>
@@ -409,6 +410,21 @@ namespace Data.Entities
                 entity.HasOne(t => t.Trainer)
                 .WithMany(r => r.RelCourseTrainers)
                 .HasForeignKey(t => t.TrainerId);
+            });
+            // represents the n:m relation between courses and classrooms
+            modelBuilder.Entity<RelCourseClassroom>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.CourseId).IsRequired();
+                entity.Property(x => x.ClassroomId).IsRequired();
+                // connection to n courses
+                entity.HasOne(c => c.Course)
+                .WithMany(r => r.CourseClassrooms)
+                .HasForeignKey(c => c.CourseId);
+                // connection to n classrooms
+                entity.HasOne(c => c.Classroom)
+                .WithMany(r => r.ClassroomCourses)
+                .HasForeignKey(c => c.ClassroomId);
             });
         }
     }

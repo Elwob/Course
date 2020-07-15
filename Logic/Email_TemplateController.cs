@@ -3,12 +3,12 @@ using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
-using System;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
+using System.Threading.Tasks;
 using Document = iText.Layout.Document;
+using Person = Data.Models.Person;
 using Rectangle = iText.Kernel.Geom.Rectangle;
 
 namespace Logic
@@ -64,11 +64,19 @@ namespace Logic
                     canvas.SaveState();
                     pdf.Close();
 
-                   //SmtpClient client = new SmtpClient("https://mail.yahoo.com/");
-                    //client.Credentials.GetCredential("smtp.mail.yahoo.com", 465, "Basic").UserName = "sendermartin00@yahoo.com";
-                    //client.Credentials.GetCredential("smtp.mail.yahoo.com", 465, "Basic").Password = "12344321klaus";
+                    SendEmail().Wait();
 
-                    var x = person.Contacts.FirstOrDefault(ArtOfCommunication => ArtOfCommunication.ArtOfCommunication.Equals("1")).ContactValue.ToString();
+                    Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
+                    communications.Add(communication);
+                }
+            }
+            return communications;
+        }
+
+        public async Task SendEmail()
+        {
+            var apiKey = "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";
+
 
                     MailMessage message = new MailMessage("testsenderc@gmail.com", x);
                     message.Sender = new MailAddress("testsenderc@gmail.com");
@@ -91,21 +99,12 @@ namespace Logic
 
                     oSmtp.Send(message);
 
-                    try
-                    {
-                        oSmtp.Send(message);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Exception caught in CreateTestMessage2(): {0}",
-                            ex.ToString());
-                    }
 
-                    Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
-                    communications.Add(communication);
-                }
-            }
-            return communications;
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            var response = await client.SendEmailAsync(msg);
         }
     }
 }

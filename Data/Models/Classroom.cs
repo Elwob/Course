@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Data.Models.Relations;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
@@ -34,12 +35,6 @@ namespace Data.Models
         public int? FacilityId { get; set; }
 
         /// <summary>
-        /// ??? what for ???
-        /// </summary>
-        [Column("course_id")]
-        public int? CourseId { get; set; }
-
-        /// <summary>
         /// ???
         /// </summary>
         [Column("image")]
@@ -63,18 +58,19 @@ namespace Data.Models
         [Column("subtitle")]
         public string? Subtitle { get; set; }
 
-        private List<Course> _classroomCourses;
+        private List<RelCourseClassroom> _classroomCourses;
+
         /// <summary>
         /// needed for linking
         /// </summary>
         [NotMapped]
-        public List<Course> Courses 
+        public List<RelCourseClassroom> ClassroomCourses 
         {
             get
             {
                 if (ShouldIgnoreRelation)
                 {
-                    return new List<Course>();
+                    return new List<RelCourseClassroom>();
                 }
                 else
                 {

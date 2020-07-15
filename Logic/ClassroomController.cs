@@ -17,7 +17,7 @@ namespace Logic
             foreach (var room in entities.Classrooms.ToList())
             {
                 var jId = room.Id;
-                var jRoom = room.Room;
+                var jRoom = room.Title;
                 string jPlace = "unknown";
                 try
                 {

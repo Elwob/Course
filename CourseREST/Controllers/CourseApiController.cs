@@ -27,6 +27,12 @@ namespace CourseREST.Controllers
             Classroom.ShouldIgnoreRelation = true;
         }
 
+        [HttpGet]
+        public List<JSONCourseSend> GetAll()
+        {
+            return courseController.GetAllCourses();
+        }
+
         [Route("search")]
         [HttpPost]
         public List<JSONCourseSend> Get([FromBody] CourseFilter filter)
@@ -35,11 +41,20 @@ namespace CourseREST.Controllers
         }
 
         [HttpPost]
-        public Course Post([FromBody] JSONCourseReceive course)
+        public JSONCourseSend Post([FromBody] JSONCourseReceive course)
         {
             return courseController.PostCourse(course);
         }
-    }
+
+        //[HttpPut("{id}")]
+        //public Course
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            courseController.DeleteCourse(id);
+        }
+}
 
     /// <summary>
     /// contains all requests concerning CourseCategories
@@ -55,6 +70,4 @@ namespace CourseREST.Controllers
             return Enum.GetNames(typeof(ECourseCategory)).ToList();
         }
     }
-
-
 }
