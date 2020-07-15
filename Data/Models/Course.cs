@@ -1,3 +1,4 @@
+using Data.Models.Relations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PersonData;
@@ -64,12 +65,6 @@ namespace Data.Models
         public double? Price { get; set; }
 
         /// <summary>
-        /// the id of the classromm the course is held in
-        /// </summary>
-        [Column("classroom_id")]
-        public int? ClassroomId { get; set; }
-
-        /// <summary>
         /// the amount of maximum participants
         /// </summary>
         [Column("participant_max")]
@@ -103,9 +98,9 @@ namespace Data.Models
         public List<Absence> Absences { get; set; }
 
         /// <summary>
-        /// needed for linking
+        /// a list of relations to the courses' classrooms
         /// </summary>
         [NotMapped]
-        public Classroom Classroom { get; set; }
+        public List<RelCourseClassroom> CourseClassrooms { get; set; }
     }
 }

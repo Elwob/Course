@@ -49,9 +49,9 @@ namespace Data.Models.JSONModels
         public double? Price { get; set; }
 
         /// <summary>
-        /// the id of the classromm the course is held in
+        /// a list of classrooms the course is held in
         /// </summary>
-        public int? ClassroomId { get; set; }
+        public List<JSONClassroom> ClassroomArr { get; set; }
 
         /// <summary>
         /// the amount of maximum participants
