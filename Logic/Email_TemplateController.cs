@@ -70,26 +70,26 @@ namespace Logic
 
                     var x = person.Contacts.FirstOrDefault(ArtOfCommunication => ArtOfCommunication.ArtOfCommunication.Equals("1")).ContactValue.ToString();
 
-                    MailMessage message = new MailMessage("sendermartin00@yahoo.com", person.Contacts.FirstOrDefault(ArtOfCommunication => ArtOfCommunication.ArtOfCommunication.Equals("1")).ContactValue.ToString());
+                    MailMessage message = new MailMessage("testsenderc@gmail.com", x);
+                    message.Sender = new MailAddress("testsenderc@gmail.com");
                     message.Subject = "Using the SmtpClient class.";
 
                     message.Body = @"Using this feature, you can send an email message from an application very easily.";
                     message.Attachments.Add(new Attachment(destFile));
-                    //SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)587
-                    //{
-                    //    Credentials = new NetworkCredential("sendermartin00@yahoo.com", "12344321klaus"),
-                    //    EnableSsl = false
+                    //SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)oder TLS"587"
 
-                    //};
+                    //Todo Remove Testsender !
 
-                    //      MailMessage oMail = new MailMessage(new MailAddress("sendermartin00@yahoo.com"), new MailAddress("username@yahoo.com"));
-                    SmtpClient oSmtp = new SmtpClient("https://mail.yahoo.com/");
-                    oSmtp.Host = "smtp.mail.yahoo.com";
-                    oSmtp.Credentials = new NetworkCredential("sendermartin00@yahoo.com", "12344321klaus!");
-                    oSmtp.EnableSsl =false;
-                    oSmtp.Port =587;
+                    SmtpClient oSmtp = new SmtpClient("smtp.gmail.com");
+                    oSmtp.Host = "smtp.gmail.com";
+                    oSmtp.Credentials = new NetworkCredential("testsenderc@gmail.com", "Uv8ZDFSWfPQVZ6e");
+                    oSmtp.EnableSsl = true;
+                    oSmtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    oSmtp.Port = 587;
 
-                    System.Net.ServicePointManager.Expect100Continue = false;
+
+
+                    oSmtp.Send(message);
 
                     try
                     {

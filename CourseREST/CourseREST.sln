@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseREST", "CourseREST.csproj", "{F1E4754D-4D8F-4446-97D2-E8ECD8A2A5A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseREST", "CourseREST.csproj", "{F1E4754D-4D8F-4446-97D2-E8ECD8A2A5A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "..\Logic\Logic.csproj", "{96B21B57-BCD9-4863-9B0B-B39556597B62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "..\Logic\Logic.csproj", "{96B21B57-BCD9-4863-9B0B-B39556597B62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "..\Data\Data.csproj", "{CA2A44EE-E580-4736-9DE3-82FD2541E1CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "..\Data\Data.csproj", "{CA2A44EE-E580-4736-9DE3-82FD2541E1CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "..\UnitTestProject1\UnitTestProject1.csproj", "{C9DBD655-7C2E-421A-B49B-4D64B9F3F8EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{CA2A44EE-E580-4736-9DE3-82FD2541E1CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA2A44EE-E580-4736-9DE3-82FD2541E1CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA2A44EE-E580-4736-9DE3-82FD2541E1CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9DBD655-7C2E-421A-B49B-4D64B9F3F8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9DBD655-7C2E-421A-B49B-4D64B9F3F8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9DBD655-7C2E-421A-B49B-4D64B9F3F8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9DBD655-7C2E-421A-B49B-4D64B9F3F8EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
