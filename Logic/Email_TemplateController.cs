@@ -3,9 +3,11 @@ using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
+using Org.BouncyCastle.Asn1.X509;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -19,6 +21,12 @@ namespace Logic
     {
         private DocumentController documentController = new DocumentController();
         private PersonController personController = new PersonController();
+
+    public EmailTemplate    GetEmailTemplate(int id)
+        {
+            var emailTemplate = (EmailTemplate)entities.EmailTemplates.Where(DocumentId => DocumentId.Equals(id));
+            return emailTemplate;
+        }
 
         public List<Communication> FillDocuments(EmailTemplate emailTemplate)
 
@@ -66,9 +74,14 @@ namespace Logic
                     canvas.SaveState();
                     pdf.Close();
 
+                   // person.Gender.ToString()
                     MailMessage message = new MailMessage("testsenderc@gmail.com", "martinus_burtscher@yahoo.de");
                     message.Sender = new MailAddress("testsenderc@gmail.com");
-                    message.Subject = "Using the SmtpClient class.";
+                    message.Subject = "emailTemplate.DocumentType.ToString()";
+
+
+
+                   string Body= 
 
                     message.Body = @"Using this feature, you can send an email message from an application very easily.";
                     //message.Attachments.Add(new Attachment(destFile));

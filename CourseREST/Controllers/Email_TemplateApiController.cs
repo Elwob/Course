@@ -21,5 +21,11 @@ namespace CourseREST.Controllers
             return communications;
             
         }
+        [HttpGet]
+        public EmailTemplate GetEmailTemplate (int id)
+        {
+            var emailTemplate = email_TemplateController.GetEmailTemplate(int id);
+        return emailTemplate;
+        }
     }
 }
