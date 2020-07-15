@@ -83,15 +83,15 @@ namespace Logic
                     message.Subject = "emailTemplate.DocumentType.ToString()";
 
                     //     int document template number
-                    int getDocumentNr = (int)emailTemplate.DocumentType;
+                    int getDocumentNr = (int)emailTemplate.DocumentType+1;
 
                     EmailTemplate emailTemplateForText = entities.EmailTemplates.FirstOrDefault(id => id.Id == getDocumentNr);
                     string Body = emailTemplateForText.Text;
-                   
-                
+                    Body = Body.Replace("{Geschlecht}",person.Gender);
+                    Body = Body.Replace("{Vorname}", person.FirstName);
+                    Body = Body.Replace("{Vorname}", person.FirstName);
 
-
-                    message.Body = @"Using this feature, you can send an email message from an application very easily.";
+                    message.Body = Body;
                     //message.Attachments.Add(new Attachment(destFile));
                     //SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)587
 
