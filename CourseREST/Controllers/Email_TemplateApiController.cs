@@ -24,7 +24,7 @@ namespace CourseREST.Controllers
         [HttpGet]
         public EmailTemplate GetEmailTemplate (int id)
         {
-            var emailTemplate = email_TemplateController.GetEmailTemplate(int id);
+            var emailTemplate = email_TemplateController.GetEmailTemplate( id);
         return emailTemplate;
         }
     }

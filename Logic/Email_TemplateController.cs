@@ -1,4 +1,5 @@
 using Data.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Document = iText.Layout.Document;
 using Person = Data.Models.Person;
@@ -79,9 +81,12 @@ namespace Logic
                     message.Sender = new MailAddress("testsenderc@gmail.com");
                     message.Subject = "emailTemplate.DocumentType.ToString()";
 
+                    int docNrTemplate=(int)
 
+                 EDocumentType Document=(EDocumentType)emailTemplate.DocumentType.ToString();
 
-                   string Body= 
+                    string Body = entities.EmailTemplates.FirstOrDefault( );
+
 
                     message.Body = @"Using this feature, you can send an email message from an application very easily.";
                     //message.Attachments.Add(new Attachment(destFile));
