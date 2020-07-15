@@ -50,5 +50,6 @@ namespace Data.Models
         [NotMapped]
         public string Comment { get; set; }
 
+        
     }
 }

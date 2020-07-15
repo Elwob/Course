@@ -14,7 +14,7 @@ namespace CourseREST.Controllers
         private Email_TemplateController email_TemplateController = new Email_TemplateController();
 
         [HttpPost]
-        public List<Communication> FillDocuments(EmailTemplate emailTemplate)
+        public List<Communication> FillDocuments([FromBody] EmailTemplate emailTemplate)
         {
             var communications = email_TemplateController.FillDocuments(emailTemplate);
 
