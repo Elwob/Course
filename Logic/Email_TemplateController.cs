@@ -1,17 +1,14 @@
 using Data.Models;
-using DocumentFormat.OpenXml.Bibliography;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
+using System.Threading.Tasks;
 using Document = iText.Layout.Document;
+using Person = Data.Models.Person;
 using Rectangle = iText.Kernel.Geom.Rectangle;
 
 namespace Logic
@@ -67,11 +64,7 @@ namespace Logic
                     canvas.SaveState();
                     pdf.Close();
 
-
-
                     SendEmail().Wait();
-
-
 
                     Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
                     communications.Add(communication);
@@ -79,18 +72,18 @@ namespace Logic
             }
             return communications;
         }
-        public async SendEmail()
-        {
 
-            var apiKey = Environment.GetEnvironmentVariable("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");
+        public async Task SendEmail()
+        {
+            var apiKey = "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";
 
             var client = new SendGridClient(apiKey);
 
-            var from = new EmailAddress("sendermartin00@yahoo.com", "sendermartin00");
+            var from = new EmailAddress("sendermartin00@DCV.at");
 
             var subject = "Sending with SendGrid is Fun";
 
-            var to = new EmailAddress("Martinus_Burtscher@yahoo.de", "Martin Burtscher");
+            var to = new EmailAddress("Martinus_Burtscher@yahoo.de");
 
             var plainTextContent = "and easy to do anywhere, even with C#";
 
@@ -99,7 +92,6 @@ namespace Logic
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
 
             var response = await client.SendEmailAsync(msg);
-
         }
     }
 }
