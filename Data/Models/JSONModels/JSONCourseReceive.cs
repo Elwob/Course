@@ -41,7 +41,7 @@ namespace Data.Models.JSONModels
         /// <summary>
         /// the amount a teaching units of the course
         /// </summary>
-        public int? Units { get; set; }
+        public int? Unit { get; set; }
 
         /// <summary>
         /// the price of the course
@@ -51,7 +51,7 @@ namespace Data.Models.JSONModels
         /// <summary>
         /// a list of classrooms the course is held in
         /// </summary>
-        public List<JSONClassroom> ClassroomArr { get; set; }
+        public List<int> ClassroomArr { get; set; }
 
         /// <summary>
         /// the amount of maximum participants

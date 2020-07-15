@@ -29,7 +29,6 @@ namespace CourseREST.Controllers
         public Content Post([FromBody] Content recContent)
         {
             return contentController.PostContent(recContent);
-            //return null;
         }
 
         [HttpPut("{id}")]

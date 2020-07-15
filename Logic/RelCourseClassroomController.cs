@@ -9,9 +9,9 @@ namespace Logic
 {
     internal class RelCourseClassroomController : MainController
     {
-        public void CreateRelation(int courseId, JSONClassroom classroom)
+        public void CreateRelation(int courseId, int classroomId)
         {
-            entities.RelCourseClassrooms.Add(new RelCourseClassroom() { CourseId = courseId, ClassroomId = classroom.Id });
+            entities.RelCourseClassrooms.Add(new RelCourseClassroom() { CourseId = courseId, ClassroomId = classroomId });
             entities.SaveChanges();
         }
     }
