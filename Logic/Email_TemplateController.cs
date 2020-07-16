@@ -79,7 +79,7 @@ namespace Logic
                     // person.Gender.ToString()
                     MailMessage message = new MailMessage("testsenderc@gmail.com",contact.ContactValue);
                     message.Sender = new MailAddress("testsenderc@gmail.com");
-                    message.Subject = "emailTemplate.DocumentType.ToString()";
+                    message.Subject = emailTemplate.DocumentType.ToString();
 
                     //     int document template number
                     int getDocumentNr = (int)emailTemplate.DocumentType+1;
@@ -94,12 +94,13 @@ namespace Logic
                     body = body.Replace("{Kurstitel}", courseName);
 
                     message.Body = body;
-                  
+
                     //SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)587
 
                     //Todo Remove Testsender !
-
+                 
                     SmtpClient oSmtp = new SmtpClient("smtp.gmail.com");
+                    oSmtp.UseDefaultCredentials = false;
                     oSmtp.Host = "smtp.gmail.com";
                     oSmtp.Credentials = new NetworkCredential("testsenderc@gmail.com", "Uv8ZDFSWfPQVZ6e");
                     oSmtp.EnableSsl = true;
