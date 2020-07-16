@@ -57,7 +57,7 @@ namespace CourseREST.Controllers
         {
             courseController.DeleteCourse(id);
         }
-}
+    }
 
     /// <summary>
     /// contains all requests concerning CourseCategories
