@@ -12,12 +12,15 @@ namespace Logic
     public class CourseController
     {
         private CourseEntities entities = CourseEntities.GetInstance();
-
         RelCourseContentController relCourseContentController = new RelCourseContentController();
         RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
         RelCourseClassroomController relCourseClassroomController = new RelCourseClassroomController();
         ClassroomController classroomController = new ClassroomController();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<JSONCourseSend> GetAllCourses()
         {
             var courses = GetAll();
@@ -212,6 +215,7 @@ namespace Logic
             }
             return ConvertCourseToJSON(course);
         }
+
         /// <summary>
         /// updates an existing course in DB
         /// </summary>
@@ -223,10 +227,13 @@ namespace Logic
             Course courseNew = ConvertJSONToCourse(courseReceive);
             courseNew.Id = courseId;
             entities.Entry(entities.Courses.FirstOrDefault(x => x.Id == courseId)).CurrentValues.SetValues(courseNew);
-            //var course = entities.Courses.FirstOrDefault(x => x.Id == courseId);
-            //course = courseNew;
             entities.SaveChanges();
-
+            // update trainer relations
+            relCourseTrainerController.UpdateRelations(courseId, courseReceive.TrainerArr);
+            // update content relations
+            relCourseContentController.UpdateRelations(courseId, courseReceive.ContentArr);
+            // update classroom relations
+            relCourseClassroomController.UpdateRelations(courseId, courseReceive.ClassroomArr);
             return ConvertCourseToJSON(entities.Courses.FirstOrDefault(x => x.Id == courseId));
         }
 
@@ -253,6 +260,11 @@ namespace Logic
             return course;
         }
 
+        /// <summary>
+        /// converts a Course to a JSONCourseSend
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         private JSONCourseSend ConvertCourseToJSON(Course course)
         {
             var jC = new JSONCourseSend();
@@ -267,10 +279,6 @@ namespace Logic
             jC.Units = course.Unit;
             jC.Price = course.Price;
             jC.ClassroomArr = classroomController.CreateClassroomArr(course.Id);
-            
-            //jC.ClassroomArr = classroomController.ConvertClassroomToJSON(course.Classroom);
-
-
             jC.participant_max = course.MaxParticipants;
             jC.participant_min = course.MinParticipants;
             jC.TrainerArr = CreateTrainerArr(course.Id);
@@ -279,6 +287,11 @@ namespace Logic
             return jC;
         }
 
+        /// <summary>
+        /// creates a list of JSONContentSends for a specific course
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
         private List<JSONContentSend> CreateContentArr(int courseId)
         {
             var jsonContents = new List<JSONContentSend>();
@@ -298,6 +311,11 @@ namespace Logic
             return jsonContents;
         }
 
+        /// <summary>
+        /// creates a list of JSONTrainers for a specific course
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
         private List<JSONTrainer> CreateTrainerArr(int courseId)
         {
             var jsonTrainers = new List<JSONTrainer>();
@@ -313,6 +331,10 @@ namespace Logic
             return jsonTrainers;
         }
 
+        /// <summary>
+        /// deletes a certain course in db
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteCourse(int id)
         {
             entities.Courses.Remove(entities.Courses.Single(x => x.Id == id));
