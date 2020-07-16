@@ -70,6 +70,11 @@ namespace Data.Entities
         public DbSet<Classroom> Classrooms { get; set; }
 
         /// <summary>
+        /// contains all possible course categories
+        /// </summary>
+        public DbSet<CourseCategory> CourseCategories { get; set; }
+
+        /// <summary>
         /// contains all relations between courses and contents existing in DB
         /// </summary>
         public DbSet<RelCourseContent> RelCourseContents { get; set; }
@@ -220,6 +225,14 @@ namespace Data.Entities
             {
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.Room).IsRequired();
+            });
+            // represents the model 
+            modelBuilder.Entity<CourseCategory>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Name).IsRequired();
+                entity.Property(x => x.Color).IsRequired();
+                entity.Property(x => x.FontColor).IsRequired();
             });
         }
 
