@@ -233,9 +233,7 @@ namespace Data.Entities
             modelBuilder.Entity<Person>(entity =>
             {
                 entity.HasKey(x => x.Id);
-                entity.Property(x => x.FirstName).IsRequired();
                 entity.Property(x => x.LastName).IsRequired();
-                entity.Property(x => x.Function).IsRequired();
                 entity.Property(x => x.Active).IsRequired();
                 entity.Property(x => x.Deleted).IsRequired();
                 entity.Property(x => x.WantsNewsletter).IsRequired();
