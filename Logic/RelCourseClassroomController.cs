@@ -9,12 +9,22 @@ namespace Logic
     /// </summary>
     internal class RelCourseClassroomController : MainController
     {
+        /// <summary>
+        ///  creates relations between courses and classrooms
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="classroomId"></param>
         public void CreateRelation(int courseId, int classroomId)
         {
             entities.RelCourseClassrooms.Add(new RelCourseClassroom() { CourseId = courseId, ClassroomId = classroomId });
             entities.SaveChanges();
         }
 
+        /// <summary>
+        /// Updates relations between courses and classrooms
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="classroomIds"></param>
         public void UpdateRelations(int courseId, List<int> classroomIds)
         {
             // add not already existing relations

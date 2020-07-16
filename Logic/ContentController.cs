@@ -25,7 +25,6 @@ namespace Logic
         /// <returns></returns>
         public Content PostContent(Content recContent)
         {
-            //entities.Contents.Add(new Content(recContent.Topic, recContent.Description, recContent.UnitEstimation));
             entities.Contents.Add(recContent);
             entities.SaveChanges();
             return recContent;

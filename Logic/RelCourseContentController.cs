@@ -10,12 +10,22 @@ namespace Logic
 {
     internal class RelCourseContentController : MainController
     {
+        /// <summary>
+        /// creates relations between courses and contents
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="content"></param>
         public void CreateRelation(int courseId, JSONContentReceive content)
         {
             entities.RelCourseContents.Add(new RelCourseContent() { CourseId = courseId, ContentId = content.Id, Units = content.Units });
             entities.SaveChanges();
         }
 
+        /// <summary>
+        /// Updates relations between courses and contents
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="contents"></param>
         public void UpdateRelations(int courseId, List<JSONContentReceive> contents)
         {
             // add not already existing relations

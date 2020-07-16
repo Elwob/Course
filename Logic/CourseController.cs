@@ -135,8 +135,7 @@ namespace Logic
         {
             if (filter.category != null && filter.category.Length > 0)
             {
-                Enum.TryParse(filter.category, out ECourseCategory category);
-                courses = courses.Where(x => x.Category == category).ToList();
+                courses = courses.Where(x => x.Category == filter.category).ToList();
             }
             return courses;
         }
@@ -241,20 +240,19 @@ namespace Logic
         /// converts a JSONCourseReceive to Course
         /// </summary>
         /// <returns></returns>
-        private Course ConvertJSONToCourse(JSONCourseReceive jasonCourse)
+        private Course ConvertJSONToCourse(JSONCourseReceive jsonCourse)
         {
             var course = new Course();
-            course.Title = jasonCourse.Title;
-            course.CourseNumber = jasonCourse.CourseNumber;
-            course.Description = jasonCourse.Description;
-            Enum.TryParse(jasonCourse.Category, out ECourseCategory courseCategory);
-            course.Category = courseCategory;
-            course.Start = DateTime.ParseExact(jasonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
-            course.End = DateTime.ParseExact(jasonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
-            course.Unit = jasonCourse.Unit;
-            course.Price = jasonCourse.Price;
-            course.MaxParticipants = jasonCourse.MaxParticipants;
-            course.MinParticipants = jasonCourse.MinParticipants;
+            course.Title = jsonCourse.Title;
+            course.CourseNumber = jsonCourse.CourseNumber;
+            course.Description = jsonCourse.Description;
+            course.Category = jsonCourse.Category;
+            course.Start = DateTime.ParseExact(jsonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
+            course.End = DateTime.ParseExact(jsonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
+            course.Unit = jsonCourse.Unit;
+            course.Price = jsonCourse.Price;
+            course.MaxParticipants = jsonCourse.MaxParticipants;
+            course.MinParticipants = jsonCourse.MinParticipants;
             course.CreatedAt = DateTime.Now;
             course.ModifiedAt = DateTime.Now;
             return course;
@@ -272,7 +270,7 @@ namespace Logic
             jC.Title = course.Title;
             jC.CourseNumber = course.CourseNumber;
             jC.Description = course.Description;
-            jC.Category = course.Category.ToString();
+            jC.Category = course.Category;
             jC.Start = course.Start.ToString();
             jC.End = course.End.ToString();
             jC.Content = CreateContentArr(course.Id);

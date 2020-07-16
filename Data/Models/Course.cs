@@ -35,10 +35,8 @@ namespace Data.Models
         /// <summary>
         /// the category the course belongs to
         /// </summary>
-        ///
-        [JsonConverter(typeof(StringEnumConverter))]
-        [Column("category", TypeName = "varchar(100)")]
-        public ECourseCategory Category { get; set; }
+        [Column("category", TypeName = "varchar(250)")]
+        public string Category { get; set; }
 
         /// <summary>
         /// the courses' start date
