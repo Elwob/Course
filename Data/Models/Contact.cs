@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json.Converters;
+using PersonData;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Data.Models
 {
@@ -31,7 +34,8 @@ namespace Data.Models
         /// the kind of communication ???????
         /// </summary>
         [Column("art_of_communication", TypeName = "varchar(200)")]
-        public string ArtOfCommunication { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public EChannel ArtOfCommunication { get; set; }
 
         /// <summary>
         /// the contact value ???????
@@ -43,7 +47,8 @@ namespace Data.Models
         /// the type of contact
         /// </summary>
         [Column("contact_type", TypeName = "varchar(200)")]
-        public string ContactType { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public EContactType? ContactType { get; set; }
 
         /// <summary>
         /// says if a contact is a persons main contact or not

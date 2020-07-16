@@ -3,12 +3,12 @@ using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
-using SendGrid;
-using SendGrid.Helpers.Mail;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
+using Attachment = System.Net.Mail.Attachment;
 using Document = iText.Layout.Document;
 using Person = Data.Models.Person;
 using Rectangle = iText.Kernel.Geom.Rectangle;
@@ -19,6 +19,12 @@ namespace Logic
     {
         private DocumentController documentController = new DocumentController();
         private PersonController personController = new PersonController();
+
+    public EmailTemplate    GetEmailTemplate(int id)
+        {
+            var emailTemplate = (EmailTemplate)entities.EmailTemplates.Where(DocumentId => DocumentId.Equals(id));
+            return emailTemplate;
+        }
 
         public List<Communication> FillDocuments(EmailTemplate emailTemplate)
 
@@ -66,22 +72,41 @@ namespace Logic
                     canvas.SaveState();
                     pdf.Close();
 
-                    MailMessage message = new MailMessage("testsenderc@gmail.com", "martinus_burtscher@yahoo.de");
-                    message.Sender = new MailAddress("testsenderc@gmail.com");
-                    message.Subject = "Using the SmtpClient class.";
+                    Contact contact =entities.Contacts.Where(x => x.PersonId == person.Id).FirstOrDefault(x =>x.ArtOfCommunication.Equals(EChannel.Email));
+                  //  var contact = entities.Contacts.Where(x => x.PersonId == person.Id && x.ArtOfCommunication.Equals(EChannel.Email)).ToList();
+                    //var contact = entities.Contacts.ToList();
 
-                    message.Body = @"Using this feature, you can send an email message from an application very easily.";
-                    //message.Attachments.Add(new Attachment(destFile));
+                    // person.Gender.ToString()
+                    MailMessage message = new MailMessage("testsenderc@gmail.com",contact.ContactValue);
+                    message.Sender = new MailAddress("testsenderc@gmail.com");
+                    message.Subject = emailTemplate.DocumentType.ToString();
+
+                    //     int document template number
+                    int getDocumentNr = (int)emailTemplate.DocumentType+1;
+                    Course course = entities.Courses.FirstOrDefault(id => id.Id == emailTemplate.CourseId);
+
+                    String courseName = course.Title;
+                    EmailTemplate emailTemplateForText = entities.EmailTemplates.FirstOrDefault(id => id.Id == getDocumentNr);
+                    string body = emailTemplateForText.Text;
+                    body = body.Replace("{Geschlecht}",person.Gender);
+                    body = body.Replace("{Vorname}", person.FirstName);
+                    body = body.Replace("{Nachname}", person.LastName);
+                    body = body.Replace("{Kurstitel}", courseName);
+
+                    message.Body = body;
+
                     //SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)587
 
                     //Todo Remove Testsender !
-
+                 
                     SmtpClient oSmtp = new SmtpClient("smtp.gmail.com");
+                    oSmtp.UseDefaultCredentials = false;
                     oSmtp.Host = "smtp.gmail.com";
                     oSmtp.Credentials = new NetworkCredential("testsenderc@gmail.com", "Uv8ZDFSWfPQVZ6e");
                     oSmtp.EnableSsl = true;
                     oSmtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                     oSmtp.Port = 587;
+                    message.Attachments.Add(new Attachment(destFile));
                     oSmtp.Send(message);
 
                     Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
