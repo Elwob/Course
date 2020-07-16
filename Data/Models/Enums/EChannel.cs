@@ -10,13 +10,13 @@ namespace Data.Models
     /// </summary>
     
     /// that Enums will be shown correctly in JSON
-    [JsonConverter(typeof(StringEnumConverter))]
+
     public enum EChannel
     {
-        [EnumMember(Value = "Email")]
-        Email,
         [EnumMember(Value = "Phone Call")]
         PhoneCall,
+        [EnumMember(Value = "Email")]
+        Email,
         [EnumMember(Value = "Personal")]
         Personal,
         [EnumMember(Value = "Letter")]

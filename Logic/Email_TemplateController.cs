@@ -1,19 +1,14 @@
 using Data.Models;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
-using Org.BouncyCastle.Asn1.X509;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
+using Attachment = System.Net.Mail.Attachment;
 using Document = iText.Layout.Document;
 using Person = Data.Models.Person;
 using Rectangle = iText.Kernel.Geom.Rectangle;
@@ -77,22 +72,29 @@ namespace Logic
                     canvas.SaveState();
                     pdf.Close();
 
-                   // person.Gender.ToString()
-                    MailMessage message = new MailMessage("testsenderc@gmail.com", "martinus_burtscher@yahoo.de");
+                    Contact contact =entities.Contacts.Where(x => x.PersonId == person.Id).FirstOrDefault(x =>x.ArtOfCommunication.Equals(EChannel.Email));
+                  //  var contact = entities.Contacts.Where(x => x.PersonId == person.Id && x.ArtOfCommunication.Equals(EChannel.Email)).ToList();
+                    //var contact = entities.Contacts.ToList();
+
+                    // person.Gender.ToString()
+                    MailMessage message = new MailMessage("testsenderc@gmail.com",contact.ContactValue);
                     message.Sender = new MailAddress("testsenderc@gmail.com");
                     message.Subject = "emailTemplate.DocumentType.ToString()";
 
                     //     int document template number
                     int getDocumentNr = (int)emailTemplate.DocumentType+1;
+                    Course course = entities.Courses.FirstOrDefault(id => id.Id == emailTemplate.CourseId);
 
+                    String courseName = course.Title;
                     EmailTemplate emailTemplateForText = entities.EmailTemplates.FirstOrDefault(id => id.Id == getDocumentNr);
-                    string Body = emailTemplateForText.Text;
-                    Body = Body.Replace("{Geschlecht}",person.Gender);
-                    Body = Body.Replace("{Vorname}", person.FirstName);
-                    Body = Body.Replace("{Vorname}", person.FirstName);
+                    string body = emailTemplateForText.Text;
+                    body = body.Replace("{Geschlecht}",person.Gender);
+                    body = body.Replace("{Vorname}", person.FirstName);
+                    body = body.Replace("{Nachname}", person.LastName);
+                    body = body.Replace("{Kurstitel}", courseName);
 
-                    message.Body = Body;
-                    //message.Attachments.Add(new Attachment(destFile));
+                    message.Body = body;
+                  
                     //SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)587
 
                     //Todo Remove Testsender !
@@ -103,6 +105,7 @@ namespace Logic
                     oSmtp.EnableSsl = true;
                     oSmtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                     oSmtp.Port = 587;
+                    message.Attachments.Add(new Attachment(destFile));
                     oSmtp.Send(message);
 
                     Communication communication = documentController.CreateDocumentFromTemplate(emailTemplate, person, null, destFile, docName);
