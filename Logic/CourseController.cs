@@ -15,7 +15,9 @@ namespace Logic
         RelCourseContentController relCourseContentController = new RelCourseContentController();
         RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
         RelCourseClassroomController relCourseClassroomController = new RelCourseClassroomController();
+        RelCourseSubventionController relCourseSubventionController = new RelCourseSubventionController();
         ClassroomController classroomController = new ClassroomController();
+        JSONConverter jsonConverter = new JSONConverter();
 
         /// <summary>
         /// 
@@ -27,7 +29,7 @@ namespace Logic
             var jsonCourses = new List<JSONCourseSend>();
             foreach (var course in courses)
             {
-                jsonCourses.Add(ConvertCourseToJSON(course));
+                jsonCourses.Add(jsonConverter.ConvertCourseToJSON(course));
             }
             return jsonCourses;
         }
@@ -63,7 +65,7 @@ namespace Logic
             var jsonCourses = new List<JSONCourseSend>();
             foreach (var course in courses)
             {
-                jsonCourses.Add(ConvertCourseToJSON(course));
+                jsonCourses.Add(jsonConverter.ConvertCourseToJSON(course));
             }
             return jsonCourses;
         }
@@ -194,9 +196,10 @@ namespace Logic
         /// <returns></returns>
         public JSONCourseSend PostCourse(JSONCourseReceive jsonCourse)
         {
-            Course course = ConvertJSONToCourse(jsonCourse);
+            Course course = jsonConverter.ConvertJSONToCourse(jsonCourse);
             entities.Courses.Add(course);
             entities.SaveChanges();
+            // TODO: build a generic method for all CreateRelations
             // create trainer relations
             foreach (var trainerid in jsonCourse.TrainerArr)
             {
@@ -212,7 +215,12 @@ namespace Logic
             {
                 relCourseClassroomController.CreateRelation(course.Id, classroom);
             }
-            return ConvertCourseToJSON(course);
+            // create subvention relations
+            foreach (var subvention in jsonCourse.SubventionsArr)
+            {
+                relCourseSubventionController.CreateRelation(course.Id, subvention);
+            }
+            return jsonConverter.ConvertCourseToJSON(course);
         }
 
         /// <summary>
@@ -223,110 +231,20 @@ namespace Logic
         /// <returns></returns>
         public JSONCourseSend UpdateCourse(int courseId, JSONCourseReceive courseReceive)
         {
-            Course courseNew = ConvertJSONToCourse(courseReceive);
+            Course courseNew = jsonConverter.ConvertJSONToCourse(courseReceive);
             courseNew.Id = courseId;
             entities.Entry(entities.Courses.FirstOrDefault(x => x.Id == courseId)).CurrentValues.SetValues(courseNew);
             entities.SaveChanges();
+            // TODO: build a generic method for all UpdateRelations
             // update trainer relations
             relCourseTrainerController.UpdateRelations(courseId, courseReceive.TrainerArr);
             // update content relations
             relCourseContentController.UpdateRelations(courseId, courseReceive.ContentArr);
             // update classroom relations
             relCourseClassroomController.UpdateRelations(courseId, courseReceive.ClassroomArr);
-            return ConvertCourseToJSON(entities.Courses.FirstOrDefault(x => x.Id == courseId));
-        }
-
-        /// <summary>
-        /// converts a JSONCourseReceive to Course
-        /// </summary>
-        /// <returns></returns>
-        private Course ConvertJSONToCourse(JSONCourseReceive jsonCourse)
-        {
-            var course = new Course();
-            course.Title = jsonCourse.Title;
-            course.CourseNumber = jsonCourse.CourseNumber;
-            course.Description = jsonCourse.Description;
-            course.Category = jsonCourse.Category;
-            course.Start = DateTime.ParseExact(jsonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
-            course.End = DateTime.ParseExact(jsonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
-            course.Unit = jsonCourse.Unit;
-            course.Price = jsonCourse.Price;
-            course.MaxParticipants = jsonCourse.MaxParticipants;
-            course.MinParticipants = jsonCourse.MinParticipants;
-            course.CreatedAt = DateTime.Now;
-            course.ModifiedAt = DateTime.Now;
-            return course;
-        }
-
-        /// <summary>
-        /// converts a Course to a JSONCourseSend
-        /// </summary>
-        /// <param name="course"></param>
-        /// <returns></returns>
-        private JSONCourseSend ConvertCourseToJSON(Course course)
-        {
-            var jC = new JSONCourseSend();
-            jC.Id = course.Id;
-            jC.Title = course.Title;
-            jC.CourseNumber = course.CourseNumber;
-            jC.Description = course.Description;
-            jC.Category = course.Category;
-            jC.Start = course.Start.ToString();
-            jC.End = course.End.ToString();
-            jC.Content = CreateContentArr(course.Id);
-            jC.Units = course.Unit;
-            jC.Price = course.Price;
-            jC.ClassroomArr = classroomController.CreateClassroomArr(course.Id);
-            jC.participant_max = course.MaxParticipants;
-            jC.participant_min = course.MinParticipants;
-            jC.TrainerArr = CreateTrainerArr(course.Id);
-            jC.CreatedAt = course.CreatedAt;
-            jC.ModifiedAt = course.ModifiedAt;
-            return jC;
-        }
-
-        /// <summary>
-        /// creates a list of JSONContentSends for a specific course
-        /// </summary>
-        /// <param name="courseId"></param>
-        /// <returns></returns>
-        private List<JSONContentSend> CreateContentArr(int courseId)
-        {
-            var jsonContents = new List<JSONContentSend>();
-            // get all course-content relations where a certain course exists
-            var relations = entities.RelCourseContents.Where(x => x.CourseId == courseId).ToList();
-            // filter contents for existing course-content relations
-            var c = entities.Contents.ToList();
-            var contents = c.Where(x => relations.Any(z => x.Id == z.ContentId)).ToList();
-            // convert to JSONContentSend
-            foreach (var content in contents)
-            {
-                // get correct units (in a specific course, not estimation)
-                var units = relations.Where(x => x.CourseId == courseId && x.ContentId == content.Id).FirstOrDefault().Units;
-                // create and add jContent
-                jsonContents.Add(new JSONContentSend(content.Id, content.Topic, content.Description, units));
-            }
-            return jsonContents;
-        }
-
-        /// <summary>
-        /// creates a list of JSONTrainers for a specific course
-        /// </summary>
-        /// <param name="courseId"></param>
-        /// <returns></returns>
-        private List<JSONTrainer> CreateTrainerArr(int courseId)
-        {
-            var jsonTrainers = new List<JSONTrainer>();
-            // get all belonging trainers
-            var relations = entities.RelCourseTrainers.Where(x => x.CourseId == courseId).ToList();
-            var t = entities.Persons.Where(x => x.Function == "0" || x.Function == "1").ToList();
-            var trainers = t.Where(x => relations.Any(z => x.Id == z.TrainerId)).ToList();
-            //Convert to JSONTrainer
-            foreach (var trainer in trainers)
-            {
-                jsonTrainers.Add(new JSONTrainer(trainer.Id, trainer.FirstName, trainer.LastName));
-            }
-            return jsonTrainers;
+            // update subvention relations
+            relCourseSubventionController.UpdateRelations(courseId, courseReceive.SubventionsArr);
+            return jsonConverter.ConvertCourseToJSON(entities.Courses.FirstOrDefault(x => x.Id == courseId));
         }
 
         /// <summary>

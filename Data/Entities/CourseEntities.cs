@@ -278,7 +278,6 @@ namespace Data.Entities
                 entity.Property(x => x.MainContact).IsRequired();
                 entity.Property(x => x.CreatedAt).IsRequired();
                 // connection to a person
-
                 entity.HasOne(x => x.Person)
                 .WithMany(x => x.Contacts)
                 .HasForeignKey(x => x.PersonId);

@@ -69,8 +69,13 @@ namespace Data.Models.JSONModels
         public List<int> TrainerArr { get; set; }
 
         /// <summary>
-        /// contains all contentIds
+        /// contains all contents (as JSONContentReceive)
         /// </summary>
         public List<JSONContentReceive> ContentArr { get; set; }
+
+        /// <summary>
+        /// contains all subventionIds
+        /// </summary>
+        public List<int> SubventionsArr { get; set; }
     }
 }

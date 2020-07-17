@@ -29,7 +29,7 @@ namespace Data.Models.JSONModels
         /// <summary>
         /// the category the course belongs to
         /// </summary>
-        public string Category { get; set; }
+        public CourseCategory Category { get; set; }
 
         /// <summary>
         /// the courses' start date
@@ -75,6 +75,11 @@ namespace Data.Models.JSONModels
         /// contains all trainerIds
         /// </summary>
         public List<JSONTrainer> TrainerArr { get; set; }
+
+        /// <summary>
+        /// contains all subventions
+        /// </summary>
+        public List<Subvention> SubventionArr { get; set; }
 
         /// <summary>
         /// the date the document was created at

@@ -62,5 +62,29 @@ namespace Logic
                 }
             }
         }
+
+        /// <summary>
+        /// creates a list of JSONContentSends for a specific course
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
+        public List<JSONContentSend> CreateContentArr(int courseId)
+        {
+            var jsonContents = new List<JSONContentSend>();
+            // get all course-content relations where a certain course exists
+            var relations = entities.RelCourseContents.Where(x => x.CourseId == courseId).ToList();
+            // filter contents for existing course-content relations
+            var c = entities.Contents.ToList();
+            var contents = c.Where(x => relations.Any(z => x.Id == z.ContentId)).ToList();
+            // convert to JSONContentSend
+            foreach (var content in contents)
+            {
+                // get correct units (in a specific course, not estimation)
+                var units = relations.Where(x => x.CourseId == courseId && x.ContentId == content.Id).FirstOrDefault().Units;
+                // create and add jContent
+                jsonContents.Add(new JSONContentSend(content.Id, content.Topic, content.Description, units));
+            }
+            return jsonContents;
+        }
     }
 }
