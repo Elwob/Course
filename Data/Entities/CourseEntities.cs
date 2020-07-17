@@ -139,6 +139,7 @@ namespace Data.Entities
         /// <returns></returns>
         public static CourseEntities GetInstance()
         {
+          
             if (instance == null)
             {
                 return new CourseEntities();

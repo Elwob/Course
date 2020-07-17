@@ -5,9 +5,11 @@ using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Resources;
 using Attachment = System.Net.Mail.Attachment;
 using Document = iText.Layout.Document;
 using Person = Data.Models.Person;
@@ -73,18 +75,27 @@ namespace Logic
                     pdf.Close();
 
                     Contact contact =entities.Contacts.Where(x => x.PersonId == person.Id).FirstOrDefault(x =>x.ArtOfCommunication.Equals(EChannel.Email));
-                  //  var contact = entities.Contacts.Where(x => x.PersonId == person.Id && x.ArtOfCommunication.Equals(EChannel.Email)).ToList();
+                    //  var contact = entities.Contacts.Where(x => x.PersonId == person.Id && x.ArtOfCommunication.Equals(EChannel.Email)).ToList();
                     //var contact = entities.Contacts.ToList();
+                 
+                      // Get Username & Password from Server file
+                      var resourceManager = new ResourceManager(typeof(Properties.Resources));
+                    var url = resourceManager.GetString("User_Password");
+                    string text = File.ReadAllText(url);
+                    string[] split = text.Split(";") ;
+                    string userName = split[0];
+                        string password = split[1];
 
-                    // person.Gender.ToString()
-                    MailMessage message = new MailMessage("testsenderc@gmail.com",contact.ContactValue);
-                    message.Sender = new MailAddress("testsenderc@gmail.com");
+                    
+                    MailMessage message = new MailMessage(userName,contact.ContactValue);
+                    message.Sender = new MailAddress(userName);
                     message.Subject = emailTemplate.DocumentType.ToString();
 
                     //     int document template number
                     int getDocumentNr = (int)emailTemplate.DocumentType+1;
                     Course course = entities.Courses.FirstOrDefault(id => id.Id == emailTemplate.CourseId);
 
+                    // fill database template for diploma
                     String courseName = course.Title;
                     EmailTemplate emailTemplateForText = entities.EmailTemplates.FirstOrDefault(id => id.Id == getDocumentNr);
                     string body = emailTemplateForText.Text;
@@ -95,17 +106,17 @@ namespace Logic
 
                     message.Body = body;
 
-                    //SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)587
+                    //SmtpClient client = new SmtpClient("smtp.mail.yahoo.com", 465)587,25
 
                     //Todo Remove Testsender !
                  
-                    SmtpClient oSmtp = new SmtpClient("smtp.gmail.com");
+                    SmtpClient oSmtp = new SmtpClient("w01959cb.kasserver.com");
                     oSmtp.UseDefaultCredentials = false;
-                    oSmtp.Host = "smtp.gmail.com";
-                    oSmtp.Credentials = new NetworkCredential("testsenderc@gmail.com", "Uv8ZDFSWfPQVZ6e");
+                    oSmtp.Host = "w01959cb.kasserver.com";
+                    oSmtp.Credentials = new NetworkCredential(userName, password);
                     oSmtp.EnableSsl = true;
                     oSmtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    oSmtp.Port = 587;
+                    oSmtp.Port = 25;
                     message.Attachments.Add(new Attachment(destFile));
                     oSmtp.Send(message);
 
