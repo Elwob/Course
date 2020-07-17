@@ -8,6 +8,13 @@ namespace Logic
 {
     public class CommunicationController : MainController
     {
+        /// <summary>
+        /// Gets the Communication from one person concerning one course
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="classId"></param>
+        /// <param name="participantId"></param>
+        /// <returns>List<Communication></Communication></returns>
         public List<Communication> GetCommunicationsNeeded<T>(int classId, int participantId)
         {
             var person = entities.Persons.FirstOrDefault(c => c.Id == participantId);
@@ -26,7 +33,11 @@ namespace Logic
 
             return null;
         }
-
+        /// <summary>
+        /// calls Method to check Ids and Method to create Relations, then changes will be saved on database
+        /// </summary>
+        /// <param name="communication"></param>
+        /// <returns>Communication</returns>
         public Communication CreateRelationAndAddToDatabase(Communication communication)
         {
             communication = CheckIfIdToConnectWithExists(communication);
@@ -42,7 +53,14 @@ namespace Logic
             entities.SaveChanges();
             return communication;
         }
-
+        /// <summary>
+        /// creates a communication, for example after sending mails to one or more Participants
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="template"></param>
+        /// <param name="date"></param>
+        /// <param name="reminderId"></param>
+        /// <returns>Communication</returns>
         public Communication CreateCommunication(Document document, EmailTemplate template, DateTime date, int? reminderId)
 
         {
@@ -58,7 +76,11 @@ namespace Logic
             communication = CreateRelationAndAddToDatabase(communication);
             return communication;
         }
-
+        /// <summary>
+        /// Deletes a Communication and its Relations to Classes, a Document which maybe is connected will not be deleted.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>string</returns>
         public string DeleteById(int id)
         {
             ///deletes the Relations from Communication to Classes
@@ -90,7 +112,12 @@ namespace Logic
                 
             }
         }
-
+        /// <summary>
+        /// changes the comment in a communication and saves changes on database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="communication"></param>
+        /// <returns>Communication</returns>
         public Communication ChangeCommunication(int id, Communication communication)
         {
             var communicationToChange = entities.Communications.Where(x => x.Id == id).FirstOrDefault();

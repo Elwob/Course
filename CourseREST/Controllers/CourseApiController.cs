@@ -46,7 +46,18 @@ namespace CourseREST.Controllers
         [HttpPost]
         public List<JSONCourseSend> Get([FromBody] CourseFilter filter)
         {
-            return courseController.GetFilteredCourses(filter);
+            List<JSONCourseSend> myList = null;
+            try
+            {
+                myList = courseController.GetFilteredCourses(filter);
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return myList;
         }
 
         /// <summary>

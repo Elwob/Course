@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Models.BaseClasses;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +11,11 @@ namespace Data.Models
     [Table("person")]
     public class Person
     {
+        public Person()
+        {
+            MaterialDict = new Dictionary<string, BaseClassMaterial>();
+        }
+      
         /// <summary>
         /// /// says if relations should be displayed when generating jsons
         /// </summary>
@@ -122,6 +128,12 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public List<Contact> Contacts { get; set; }
+
+        /// <summary>
+        /// a list of booleans which are true, if person has lend out material
+        /// </summary>
+        [NotMapped]
+        public Dictionary<string, BaseClassMaterial> MaterialDict { get; set; }
 
         /// <summary>
         /// list of all relations between addresses and persons
