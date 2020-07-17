@@ -27,12 +27,21 @@ namespace CourseREST.Controllers
             Classroom.ShouldIgnoreRelation = true;
         }
 
+        /// <summary>
+        /// returns a list of all contents converted to a JSON format
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public List<JSONCourseSend> GetAll()
         {
             return courseController.GetAllCourses();
         }
 
+        /// <summary>
+        /// filters courses according to the entries at frontend
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         [Route("search")]
         [HttpPost]
         public List<JSONCourseSend> Get([FromBody] CourseFilter filter)
@@ -51,33 +60,37 @@ namespace CourseREST.Controllers
             return myList;
         }
 
+        /// <summary>
+        /// creates a new course in DB
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPost]
-        public Course Post([FromBody] JSONCourseReceive course)
+        public JSONCourseSend Post([FromBody] JSONCourseReceive course)
         {
             return courseController.PostCourse(course);
         }
 
+        /// <summary>
+        /// updates a course in DB
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="course"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public JSONCourseSend Put(int id, [FromBody] JSONCourseReceive course)
+        {
+            return courseController.UpdateCourse(id, course);
+        }
+
+        /// <summary>
+        /// deletes a certain course in DB
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
             courseController.DeleteCourse(id);
         }
     }
-
-    /// <summary>
-    /// contains all requests concerning CourseCategories
-    /// </summary>
-    [Route("category")]
-    [Route("[controller]")]
-    [ApiController]
-    public class CourseCategoryApiController : ControllerBase
-    {
-        [HttpGet]
-        public List<string> Get()
-        {
-            return Enum.GetNames(typeof(ECourseCategory)).ToList();
-        }
-    }
-
-
 }

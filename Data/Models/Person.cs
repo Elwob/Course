@@ -31,7 +31,7 @@ namespace Data.Models
         /// name one of a entity (if person first name)
         /// </summary>
         [Column("name1", TypeName = "varchar(200)")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         /// <summary>
         /// name two of a entity (if person last name)

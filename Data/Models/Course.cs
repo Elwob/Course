@@ -1,3 +1,4 @@
+using Data.Models.Relations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PersonData;
@@ -34,10 +35,8 @@ namespace Data.Models
         /// <summary>
         /// the category the course belongs to
         /// </summary>
-        ///
-        [JsonConverter(typeof(StringEnumConverter))]
-        [Column("category", TypeName = "varchar(100)")]
-        public ECourseCategory Category { get; set; }
+        [Column("category", TypeName = "varchar(250)")]
+        public string Category { get; set; }
 
         /// <summary>
         /// the courses' start date
@@ -62,12 +61,6 @@ namespace Data.Models
         /// </summary>
         [Column("price")]
         public double? Price { get; set; }
-
-        /// <summary>
-        /// the id of the classromm the course is held in
-        /// </summary>
-        [Column("classroom_id")]
-        public int? ClassroomId { get; set; }
 
         /// <summary>
         /// the amount of maximum participants
@@ -103,9 +96,9 @@ namespace Data.Models
         public List<Absence> Absences { get; set; }
 
         /// <summary>
-        /// needed for linking
+        /// a list of relations to the courses' classrooms
         /// </summary>
         [NotMapped]
-        public Classroom Classroom { get; set; }
+        public List<RelCourseClassroom> CourseClassrooms { get; set; }
     }
 }

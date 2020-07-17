@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
@@ -5,7 +7,7 @@ namespace Data.Models
     /// <summary>
     /// contains information to a certain email template
     /// </summary>
-    [Table("EmailTemplate")]
+    [Table("email_template")]
     public class EmailTemplate
     {
         /// <summary>
@@ -18,6 +20,7 @@ namespace Data.Models
         /// contains the type of document a template is for
         /// </summary>
         [Column("document_type", TypeName = "varchar(100)")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public EDocumentType DocumentType { get; set; }
 
         /// <summary>
@@ -50,5 +53,6 @@ namespace Data.Models
         [NotMapped]
         public string Comment { get; set; }
 
+        
     }
 }

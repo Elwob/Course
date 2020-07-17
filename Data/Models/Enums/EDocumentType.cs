@@ -14,20 +14,28 @@ namespace Data.Models
     {
         [EnumMember(Value = "Invitation")]
         Invitation,
+
         [EnumMember(Value = "Registration Confirmation")]
         RegistrationConfirmation,
+
         [EnumMember(Value = "Bill")]
         Bill,
+
         [EnumMember(Value = "Dun")]
         Dun,
+
         [EnumMember(Value = "Diploma")]
         Diploma,
+
         [EnumMember(Value = "Information")]
         Information,
+
         [EnumMember(Value = "Note")]
         Note,
+
         [EnumMember(Value = "Other")]
         Other,
+
         [EnumMember(Value = "Mail")]
         Mail
     }
