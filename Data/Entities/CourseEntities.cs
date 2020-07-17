@@ -70,6 +70,16 @@ namespace Data.Entities
         public DbSet<Classroom> Classrooms { get; set; }
 
         /// <summary>
+        /// contains all notebooks existing in DB
+        /// </summary>
+        public DbSet<Notebook> Notebooks { get; set; }
+
+        /// <summary>
+        /// contains all Equipment existing in DB
+        /// </summary>
+        public DbSet<Equipment> Equipments { get; set; }
+
+        /// <summary>
         /// contains all relations between courses and contents existing in DB
         /// </summary>
         public DbSet<RelCourseContent> RelCourseContents { get; set; }
@@ -234,7 +244,6 @@ namespace Data.Entities
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.FirstName).IsRequired();
                 entity.Property(x => x.LastName).IsRequired();
-                entity.Property(x => x.Function).IsRequired();
                 entity.Property(x => x.Active).IsRequired();
                 entity.Property(x => x.Deleted).IsRequired();
                 entity.Property(x => x.WantsNewsletter).IsRequired();
@@ -285,6 +294,29 @@ namespace Data.Entities
                 entity.Property(x => x.CreatedAt).IsRequired();
                 // connection to a person
                 entity.HasOne(x => x.Person).WithMany(x => x.Comments).HasForeignKey(x => x.PersonId);
+            });
+            // represents the model Notebook
+            modelBuilder.Entity<Notebook>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.SerialNumber).IsRequired();
+                entity.Property(x => x.Make).IsRequired();
+                entity.Property(x => x.Model).IsRequired();
+                // connection between Notebook and Person
+                entity.HasOne(x => x.Person);
+                // connection between Notebook and Location
+                entity.HasOne(x => x.Location);
+            });
+            // represents the model Notebook
+            modelBuilder.Entity<Equipment>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Type).IsRequired();
+                entity.Property(x => x.Quantity).IsRequired();              
+                // connection between Equipment and Person
+                entity.HasOne(x => x.Person);
+                // connection between Equipment and Location
+                entity.HasOne(x => x.Location);
             });
         }
 

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using Logic;
+using Data.Models.BaseClasses;
+using System;
 
 namespace CourseREST.Controllers
 {
@@ -26,6 +28,7 @@ namespace CourseREST.Controllers
         {
             return personController.FindAllParticipantsOfOneCourse(courseId);
         }
+
     }
 
     [Route("trainer")]
