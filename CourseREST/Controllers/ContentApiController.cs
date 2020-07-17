@@ -1,6 +1,7 @@
 using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace CourseREST.Controllers
@@ -26,7 +27,18 @@ namespace CourseREST.Controllers
         [HttpGet]
         public List<Content> Get()
         {
-            return contentController.GetAllContents();
+            List<Content> contentList = null;
+            try
+            {
+                contentList = contentController.GetAllContents();
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return contentList;
         }
 
         /// <summary>
@@ -37,7 +49,18 @@ namespace CourseREST.Controllers
         [HttpPost]
         public Content Post([FromBody] Content recContent)
         {
-            return contentController.PostContent(recContent);
+            Content returnContent = null;
+            try
+            {
+                returnContent = contentController.PostContent(recContent);
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return returnContent;
         }
 
         /// <summary>
@@ -49,7 +72,18 @@ namespace CourseREST.Controllers
         [HttpPut("{id}")]
         public Content Put(int id, [FromBody] Content content)
         {
-            return contentController.PutContent(id, content);
+            Content returnContent = null;
+            try
+            {
+                returnContent = contentController.PutContent(id, content);
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return returnContent;
         }
 
         /// <summary>
@@ -59,7 +93,16 @@ namespace CourseREST.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            contentController.DeleteContent(id);
+            try
+            {
+                contentController.DeleteContent(id);
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
         }
     }
 }

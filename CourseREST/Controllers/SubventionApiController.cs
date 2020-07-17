@@ -1,6 +1,7 @@
 ﻿using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace CourseREST.Controllers
@@ -22,7 +23,18 @@ namespace CourseREST.Controllers
         [HttpGet]
         public List<Subvention> Get()
         {
-            return subventionController.GetAllSubventions();
+            List<Subvention> subventionList = null;
+            try
+            {
+                subventionList = subventionController.GetAllSubventions();
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return subventionList;
         }
 
         /// <summary>
@@ -33,7 +45,18 @@ namespace CourseREST.Controllers
         [HttpPost]
         public Subvention Post([FromBody] Subvention recSubvention)
         {
-            return subventionController.PostSubvention(recSubvention);
+            Subvention returnSubvention = null;
+            try
+            {
+                returnSubvention = subventionController.PostSubvention(recSubvention);
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return returnSubvention;
         }
 
         /// <summary>
@@ -45,7 +68,18 @@ namespace CourseREST.Controllers
         [HttpPut("{id}")]
         public Subvention Put(int id, [FromBody] Subvention recSubvention)
         {
-            return subventionController.PutSubvention(id, recSubvention);
+            Subvention returnSubvention = null;
+            try
+            {
+                returnSubvention = subventionController.PutSubvention(id, recSubvention);
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return returnSubvention;
         }
 
         /// <summary>
@@ -55,7 +89,15 @@ namespace CourseREST.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            subventionController.DeleteSubvention(id);
+            try
+            {
+                subventionController.DeleteSubvention(id);
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+            }
         }
     }
 }

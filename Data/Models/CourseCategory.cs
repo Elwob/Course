@@ -22,15 +22,15 @@ namespace Data.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// the categorys' background color
+        /// the categories' background color (set per default if not specified otherwise)
         /// </summary>
         [Column("color")]
-        public string Color { get; set; }
+        public string Color { get; set; } = "#6CFACB";
 
         /// <summary>
-        /// the categorys' font color
+        /// the categories' font color (set per default if not specified otherwise)
         /// </summary>
         [Column("font_color")]
-        public string FontColor { get; set; }
+        public string FontColor { get; set; } = "#00426A";
     }
 }
