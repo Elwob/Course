@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,18 @@ namespace CourseREST.Controllers
         [HttpGet]
         public List<CourseCategory> Get()
         {
-            return courseCategoryController.GetAllCategories();
+            List<CourseCategory> returnList = null;
+            try
+            {
+                returnList = courseCategoryController.GetAllCategories();
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return returnList;
         }
 
         [HttpPost]

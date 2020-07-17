@@ -2,6 +2,7 @@ using Data.Models;
 using Data.Models.JSONModels;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,18 @@ namespace CourseREST.Controllers
         [HttpGet]
         public List<JSONCourseSend> GetAll()
         {
-            return courseController.GetAllCourses();
+            List<JSONCourseSend> returnList = null;
+            try
+            {
+                returnList = courseController.GetAllCourses();
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return returnList;
         }
 
         /// <summary>
@@ -46,10 +58,10 @@ namespace CourseREST.Controllers
         [HttpPost]
         public List<JSONCourseSend> Get([FromBody] CourseFilter filter)
         {
-            List<JSONCourseSend> myList = null;
+            List<JSONCourseSend> returnList = null;
             try
             {
-                myList = courseController.GetFilteredCourses(filter);
+                returnList = courseController.GetFilteredCourses(filter);
                 Response.StatusCode = 200;
             }
             catch (Exception)
@@ -57,7 +69,7 @@ namespace CourseREST.Controllers
                 Response.StatusCode = 500;
                 throw;
             }
-            return myList;
+            return returnList;
         }
 
         /// <summary>
@@ -68,7 +80,18 @@ namespace CourseREST.Controllers
         [HttpPost]
         public JSONCourseSend Post([FromBody] JSONCourseReceive course)
         {
-            return courseController.PostCourse(course);
+            JSONCourseSend returnCourse = null;
+            try
+            {
+                returnCourse = courseController.PostCourse(course);
+                Response.StatusCode = 200;
+            }
+            catch
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return returnCourse;
         }
 
         /// <summary>
@@ -80,7 +103,18 @@ namespace CourseREST.Controllers
         [HttpPut("{id}")]
         public JSONCourseSend Put(int id, [FromBody] JSONCourseReceive course)
         {
-            return courseController.UpdateCourse(id, course);
+            JSONCourseSend returnCourse = null;
+            try
+            {
+                returnCourse = courseController.UpdateCourse(id, course);
+                Response.StatusCode = 200;
+            }
+            catch
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return returnCourse;
         }
 
         /// <summary>
@@ -90,7 +124,16 @@ namespace CourseREST.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            courseController.DeleteCourse(id);
+            try
+            {
+                courseController.DeleteCourse(id);
+                Response.StatusCode = 200;
+            }
+            catch
+            {
+                Response.StatusCode = 500;
+            }
+            
         }
     }
 }
