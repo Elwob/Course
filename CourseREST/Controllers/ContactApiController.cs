@@ -3,6 +3,7 @@ using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace CourseREST.Controllers
 {
@@ -13,10 +14,24 @@ namespace CourseREST.Controllers
     {
         private CourseEntities entities = CourseEntities.GetInstance();
 
+        /// <summary>
+        /// returns all contacts existing in DB
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public List<Contact> get()
         {
-            var contacts = entities.Contacts.ToList();
+            List<Contact> contacts = null;
+            try
+            {
+                contacts = entities.Contacts.ToList();
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
             return contacts;
         }
     }
