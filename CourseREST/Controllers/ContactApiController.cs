@@ -7,6 +7,9 @@ using System;
 
 namespace CourseREST.Controllers
 {
+    /// <summary>
+    /// contains all requests concerning contacts
+    /// </summary>
     [Route("contact")]
     [Route("[controller]")]
     [ApiController]

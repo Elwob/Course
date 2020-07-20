@@ -12,18 +12,30 @@ namespace Logic
 {
     public class PersonController : MainController
     {
+        /// <summary>
+        /// returns a specific person
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Person FindOne(int id)
         {
             var x = entities.Persons.Include(x => x.Contacts).FirstOrDefault(x => x.Id == id);
             return x;
         }
 
+        /// <summary>
+        /// returns all trainers
+        /// </summary>
+        /// <returns></returns>
         public List<Person> FindAllTrainers()
         {
-            // TODO: change to enums
+            // TODO: change strings "0" and "1" to enums
             return entities.Persons.Where(x => x.Function == "0" || x.Function == "1").ToList();
         }
-
+        /// <summary>
+        /// returns a list of all persons
+        /// </summary>
+        /// <returns></returns>
         public List<Person> FindAll()
         {
             return entities.Persons.ToList();
