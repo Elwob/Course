@@ -133,7 +133,6 @@ namespace CourseREST.Controllers
             {
                 Response.StatusCode = 500;
             }
-            
         }
     }
 }

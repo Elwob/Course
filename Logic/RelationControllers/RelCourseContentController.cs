@@ -1,10 +1,7 @@
 using Data.Models;
 using Data.Models.JSONModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 
 namespace Logic
 {
@@ -46,7 +43,7 @@ namespace Logic
             }
             foreach (var courseRel in courseRels)
             {
-                if (contentIds.Contains(courseRel.ContentId) && courseRel.Units != contents.FirstOrDefault(x => x.Id == courseRel.ContentId).Units);
+                if (contentIds.Contains(courseRel.ContentId) && courseRel.Units != contents.FirstOrDefault(x => x.Id == courseRel.ContentId).Units) ;
                 {
                     courseRel.Units = contents.FirstOrDefault(x => x.Id == courseRel.ContentId).Units;
                     entities.SaveChanges();

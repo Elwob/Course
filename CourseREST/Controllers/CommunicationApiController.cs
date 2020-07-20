@@ -1,11 +1,10 @@
-using Data.Entities;
 using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System;
+
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CourseREST.Controllers
 {
@@ -42,6 +41,7 @@ namespace CourseREST.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>string</returns>
+
         [HttpDelete("{id}")]
         public string DeleteById(int id)
         {
@@ -101,6 +101,5 @@ namespace CourseREST.Controllers
             }          
             return latestCommunication;
         }
-
     }
 }

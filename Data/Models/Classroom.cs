@@ -64,7 +64,7 @@ namespace Data.Models
         /// needed for linking
         /// </summary>
         [NotMapped]
-        public List<RelCourseClassroom> ClassroomCourses 
+        public List<RelCourseClassroom> ClassroomCourses
         {
             get
             {

@@ -39,12 +39,13 @@ namespace Data.Models
         public int? UnitEstimation { get; set; }
 
         private List<RelCourseContent> _contentCourses;
+
         /// <summary>
         /// contains relations to all courses the content is teached in
         /// </summary>
         [NotMapped]
-        public List<RelCourseContent> ContentCourse 
-        { 
+        public List<RelCourseContent> ContentCourse
+        {
             get
             {
                 if (ShouldIgnoreRelation)
@@ -59,7 +60,7 @@ namespace Data.Models
             set
             {
                 _contentCourses = value;
-            } 
+            }
         }
 
         public Content(string topic, string description, int? unitEstimation)

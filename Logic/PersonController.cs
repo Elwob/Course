@@ -1,10 +1,7 @@
 using Data.Models;
 using Data.Models.BaseClasses;
-using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.Azure.Management.DataFactory.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Org.BouncyCastle.Crypto.Tls;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,22 +9,35 @@ namespace Logic
 {
     public class PersonController : MainController
     {
+        /// <summary>
+        /// returns a specific person
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Person FindOne(int id)
         {
             var x = entities.Persons.Include(x => x.Contacts).FirstOrDefault(x => x.Id == id);
             return x;
         }
 
+        /// <summary>
+        /// returns all trainers
+        /// </summary>
+        /// <returns></returns>
         public List<Person> FindAllTrainers()
         {
-            // TODO: change to enums
+            // TODO: change strings "0" and "1" to enums
             return entities.Persons.Where(x => x.Function == "0" || x.Function == "1").ToList();
         }
-
+        /// <summary>
+        /// returns a list of all persons
+        /// </summary>
+        /// <returns></returns>
         public List<Person> FindAll()
         {
             return entities.Persons.ToList();
         }
+
         /// <summary>
         /// Searches all Participants of one Course and calls Method FindPersonalizedMaterial
         /// </summary>
@@ -35,7 +45,6 @@ namespace Logic
         /// <returns></returns>
         public List<Person> FindAllParticipantsOfOneCourse(int id)
         {
-
             List<RelCourseParticipant> relParticipantsList = entities.RelCourseParticipants
                                                             .Include(x => x.Person).ThenInclude(x => x.Comments)
                                                             .Include(x => x.Person).ThenInclude(x => x.Contacts)
@@ -44,15 +53,15 @@ namespace Logic
 
             List<Person> participants = relParticipantsList.Select(x => x.Person).ToList();
 
-            if(participants.Count > 0)
+            if (participants.Count > 0)
             {
                 participants = FindPersonalizedMaterial<Notebook>(participants);
                 participants = FindPersonalizedMaterial<Equipment>(participants);
-            }                   
+            }
 
             return participants;
-
         }
+
         /// <summary>
         /// searches for Material which is personalized and calls Method FillMaterialDictionary
         /// </summary>
@@ -72,22 +81,21 @@ namespace Logic
 
                 foreach (Person person in participants)
                 {
-                   
                     //with x.GetType().GetProperty("PersonId")....we get access to the PersonId which otherwise would not be reachable
                     var materials = materialList.Where(x => (x.GetType().GetProperty("PersonId").GetValue(x, null) as int?) == person.Id).ToList();
                     if (materials != null)
                     {
                         foreach (var item in materials)
-                        {                    
+                        {
                             FillMaterialDictionary<T>(person, item);
                         }
                     }
                 }
                 return participants;
             }
-            
             else return null;
         }
+
         /// <summary>
         /// fills right keys and values to each persons MaterialDictionary
         /// </summary>
@@ -95,7 +103,7 @@ namespace Logic
         /// <param name="person"></param>
         /// <param name="item"></param>
         public void FillMaterialDictionary<T>(Person person, T item) where T : BaseClassMaterial
-        {        
+        {
             if (!(typeof(T).Name == "Equipment"))
             {
                 if (person.MaterialDict.ContainsKey(typeof(T).Name))
@@ -105,7 +113,6 @@ namespace Logic
                 else
                 {
                     person.MaterialDict.Add(typeof(T).Name, item);
-
                 }
             }
             else

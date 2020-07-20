@@ -7,7 +7,7 @@ namespace Logic
 {
     public class CourseCategoryController
     {
-        CourseEntities entities = CourseEntities.GetInstance();
+        private CourseEntities entities = CourseEntities.GetInstance();
 
         public List<CourseCategory> GetAllCategories()
         {

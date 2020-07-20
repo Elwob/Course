@@ -1,12 +1,10 @@
 ﻿using iText.Layout.Element;
 using iText.Layout.Renderer;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data.Models
 {
-    class itext7_MB : IBlockElement
+    internal class itext7_MB : IBlockElement
     {
         public IRenderer CreateRendererSubTree()
         {

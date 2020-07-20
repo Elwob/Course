@@ -30,8 +30,8 @@ namespace Logic
                         int addressId = entities.RelClassroomAddresses.Where(x => x.LocationId == room.Id).FirstOrDefault().AddressId;
                         jPlace = entities.Addresses.Where(x => x.Id == addressId).DefaultIfEmpty().FirstOrDefault().Place;
                     }
-                    
-                } catch (NullReferenceException ex)
+                }
+                catch (NullReferenceException ex)
                 {
                     Console.WriteLine("Classroom doesn't have an address");
                 }
@@ -39,7 +39,6 @@ namespace Logic
                 {
                     rooms.Add(new JSONClassroom(jId, jRoom, jPlace));
                 }
-                
             }
             return rooms;
         }

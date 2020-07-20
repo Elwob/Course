@@ -1,25 +1,41 @@
-
-using Data.Entities;
 using Data.Models.JSONModels;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 
 namespace CourseREST.Controllers
 {
+    /// <summary>
+    /// contains all requests concerning classrooms
+    /// </summary>
     [Route("classroom")]
     [Route("[controller]")]
     [ApiController]
     public class ClassroomApiController : ControllerBase
     {
-        private CourseEntities entities = CourseEntities.GetInstance();
         private ClassroomController classroomController = new ClassroomController();
 
+        /// <summary>
+        /// returns all classrooms existing in DB
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public List<JSONClassroom> get()
         {
-            return classroomController.GetRooms();
+            List<JSONClassroom> classrooms = null;
+            try
+            {
+                classrooms = classroomController.GetRooms();
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return classrooms;
         }
     }
 }

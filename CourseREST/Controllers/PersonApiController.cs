@@ -1,14 +1,14 @@
-﻿using Data.Entities;
-using Data.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Data.Models;
 using Logic;
-using Data.Models.BaseClasses;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace CourseREST.Controllers
 {
+    /// <summary>
+    /// contains all requests concerning persons
+    /// </summary>
     [Route("person")]
     [Route("[controller]")]
     [ApiController]
@@ -16,21 +16,54 @@ namespace CourseREST.Controllers
     {
         public PersonController personController = new PersonController();
 
+        /// <summary>
+        /// returns a list of all persons in DB
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public List<Person> Get()
         {
-            return personController.FindAll();
+            List<Person> persons = null;
+            try
+            {
+                persons = personController.FindAll();
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return persons;
         }
 
+        /// <summary>
+        /// returns a list of participants of a certain course
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
         [Route("getParticipants/{courseId}")]
         [HttpGet]
         public List<Person> GetParticipants(int courseId)
         {
-            return personController.FindAllParticipantsOfOneCourse(courseId);
+            List<Person> participants = null;
+            try
+            {
+                participants = personController.FindAllParticipantsOfOneCourse(courseId);
+                Response.StatusCode = 200;
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return participants;
         }
-
     }
 
+    /// <summary>
+    /// returns all trainers
+    /// </summary>
     [Route("trainer")]
     [Route("[controller]")]
     [ApiController]
@@ -41,7 +74,18 @@ namespace CourseREST.Controllers
         [HttpGet]
         public List<Person> Get()
         {
-            return personController.FindAllTrainers();
+            List<Person> trainers = null;
+            try
+            {
+                trainers = personController.FindAllTrainers();
+                Response.StatusCode = 200;
+            }
+            catch
+            {
+                Response.StatusCode = 500;
+                throw;
+            }
+            return trainers;
         }
     }
 }

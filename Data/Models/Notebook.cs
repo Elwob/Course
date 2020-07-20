@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Data.Attributes;
+﻿using Data.Models.BaseClasses;
 using System.ComponentModel.DataAnnotations.Schema;
-using Data.Models.BaseClasses;
 
 namespace Data.Models
 {
     [Table("notebook")]
     public class Notebook : BaseClassMaterial
     {
-       
         /// <summary>
         /// notebook's serial number
         /// </summary>
@@ -52,6 +47,5 @@ namespace Data.Models
         /// </summary>
         [NotMapped]
         public Person Person { get; set; }
-
     }
 }

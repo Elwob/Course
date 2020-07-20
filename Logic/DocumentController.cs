@@ -30,7 +30,7 @@ namespace Logic
         public Document CreateNewDocument(Document recDocument)
         {
             recDocument = CheckIfIdToConnectWithExists(recDocument);
-            if(recDocument == null)
+            if (recDocument == null)
             {
                 return null;
             }
@@ -89,7 +89,7 @@ namespace Logic
             }
 
             Document documentToDelete = entities.Documents.SingleOrDefault(x => x.Id == id);
-            if(documentToDelete == null)
+            if (documentToDelete == null)
             {
                 return "The Document you want to delete could not be found.";
             }
@@ -151,13 +151,13 @@ namespace Logic
         public string CreateFileName(EDocumentType Type, Person person, string fileExtension)
         {
             string name = null;
-            if(person != null)
+            if (person != null)
             {
                 name = Type.ToString() + "_" + person.LastName + "_" + DateTime.Now.ToFileTime() + fileExtension;
-                
             }
             return name;
         }
+
         /// <summary>
         /// prevents wrong entries, because of not existing CourseId or PersonId
         /// </summary>

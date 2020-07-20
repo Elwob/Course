@@ -139,7 +139,6 @@ namespace Data.Entities
         /// <returns></returns>
         public static CourseEntities GetInstance()
         {
-          
             if (instance == null)
             {
                 return new CourseEntities();
@@ -236,7 +235,7 @@ namespace Data.Entities
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.Room).IsRequired();
             });
-            // represents the model 
+            // represents the model
             modelBuilder.Entity<CourseCategory>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -282,7 +281,6 @@ namespace Data.Entities
                 entity.HasOne(x => x.Person)
                 .WithMany(x => x.Contacts)
                 .HasForeignKey(x => x.PersonId);
-
             });
             // builds model Communication
             modelBuilder.Entity<Communication>(entity =>
@@ -324,7 +322,7 @@ namespace Data.Entities
             {
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.Type).IsRequired();
-                entity.Property(x => x.Quantity).IsRequired();              
+                entity.Property(x => x.Quantity).IsRequired();
                 // connection between Equipment and Person
                 entity.HasOne(x => x.Person);
                 // connection between Equipment and Location

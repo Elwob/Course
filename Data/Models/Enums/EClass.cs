@@ -14,6 +14,7 @@ namespace Data.Models
     {
         [EnumMember(Value = "Person")]
         Person,
+
         [EnumMember(Value = "Course")]
         Course
     }
