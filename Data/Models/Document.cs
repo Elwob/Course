@@ -56,6 +56,12 @@ namespace Data.Models
         public Absence Absence { get; set; }
 
         /// <summary>
+        /// document converted in Base64
+        /// </summary>
+        [NotMapped]
+        public string DocumentString { get; set; }
+
+        /// <summary>
         /// temporarily needed for building the right relationships in RelDocumentClass
         /// </summary>
         [NotMapped]
