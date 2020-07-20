@@ -11,7 +11,12 @@ namespace Logic
     public class DocumentController : MainController
     {
         private CommunicationController communicationController = new CommunicationController();
-
+        /// <summary>
+        /// Gets documents concerning one course or one person
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="className"></param>
+        /// <returns>List<Document></returns>
         public List<Document> GetDocumentsNeeded(int id, EClass className)
         {
             List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList();
@@ -23,10 +28,13 @@ namespace Logic
                 }
                 return documents;
             }
-            else return null;
-           
+            else return null;        
         }
-
+        /// <summary>
+        /// Creates a new document
+        /// </summary>
+        /// <param name="recDocument"></param>
+        /// <returns>Document</returns>
         public Document CreateNewDocument(Document recDocument)
         {
             recDocument = CheckIfIdToConnectWithExists(recDocument);
@@ -34,7 +42,10 @@ namespace Logic
             {
                 return null;
             }
-            recDocument = ConvertDocumentStringFromBase64AndSave(recDocument, ".pdf");
+            if(recDocument.DocumentString != null)
+            {
+                recDocument = ConvertDocumentStringFromBase64AndSave(recDocument, ".pdf");
+            }
             recDocument.CreatedAt = DateTime.Now;
             recDocument.ModifiedAt = DateTime.Now;
 
@@ -58,13 +69,21 @@ namespace Logic
             document.Name = fileName;
             return document;
         }
+        /// <summary>
+        /// Converts the DocumentString to Base64 and attaches it to the document we want to return
+        /// </summary>
+        /// <param name="document"></param>
         public void ConvertDocumentStringToBase64AndAttach(Document document)
         {
             var fileAsString = Convert.ToBase64String(System.IO.File.ReadAllBytes(document.Url));
             document.DocumentString = fileAsString;
             
         }
-
+        /// <summary>
+        /// Deletes a document by its Id, removes entry in RelDocumentClasses and sets DocumentId in Absences and Communications to null
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public string DeleteById(int id)
         {
             ///delete the Relations from Documents to Classes
@@ -108,30 +127,37 @@ namespace Logic
                 return "File not found.";
             }
         }
-
+        /// <summary>
+        /// Deletes a file
+        /// </summary>
+        /// <param name="documentToDelete"></param>
+        /// <returns></returns>
         public bool DeleteRealDocument(Document documentToDelete)
         {
             bool fileFound = true;
-            try
-            {
-                string filename = documentToDelete.Url;
 
-                if (File.Exists(filename))
-                {
-                    File.Delete(filename);
-                }
-                else
-                {
-                    fileFound = false;
-                }
-            }
-            catch (Exception e)
+            string filename = documentToDelete.Url;
+
+            if (File.Exists(filename))
             {
-                Console.WriteLine(e);
+                File.Delete(filename);
             }
+            else
+            {
+                fileFound = false;
+            }         
+
             return fileFound;
         }
-
+        /// <summary>
+        /// receives data from Email_TemplateController, creates a Document and then a communication on database
+        /// </summary>
+        /// <param name="template"></param>
+        /// <param name="person"></param>
+        /// <param name="reminderId"></param>
+        /// <param name="url"></param>
+        /// <param name="name"></param>
+        /// <returns>Communication</returns>
         public Communication CreateDocumentFromTemplate(EmailTemplate template, Person person, int? reminderId, string url, string name)
         {
             Document newDoc = new Document();
@@ -147,7 +173,13 @@ namespace Logic
             Communication communication = communicationController.CreateCommunication(document, template, date, reminderId);
             return communication;
         }
-
+        /// <summary>
+        /// creates unique fileName for Documents which are generated from Template
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <param name="person"></param>
+        /// <param name="fileExtension"></param>
+        /// <returns>string</returns>
         public string CreateFileName(EDocumentType Type, Person person, string fileExtension)
         {
             string name = null;
