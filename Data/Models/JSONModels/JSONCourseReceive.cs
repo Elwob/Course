@@ -72,6 +72,6 @@ namespace Data.Models.JSONModels
         /// <summary>
         /// contains all subventionIds
         /// </summary>
-        public List<int> SubventionsArr { get; set; }
+        public List<int> SubventionArr { get; set; }
     }
 }

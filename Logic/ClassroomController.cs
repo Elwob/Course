@@ -45,7 +45,6 @@ namespace Logic
 
         public List<JSONClassroom> CreateClassroomArr(int courseId)
         {
-            var jsonClassrooms = new List<JSONClassroom>();
             // get all course-classroom relations where a certain course exists
             if (entities.RelCourseClassrooms.FirstOrDefault(x => x.CourseId == courseId) != null)
             {
@@ -56,7 +55,7 @@ namespace Logic
             }
             else
             {
-                return null;
+                return new List<JSONClassroom>();
             }
         }
 

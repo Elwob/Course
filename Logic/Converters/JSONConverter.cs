@@ -29,8 +29,8 @@ namespace Logic
             course.CourseNumber = jsonCourse.CourseNumber;
             course.Description = jsonCourse.Description;
             course.Category = jsonCourse.Category;
-            course.Start = DateTime.ParseExact(jsonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
-            course.End = DateTime.ParseExact(jsonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
+            course.Start = DateTime.ParseExact(jsonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
+            course.End = DateTime.ParseExact(jsonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
             course.Unit = jsonCourse.Unit;
             course.Price = jsonCourse.Price;
             course.MaxParticipants = jsonCourse.MaxParticipants;
@@ -53,8 +53,8 @@ namespace Logic
             jC.CourseNumber = course.CourseNumber;
             jC.Description = course.Description;
             jC.Category = FindCategory(course.Category);
-            jC.Start = course.Start.ToString();
-            jC.End = course.End.ToString();
+            jC.Start = course.Start;
+            jC.End = course.End;
             jC.Content = relCourseContentController.CreateContentArr(course.Id);
             jC.Units = course.Unit;
             jC.Price = course.Price;

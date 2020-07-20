@@ -33,12 +33,12 @@ namespace Data.Models.JSONModels
         /// <summary>
         /// the courses' start date
         /// </summary>
-        public string? Start { get; set; }
+        public DateTime? Start { get; set; }
 
         /// <summary>
         /// the courses' end date
         /// </summary>
-        public string? End { get; set; }
+        public DateTime? End { get; set; }
 
         /// <summary>
         /// contains all contents

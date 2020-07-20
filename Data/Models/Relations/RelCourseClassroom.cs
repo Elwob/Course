@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Data.Models.BaseClasses;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models.Relations
 {
@@ -6,14 +7,8 @@ namespace Data.Models.Relations
     /// intermediate data used to create relations between courses and classrooms
     /// </summary>
     [Table("course_classroom")]
-    public class RelCourseClassroom
+    public class RelCourseClassroom : BaseClassRelation
     {
-        /// <summary>
-        /// id in DB (is assigned by DB as autoIncrement)
-        /// </summary>
-        [Column("id")]
-        public int Id { get; set; }
-
         /// <summary>
         /// the courses' id
         /// </summary>
