@@ -26,7 +26,7 @@ namespace Data.Models
         /// name of the room
         /// </summary>
         [Column("room")]
-        public string Room { get; set; }
+        public string? Room { get; set; }
 
         /// <summary>
         /// ???

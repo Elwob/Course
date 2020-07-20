@@ -31,7 +31,7 @@ namespace Logic
                         jPlace = entities.Addresses.Where(x => x.Id == addressId).DefaultIfEmpty().FirstOrDefault().Place;
                     }
                 }
-                catch (NullReferenceException ex)
+                catch (NullReferenceException)
                 {
                     Console.WriteLine("Classroom doesn't have an address");
                 }
@@ -47,10 +47,17 @@ namespace Logic
         {
             var jsonClassrooms = new List<JSONClassroom>();
             // get all course-classroom relations where a certain course exists
-            var relations = entities.RelCourseClassrooms.Where(x => x.CourseId == courseId).ToList();
-            // filter classrooms for existing course-classroom relations
-            var c = GetRooms();
-            return c.Where(x => relations.Any(z => x.Id == z.ClassroomId)).ToList();
+            if (entities.RelCourseClassrooms.FirstOrDefault(x => x.CourseId == courseId) != null)
+            {
+                var relations = entities.RelCourseClassrooms.Where(x => x.CourseId == courseId).ToList();
+                // filter classrooms for existing course-classroom relations
+                var c = GetRooms();
+                return c.Where(x => relations.Any(z => x.Id == z.ClassroomId)).ToList();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public JSONClassroom ConvertClassroomToJSON(Classroom classroom)
