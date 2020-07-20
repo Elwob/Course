@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 namespace CourseREST.Controllers
 {
+    /// <summary>
+    /// contains all requests concerning documents
+    /// </summary>
     [Route("document")]
     [Route("[controller]")]
     [ApiController]
