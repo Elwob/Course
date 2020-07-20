@@ -233,7 +233,6 @@ namespace Data.Entities
             modelBuilder.Entity<Classroom>(entity =>
             {
                 entity.HasKey(x => x.Id);
-                entity.Property(x => x.Room).IsRequired();
             });
             // represents the model
             modelBuilder.Entity<CourseCategory>(entity =>
