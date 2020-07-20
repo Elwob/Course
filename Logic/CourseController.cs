@@ -203,6 +203,7 @@ namespace Logic
             // create trainer relations
             foreach (var trainerid in jsonCourse.TrainerArr)
             {
+
                 relCourseTrainerController.CreateRelation(course.Id, trainerid);
             }
             // create content relations
@@ -211,12 +212,12 @@ namespace Logic
                 relCourseContentController.CreateRelation(course.Id, content);
             }
             // create classroom relations
-            foreach (var classroom in jsonCourse.ClassroomArr)
+            foreach (var classroomId in jsonCourse.ClassroomArr)
             {
-                relCourseClassroomController.CreateRelation(course.Id, classroom);
+                relCourseClassroomController.CreateRelation(course.Id, classroomId);
             }
             // create subvention relations
-            foreach (var subvention in jsonCourse.SubventionsArr)
+            foreach (var subvention in jsonCourse.SubventionArr)
             {
                 relCourseSubventionController.CreateRelation(course.Id, subvention);
             }
@@ -243,7 +244,7 @@ namespace Logic
             // update classroom relations
             relCourseClassroomController.UpdateRelations(courseId, courseReceive.ClassroomArr);
             // update subvention relations
-            relCourseSubventionController.UpdateRelations(courseId, courseReceive.SubventionsArr);
+            relCourseSubventionController.UpdateRelations(courseId, courseReceive.SubventionArr);
             return jsonConverter.ConvertCourseToJSON(entities.Courses.FirstOrDefault(x => x.Id == courseId));
         }
 

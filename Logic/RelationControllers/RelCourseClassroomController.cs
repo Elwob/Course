@@ -1,4 +1,5 @@
 ﻿using Data.Models.Relations;
+using Logic.RelationControllers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,6 +20,11 @@ namespace Logic
             entities.RelCourseClassrooms.Add(new RelCourseClassroom() { CourseId = courseId, ClassroomId = classroomId });
             entities.SaveChanges();
         }
+
+        //public void CreateRelation(int Id1, int Id2)
+        //{
+        //    CreateRel(Id1, Id2, "courseId", "classroomId");
+        //}
 
         /// <summary>
         /// Updates relations between courses and classrooms

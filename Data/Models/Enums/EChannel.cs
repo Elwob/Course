@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace Data.Models
 {
@@ -7,7 +9,7 @@ namespace Data.Models
     /// </summary>
 
     /// that Enums will be shown correctly in JSON
-
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum EChannel
     {
         [EnumMember(Value = "Phone Call")]
