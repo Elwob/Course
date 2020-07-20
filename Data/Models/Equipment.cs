@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Data.Models.BaseClasses;
 using System.ComponentModel.DataAnnotations.Schema;
-using Data.Models.BaseClasses;
 
 namespace Data.Models
 {
@@ -53,6 +50,5 @@ namespace Data.Models
 
         [Column("quantity")]
         public int Quantity { get; set; }
-
     }
 }

@@ -13,6 +13,7 @@ namespace Data.Models.JSONModels
         /// filters courses of a specific trainer
         /// </summary>
         public int? trainer_id { get; set; }
+
         /// <summary>
         /// filters course.Name for a string
         /// </summary>
@@ -24,7 +25,7 @@ namespace Data.Models.JSONModels
         public string category { get; set; }
 
         /// <summary>
-        /// filters 
+        /// filters
         /// </summary>
         public int? content_id { get; set; }
     }

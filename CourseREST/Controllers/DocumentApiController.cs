@@ -1,11 +1,7 @@
 ﻿using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace CourseREST.Controllers
 {
@@ -25,7 +21,6 @@ namespace CourseREST.Controllers
             return documents;
         }
 
-       
         [Route("getDocumentTypes")]
         [HttpGet]
         public List<string> GetEnumsDocumentType()

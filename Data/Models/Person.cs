@@ -15,7 +15,7 @@ namespace Data.Models
         {
             MaterialDict = new Dictionary<string, BaseClassMaterial>();
         }
-      
+
         /// <summary>
         /// /// says if relations should be displayed when generating jsons
         /// </summary>

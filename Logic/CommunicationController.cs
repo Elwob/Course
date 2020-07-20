@@ -24,15 +24,14 @@ namespace Logic
                                                                 .Where(x => x.ClassId == classId && x.Class == typeof(T).Name)
                                                                 .Include(c => c.Communication).ThenInclude(c => c.Document)
                                                                 .Select(c => c.Communication).ToList();
-                                                                
 
                 List<Communication> communicationsConcerningOneParticipant = communicationsFromCourse.Where(x => x.PersonId == participantId).ToList();
                 return communicationsConcerningOneParticipant;
             }
 
-
             return null;
         }
+
         /// <summary>
         /// calls Method to check Ids and Method to create Relations, then changes will be saved on database
         /// </summary>
@@ -53,6 +52,7 @@ namespace Logic
             entities.SaveChanges();
             return communication;
         }
+
         /// <summary>
         /// creates a communication, for example after sending mails to one or more Participants
         /// </summary>
@@ -76,6 +76,7 @@ namespace Logic
             communication = CreateRelationAndAddToDatabase(communication);
             return communication;
         }
+
         /// <summary>
         /// Deletes a Communication and its Relations to Classes, a Document which maybe is connected will not be deleted.
         /// </summary>
@@ -91,8 +92,8 @@ namespace Logic
             }
 
             Communication communicationToDelete = entities.Communications.SingleOrDefault(x => x.Id == id);
-            
-            if(communicationToDelete == null)
+
+            if (communicationToDelete == null)
             {
                 return "The Communication you want to delete could not be found.";
             }
@@ -101,7 +102,7 @@ namespace Logic
                 entities.Communications.Remove(communicationToDelete);
                 entities.SaveChanges();
                 Communication communication = entities.Communications.SingleOrDefault(x => x.Id == id);
-                if(communication == null)
+                if (communication == null)
                 {
                     return "Communication has been successfully deleted.";
                 }
@@ -109,9 +110,9 @@ namespace Logic
                 {
                     return "Communication could not be deleted.";
                 }
-                
             }
         }
+
         /// <summary>
         /// changes the comment in a communication and saves changes on database
         /// </summary>
@@ -132,8 +133,8 @@ namespace Logic
             {
                 return null;
             }
-           
         }
+
         /// <summary>
         /// prevents wrong entries, because of not existing CourseId or PersonId
         /// </summary>
@@ -151,8 +152,8 @@ namespace Logic
             }
             else if (trainer == null && course == null)
             {
-                ///in this case we return null, because otherwise we get no entry in RelCommunicationClass 
-                return null;      
+                ///in this case we return null, because otherwise we get no entry in RelCommunicationClass
+                return null;
             }
             else if (course == null && trainer != null)
             {

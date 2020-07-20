@@ -1,10 +1,7 @@
-using Data.Entities;
 using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CourseREST.Controllers
 {
@@ -22,7 +19,6 @@ namespace CourseREST.Controllers
 
             return communications;
         }
-
 
         [HttpDelete("{id}")]
         public string DeleteById(int id)
@@ -42,6 +38,5 @@ namespace CourseREST.Controllers
             Communication latestCommunication = communicationController.CreateRelationAndAddToDatabase(communication);
             return latestCommunication;
         }
-
     }
 }

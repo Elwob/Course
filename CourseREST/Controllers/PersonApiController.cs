@@ -1,11 +1,8 @@
-﻿using Data.Entities;
-using Data.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Data.Models;
 using Logic;
-using Data.Models.BaseClasses;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace CourseREST.Controllers
 {
@@ -62,7 +59,6 @@ namespace CourseREST.Controllers
             }
             return participants;
         }
-
     }
 
     /// <summary>

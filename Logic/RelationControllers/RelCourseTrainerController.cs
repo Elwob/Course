@@ -17,7 +17,7 @@ namespace Logic
         /// <param name="trainerId"></param>
         public void CreateRelation(int courseId, int trainerId)
         {
-            entities.RelCourseTrainers.Add(new RelCourseTrainer() { CourseId = courseId, TrainerId = trainerId});
+            entities.RelCourseTrainers.Add(new RelCourseTrainer() { CourseId = courseId, TrainerId = trainerId });
             entities.SaveChanges();
         }
 

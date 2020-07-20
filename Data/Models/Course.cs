@@ -1,6 +1,4 @@
 using Data.Models.Relations;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using PersonData;
 using System;
 using System.Collections.Generic;
