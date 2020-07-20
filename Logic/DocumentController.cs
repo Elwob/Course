@@ -15,7 +15,16 @@ namespace Logic
         public List<Document> GetDocumentsNeeded(int id, EClass className)
         {
             List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList();
-            return documents;
+            if (documents.Count > 0)
+            {
+                foreach (Document document in documents)
+                {
+                    ConvertDocumentStringToBase64AndAttach(document);
+                }
+                return documents;
+            }
+            else return null;
+           
         }
 
         public Document CreateNewDocument(Document recDocument)
@@ -25,6 +34,7 @@ namespace Logic
             {
                 return null;
             }
+            recDocument = ConvertDocumentStringFromBase64AndSave(recDocument, ".pdf");
             recDocument.CreatedAt = DateTime.Now;
             recDocument.ModifiedAt = DateTime.Now;
 
@@ -32,6 +42,27 @@ namespace Logic
             recDocument.CreateRelation();
             entities.SaveChanges();
             return recDocument;
+        }
+        /// <summary>
+        /// Creates a unique file name, converts the DocumentString from Base 64 into Bytes and writes them into destination file
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="fileExtension"></param>
+        /// <returns>Document</returns>
+        public Document ConvertDocumentStringFromBase64AndSave(Document document, string fileExtension)
+        {
+            string fileName = document.Name + "_" + DateTime.Now.ToFileTime() + fileExtension;
+            string destFile = documentMainPath + "\\DocumentsUploaded\\" + fileName;
+            System.IO.File.WriteAllBytes(destFile, Convert.FromBase64String(document.DocumentString));
+            document.Url = destFile;
+            document.Name = fileName;
+            return document;
+        }
+        public void ConvertDocumentStringToBase64AndAttach(Document document)
+        {
+            var fileAsString = Convert.ToBase64String(System.IO.File.ReadAllBytes(document.Url));
+            document.DocumentString = fileAsString;
+            
         }
 
         public string DeleteById(int id)
