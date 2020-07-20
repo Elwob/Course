@@ -9,6 +9,9 @@ using System;
 
 namespace CourseREST.Controllers
 {
+    /// <summary>
+    /// contains all requests concerning persons
+    /// </summary>
     [Route("person")]
     [Route("[controller]")]
     [ApiController]

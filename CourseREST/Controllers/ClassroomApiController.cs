@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace CourseREST.Controllers
 {
+    /// <summary>
+    /// contains all requests concerning classrooms
+    /// </summary>
     [Route("classroom")]
     [Route("[controller]")]
     [ApiController]
