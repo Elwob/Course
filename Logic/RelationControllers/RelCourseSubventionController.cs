@@ -1,6 +1,7 @@
 ﻿using Data.Models;
 using DocumentFormat.OpenXml.Bibliography;
 using iText.StyledXmlParser.Jsoup.Nodes;
+using Logic.RelationControllers;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,16 @@ using System.Text;
 
 namespace Logic
 {
-    internal class RelCourseSubventionController : MainController
+    internal class RelCourseSubventionController : MainRelController<RelCourseSubvention>
     {
         /// <summary>
-        /// creates relations between courses and subventions
+        ///  creates relations between courses and subventions
         /// </summary>
         /// <param name="courseId"></param>
-        /// <param name="subventionId"></param>
-        public void CreateRelation(int courseId, int subventionId)
+        /// <param name="objId"></param>
+        public void CreateRelation(int courseId, int objId)
         {
-            entities.RelCourseSubventions.Add(new RelCourseSubvention() { CourseId = courseId, SubventionId = subventionId });
-            entities.SaveChanges();
+            CreateRel(courseId, objId, null, "CourseId", "SubventionId", null);
         }
 
         public void UpdateRelations(int courseId, List<int> subventionIds)

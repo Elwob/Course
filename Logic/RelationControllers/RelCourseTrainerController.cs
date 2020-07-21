@@ -1,5 +1,6 @@
 ﻿using Data.Models;
 using Data.Models.JSONModels;
+using Logic.RelationControllers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,17 +9,16 @@ namespace Logic
     /// <summary>
     /// Adds & Updates Trainers in a Course
     /// </summary>
-    internal class RelCourseTrainerController : MainController
+    internal class RelCourseTrainerController : MainRelController<RelCourseTrainer>
     {
         /// <summary>
-        /// creates relations between courses and trainers
+        ///  creates relations between courses and trainers
         /// </summary>
         /// <param name="courseId"></param>
-        /// <param name="trainerId"></param>
-        public void CreateRelation(int courseId, int trainerId)
+        /// <param name="objId"></param>
+        public void CreateRelation(int courseId, int objId)
         {
-            entities.RelCourseTrainers.Add(new RelCourseTrainer() { CourseId = courseId, TrainerId = trainerId });
-            entities.SaveChanges();
+            CreateRel(courseId, objId, null, "CourseId", "TrainerId", null);
         }
 
         /// <summary>

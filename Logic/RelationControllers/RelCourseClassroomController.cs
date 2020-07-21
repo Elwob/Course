@@ -1,4 +1,5 @@
-﻿using Data.Models.Relations;
+﻿using Data.Models.BaseClasses;
+using Data.Models.Relations;
 using Logic.RelationControllers;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,23 +9,17 @@ namespace Logic
     /// <summary>
     /// Adds & Updates Classrooms in a Course
     /// </summary>
-    internal class RelCourseClassroomController : MainController
+    internal class RelCourseClassroomController : MainRelController<RelCourseClassroom>
     {
         /// <summary>
         ///  creates relations between courses and classrooms
         /// </summary>
         /// <param name="courseId"></param>
-        /// <param name="classroomId"></param>
-        public void CreateRelation(int courseId, int classroomId)
+        /// <param name="objId"></param>
+        public void CreateRelation(int courseId, int objId)
         {
-            entities.RelCourseClassrooms.Add(new RelCourseClassroom() { CourseId = courseId, ClassroomId = classroomId });
-            entities.SaveChanges();
+            CreateRel(courseId, objId, null, "CourseId", "ClassroomId", null);
         }
-
-        //public void CreateRelation(int Id1, int Id2)
-        //{
-        //    CreateRel(Id1, Id2, "courseId", "classroomId");
-        //}
 
         /// <summary>
         /// Updates relations between courses and classrooms
