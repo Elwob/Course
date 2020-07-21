@@ -1,11 +1,12 @@
 using Data.Models;
 using Data.Models.JSONModels;
+using Logic.RelationControllers;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Logic
 {
-    internal class RelCourseContentController : MainController
+    internal class RelCourseContentController : MainRelController<RelCourseContent>
     {
         /// <summary>
         /// creates relations between courses and contents
@@ -14,8 +15,7 @@ namespace Logic
         /// <param name="content"></param>
         public void CreateRelation(int courseId, JSONContentReceive content)
         {
-            entities.RelCourseContents.Add(new RelCourseContent() { CourseId = courseId, ContentId = content.Id, Units = content.Units });
-            entities.SaveChanges();
+            CreateRel(courseId, content.Id, content.Units, "CourseId", "ContentId", "Units");
         }
 
         /// <summary>

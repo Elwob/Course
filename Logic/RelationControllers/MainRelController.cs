@@ -9,36 +9,31 @@ using System.Text;
 
 namespace Logic.RelationControllers
 {
-    //TODO: Finish or delete
     public class MainRelController<T> : MainController where T : BaseClassRelation
     {
-        public void CreateRel(int Id1, int Id2, string IdName1, string IdName2)
+        /// <summary>
+        /// builds a generic relation between two classes
+        /// </summary>
+        /// <param name="id1"></param>
+        /// <param name="id2"></param>
+        /// <param name="IdName1"></param>
+        /// <param name="IdName2"></param>
+        public void CreateRel(int id1, int id2, int? value, string IdName1, string IdName2, string valueName)
         {
-            var type = typeof(T);
-            var rel = Activator.CreateInstance(type) as BaseClassRelation;
-
-            type.GetProperty(IdName1).SetValue(rel, Id1);
-            type.GetProperty(IdName2).SetValue(rel, Id2);
-
+            // create instance of T and set values
+            var relType = typeof(T);
+            var rel = (T)Activator.CreateInstance(relType);
+            rel.GetType().GetProperty(IdName1).SetValue(rel, id1);
+            rel.GetType().GetProperty(IdName2).SetValue(rel, id2);
+            if (valueName != null && value != null)
+            {
+                rel.GetType().GetProperty(valueName).SetValue(rel, value);
+            }
+            // select belonging entity and add instance
             var property = entities.GetType().GetProperty(typeof(T).Name + "s");
             var relEntity = property.GetValue(entities, null) as DbSet<T>;
-            relEntity.Add((T)rel);
+            relEntity.Add(rel);
             entities.SaveChanges();
-
-            //// get assembly name
-            //Type type = typeof(System.Data.DataSet);
-            //string assemblyName = type.Assembly.FullName.ToString();
-            //// get Name of relation entity
-            //string tStr = typeof(T).Name + "s";
-            //// 
-            //Type t = Type.GetType("Logic." + tStr + ", " + assemblyName);
-
-            //var property = entities.GetType().GetProperty(typeof(T).Name + "s");
-            //var relEntity = (property.GetValue(entities, null) as DbSet<T>);
-            //Type type = typeof(T);
-
-            //entities.RelCourseClassrooms.Add(new RelCourseClassroom() { CourseId = courseId, ClassroomId = classroomId });
-            //entities.SaveChanges();
         }
     }
 }
