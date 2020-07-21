@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Logic
 {
@@ -42,11 +43,8 @@ namespace Logic
         /// <returns>Communication</returns>
         public Communication CreateRelationAndAddToDatabase(Communication communication)
         {
-            communication = CheckIfIdToConnectWithExists(communication);
-            if (communication == null)
-            {
-                return null;
-            }
+            CheckIfIdToConnectWithExists(communication);
+   
             communication.CreatedAt = DateTime.Now;
             communication.ModifiedAt = DateTime.Now;
 
@@ -98,21 +96,13 @@ namespace Logic
 
             if (communicationToDelete == null)
             {
-                return "The Communication you want to delete could not be found.";
+                throw new EntryCouldNotBeFoundException("The Communication you want to delete could not be found.");
             }
             else
             {
                 entities.Communications.Remove(communicationToDelete);
-                entities.SaveChanges();
-                Communication communication = entities.Communications.SingleOrDefault(x => x.Id == id);
-                if (communication == null)
-                {
-                    return "Communication has been successfully deleted.";
-                }
-                else
-                {
-                    return "Communication could not be deleted.";
-                }
+                entities.SaveChanges();             
+                return "Communication has been successfully deleted.";             
             }
         }
 
@@ -134,7 +124,7 @@ namespace Logic
             }
             else
             {
-                return null;
+                throw new EntryCouldNotBeFoundException("The Communication you want to change could not be found.");
             }
         }
 
@@ -143,32 +133,35 @@ namespace Logic
         /// </summary>
         /// <param name="communication"></param>
         /// <returns>communication</returns>
-        public Communication CheckIfIdToConnectWithExists(Communication communication)
+        public void CheckIfIdToConnectWithExists(Communication communication)
         {
+            Person trainer = null;
+            Course course = null;
             var person = entities.Persons.FirstOrDefault(c => c.Id == communication.PersonId);
-            var trainer = entities.Persons.FirstOrDefault(c => c.Id == communication.TrainerId);
-            var course = entities.Courses.FirstOrDefault(c => c.Id == communication.CourseId);
             if (person == null)
             {
-                ///because a communication must always be assigned to a person, we return null
-                return null;
+                throw new EntryCouldNotBeFoundException("The Person whose communicaton you want to map could not be found.");
             }
-            else if (trainer == null && course == null)
+            if (communication.TrainerId == null && communication.CourseId == null)
             {
-                ///in this case we return null, because otherwise we get no entry in RelCommunicationClass
-                return null;
+                throw new MissingInputException("You have to enter either Trainer or Course or both.");
             }
-            else if (course == null && trainer != null)
+            if (communication.TrainerId != null)
             {
-                communication.CourseId = null;
-                return communication;
+                trainer = entities.Persons.FirstOrDefault(c => c.Id == communication.TrainerId);
+                if (trainer == null)
+                {                 
+                    throw new EntryCouldNotBeFoundException("The Trainer you have entered could not be found.");
+                }
             }
-            else if (trainer == null && course != null)
+            if(communication.CourseId != null)
             {
-                communication.TrainerId = null;
-                return communication;
-            }
-            else return communication;
+                course = entities.Courses.FirstOrDefault(c => c.Id == communication.CourseId);
+                if (course == null)
+                {                   
+                    throw new EntryCouldNotBeFoundException("The Course you have entered could not be found.");
+                }
+            }           
         }
     }
 }

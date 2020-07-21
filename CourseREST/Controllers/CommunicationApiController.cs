@@ -33,12 +33,7 @@ namespace CourseREST.Controllers
             {
                 communications = communicationController.GetCommunicationsNeeded<Course>(courseId, personId);
                 Response.StatusCode = 200;
-            }
-            catch(EntryCouldNotBeFoundException ex)
-            {
-                Response.StatusCode = 500;
-                Response.WriteAsync(ex.Message);
-            }
+            }          
             catch(Exception ex)
             {
                 Response.StatusCode = 500;
@@ -60,11 +55,11 @@ namespace CourseREST.Controllers
             {
                 responseString = communicationController.DeleteById(id);
                 Response.StatusCode = 200;
-            }
-            catch (Exception)
+            }          
+            catch(Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }        
             return responseString;
         }
@@ -82,11 +77,11 @@ namespace CourseREST.Controllers
             {
                 changedCommunication = communicationController.ChangeCommunication(id, communication);
                 Response.StatusCode = 200;
-            }
-            catch
+            }         
+            catch(Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return communication;
         }
@@ -104,10 +99,10 @@ namespace CourseREST.Controllers
                 latestCommunication = communicationController.CreateRelationAndAddToDatabase(communication);
                 Response.StatusCode = 200;
             }
-            catch(Exception)
+            catch(Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }          
             return latestCommunication;
         }
