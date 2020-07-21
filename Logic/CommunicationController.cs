@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using Logic.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,8 +29,10 @@ namespace Logic
                 List<Communication> communicationsConcerningOneParticipant = communicationsFromCourse.Where(x => x.PersonId == participantId).ToList();
                 return communicationsConcerningOneParticipant;
             }
-
-            return null;
+            else
+            {
+                throw new EntryCouldNotBeFoundException("Could not get any information about this Person from Database.");
+            }         
         }
 
         /// <summary>

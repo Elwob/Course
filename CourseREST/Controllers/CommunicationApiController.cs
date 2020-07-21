@@ -1,5 +1,7 @@
 using Data.Models;
 using Logic;
+using Logic.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System;
@@ -32,10 +34,15 @@ namespace CourseREST.Controllers
                 communications = communicationController.GetCommunicationsNeeded<Course>(courseId, personId);
                 Response.StatusCode = 200;
             }
-            catch(Exception)
+            catch(EntryCouldNotBeFoundException ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                Response.StatusCode = 500;
+                Response.WriteAsync(ex.Message);
             }
             return communications;
         }
