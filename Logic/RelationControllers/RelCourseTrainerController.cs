@@ -1,4 +1,4 @@
-﻿using Data.Models;
+using Data.Models;
 using Data.Models.Enums;
 using Data.Models.JSONModels;
 using Logic.RelationControllers;

@@ -1,7 +1,6 @@
 ﻿using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 
@@ -17,7 +16,6 @@ namespace CourseREST.Controllers
     {
         private Email_TemplateController email_TemplateController = new Email_TemplateController();
 
-        // TODO: description of method
         [HttpPost]
         public List<Communication> FillDocuments([FromBody] EmailTemplate emailTemplate)
         {
@@ -32,7 +30,7 @@ namespace CourseREST.Controllers
                 Response.StatusCode = 500;
                 throw;
             }
-            return communications;  
+            return communications;
         }
 
         /// <summary>
@@ -41,7 +39,7 @@ namespace CourseREST.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public EmailTemplate GetEmailTemplate (int id)
+        public EmailTemplate GetEmailTemplate(int id)
         {
             EmailTemplate emailTemplate = null;
             try

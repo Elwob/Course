@@ -1,9 +1,7 @@
 using Data.Models;
 using Logic;
-using Logic.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System;
 
 using System.Collections.Generic;
@@ -19,6 +17,7 @@ namespace CourseREST.Controllers
     public class CommunicationApiController : ControllerBase
     {
         private CommunicationController communicationController = new CommunicationController();
+
         /// <summary>
         /// Get Communications from one Person concerning one Course
         /// </summary>
@@ -33,14 +32,15 @@ namespace CourseREST.Controllers
             {
                 communications = communicationController.GetCommunicationsNeeded<Course>(courseId, personId);
                 Response.StatusCode = 200;
-            }          
-            catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
                 Response.WriteAsync(ex.Message);
             }
             return communications;
         }
+
         /// <summary>
         /// Delete one Communication by its Id; Assigned Document will not be deleted;
         /// </summary>
@@ -55,16 +55,17 @@ namespace CourseREST.Controllers
             {
                 responseString = communicationController.DeleteById(id);
                 Response.StatusCode = 200;
-            }          
-            catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
                 Response.WriteAsync(ex.Message);
-            }        
+            }
             return responseString;
         }
+
         /// <summary>
-        /// Change an existing communication; currently a new comment is expected 
+        /// Change an existing communication; currently a new comment is expected
         /// </summary>
         /// <param name="id"></param>
         /// <param name="communication"></param>
@@ -77,14 +78,15 @@ namespace CourseREST.Controllers
             {
                 changedCommunication = communicationController.ChangeCommunication(id, communication);
                 Response.StatusCode = 200;
-            }         
-            catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
                 Response.WriteAsync(ex.Message);
             }
             return communication;
         }
+
         /// <summary>
         /// We get a Communication Post and communicationController is going to handle it
         /// </summary>
@@ -99,11 +101,11 @@ namespace CourseREST.Controllers
                 latestCommunication = communicationController.CreateRelationAndAddToDatabase(communication);
                 Response.StatusCode = 200;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
                 Response.WriteAsync(ex.Message);
-            }          
+            }
             return latestCommunication;
         }
     }

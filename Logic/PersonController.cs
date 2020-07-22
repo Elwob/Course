@@ -44,6 +44,7 @@ namespace Logic
             else throw new EntryCouldNotBeFoundException("No Trainers found.");
              
         }
+
         /// <summary>
         /// returns a list of all persons
         /// </summary>

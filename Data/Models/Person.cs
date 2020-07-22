@@ -107,7 +107,7 @@ namespace Data.Models
         public bool? WantsNewsletter { get; set; }
 
         /// <summary>
-        /// a user id (for a member of 
+        /// a user id (for a member of
         /// </summary>
         [Column("user_id")]
         public int? UserId { get; set; }

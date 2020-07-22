@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Data.Models;
+﻿using Data.Models;
 using Logic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace CourseREST.Controllers
 {
@@ -14,7 +15,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class CourseCategoryApiController : ControllerBase
     {
-        CourseCategoryController courseCategoryController = new CourseCategoryController();
+        private CourseCategoryController courseCategoryController = new CourseCategoryController();
 
         /// <summary>
         /// returns all course categories existing in DB
@@ -29,10 +30,10 @@ namespace CourseREST.Controllers
                 returnList = courseCategoryController.GetAllCategories();
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return returnList;
         }
@@ -51,10 +52,10 @@ namespace CourseREST.Controllers
                 category = courseCategoryController.PostCategory(courseCategory);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return category;
         }
@@ -74,10 +75,10 @@ namespace CourseREST.Controllers
                 category = courseCategoryController.UpdateCategory(id, courseCategory);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return category;
         }
@@ -94,9 +95,10 @@ namespace CourseREST.Controllers
                 courseCategoryController.DeleteCategory(id);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
+                Response.WriteAsync(ex.Message);
             }
         }
     }

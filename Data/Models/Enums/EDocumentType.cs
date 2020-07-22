@@ -15,11 +15,11 @@ namespace Data.Models
         [EnumMember(Value = "Invitation")]
         Invitation,
 
-        [EnumMember(Value = "Registration Confirmation")]
-        RegistrationConfirmation,
+        [EnumMember(Value = "Anmeldebestaetigung")]
+        Anmeldebestaetigung = 2,
 
-        [EnumMember(Value = "Bill")]
-        Bill,
+        [EnumMember(Value = "Rechnung")]
+        Rechnung,
 
         [EnumMember(Value = "Dun")]
         Dun,
@@ -37,6 +37,6 @@ namespace Data.Models
         Other,
 
         [EnumMember(Value = "Mail")]
-        Mail
+        Mail,
     }
 }

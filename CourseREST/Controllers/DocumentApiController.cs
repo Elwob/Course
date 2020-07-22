@@ -2,9 +2,7 @@ using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace CourseREST.Controllers
@@ -18,6 +16,7 @@ namespace CourseREST.Controllers
     public class DocumentApiController : ControllerBase
     {
         private DocumentController documentController = new DocumentController();
+
         /// <summary>
         /// Gets Documents by Course Id, or Person Id...later on maybe more EClasses can be used
         /// </summary>
@@ -40,6 +39,7 @@ namespace CourseREST.Controllers
             }
             return documents;
         }
+
         /// <summary>
         /// Provides Enums EDocumentType
         /// </summary>
@@ -61,6 +61,7 @@ namespace CourseREST.Controllers
             }
             return enums;
         }
+
         /// <summary>
         /// We get a Document POST which includes the Document-String encoded in Base64
         /// </summary>
@@ -82,6 +83,7 @@ namespace CourseREST.Controllers
             }
             return latestDocument;
         }
+
         /// <summary>
         /// Delete one Document by its Id
         /// </summary>

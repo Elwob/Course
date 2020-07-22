@@ -12,11 +12,11 @@ namespace Logic
     public class JSONConverter
     {
         private CourseEntities entities = CourseEntities.GetInstance();
-        RelCourseContentController relCourseContentController = new RelCourseContentController();
-        RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
-        RelCourseClassroomController relCourseClassroomController = new RelCourseClassroomController();
-        RelCourseSubventionController relCourseSubventionController = new RelCourseSubventionController();
-        ClassroomController classroomController = new ClassroomController();
+        private RelCourseContentController relCourseContentController = new RelCourseContentController();
+        private RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
+        private RelCourseClassroomController relCourseClassroomController = new RelCourseClassroomController();
+        private RelCourseSubventionController relCourseSubventionController = new RelCourseSubventionController();
+    
 
         /// <summary>
         /// converts a JSONCourseReceive to Course
@@ -29,8 +29,8 @@ namespace Logic
             course.CourseNumber = jsonCourse.CourseNumber;
             course.Description = jsonCourse.Description;
             course.Category = jsonCourse.Category;
-            course.Start = DateTime.ParseExact(jsonCourse.Start, "yyyy-MM-ddTHH:mm", null);
-            course.End = DateTime.ParseExact(jsonCourse.End, "yyyy-MM-ddTHH:mm", null);
+            course.Start = DateTime.ParseExact(jsonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
+            course.End = DateTime.ParseExact(jsonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm:ss", null);
             course.Unit = jsonCourse.Unit;
             course.Price = jsonCourse.Price;
             course.MaxParticipants = jsonCourse.MaxParticipants;
@@ -58,7 +58,7 @@ namespace Logic
             jC.Content = relCourseContentController.CreateContentArr(course.Id);
             jC.Units = course.Unit;
             jC.Price = course.Price;
-            jC.ClassroomArr = classroomController.CreateClassroomArr(course.Id);
+            jC.ClassroomArr = relCourseClassroomController.CreateClassroomArr(course.Id);
             jC.participant_max = course.MaxParticipants;
             jC.participant_min = course.MinParticipants;
             jC.TrainerArr = relCourseTrainerController.CreateTrainerArr(course.Id);
@@ -67,6 +67,7 @@ namespace Logic
             jC.ModifiedAt = course.ModifiedAt;
             return jC;
         }
+
         private CourseCategory FindCategory(string catString)
         {
             return entities.CourseCategories.FirstOrDefault(x => x.Name == catString);

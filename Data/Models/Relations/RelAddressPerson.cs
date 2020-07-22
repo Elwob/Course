@@ -1,5 +1,4 @@
-﻿using Data.Models.BaseClasses;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
 {

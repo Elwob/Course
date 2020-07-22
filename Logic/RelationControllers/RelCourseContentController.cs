@@ -18,8 +18,8 @@ namespace Logic
             CreateRel(courseId, content.Id, content.Units, "CourseId", "ContentId", "Units");
         }
 
-        // TODO: could also use UpdateRels in MainRelController 
-        //(but is a bit different than the other classes using that method --> would need an adjustment of UpdateRels)
+        // could also use UpdateRels in MainRelController (like e.g. RelCourseTrainerController)
+        // (but is a bit different than the other classes using that method --> would need an adjustment of UpdateRels)
         /// <summary>
         /// Updates relations between courses and contents
         /// </summary>
