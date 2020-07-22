@@ -1,5 +1,7 @@
-﻿using Data.Models.BaseClasses;
+﻿using Data.Models;
+using Data.Models.BaseClasses;
 using Data.Models.Relations;
+using iText.Signatures;
 using Logic.RelationControllers;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,25 +30,7 @@ namespace Logic
         /// <param name="classroomIds"></param>
         public void UpdateRelations(int courseId, List<int> classroomIds)
         {
-            // add not already existing relations
-            var courseRels = entities.RelCourseClassrooms.Where(x => x.CourseId == courseId).ToList();
-            foreach (var classroomId in classroomIds)
-            {
-                if (!courseRels.Any(x => x.ClassroomId == classroomId))
-                {
-                    entities.RelCourseClassrooms.Add(new RelCourseClassroom() { CourseId = courseId, ClassroomId = classroomId });
-                    entities.SaveChanges();
-                }
-            }
-            // delete relations
-            foreach (var courseRel in courseRels)
-            {
-                if (!classroomIds.Contains(courseRel.ClassroomId))
-                {
-                    entities.RelCourseClassrooms.Remove(courseRel);
-                    entities.SaveChanges();
-                }
-            }
+            UpdateRels(courseId, classroomIds, "CourseId", "ClassroomId");
         }
     }
 }

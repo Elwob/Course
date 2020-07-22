@@ -7,8 +7,14 @@ namespace Data.Models
     /// intermediate data used to create relations between persons and addresses
     /// </summary>
     [Table("addressperson")]
-    public class RelAddressPerson : BaseClassRelation
+    public class RelAddressPerson
     {
+        /// <summary>
+        /// id in DB (is assigned by DB as autoIncrement)
+        /// </summary>
+        [Column("id")]
+        public int Id { get; set; }
+
         /// <summary>
         /// the addresses' id
         /// </summary>

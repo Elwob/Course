@@ -7,8 +7,14 @@ namespace Data.Models
     /// intermediate data used to create relations between documents and classes (e.g. Person, Course, etc.)
     /// </summary>
     [Table("document_class")]
-    public class RelDocumentClass : BaseClassRelation
+    public class RelDocumentClass
     {
+        /// <summary>
+        /// id in DB (is assigned by DB as autoIncrement)
+        /// </summary>
+        [Column("id")]
+        public int Id { get; set; }
+
         /// <summary>
         /// the documents' id
         /// </summary>

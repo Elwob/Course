@@ -7,14 +7,8 @@ namespace Data.Models.Relations
     /// intermediate data used to create relations between courses and classrooms
     /// </summary>
     [Table("course_classroom")]
-    public class RelCourseClassroom : BaseClassRelation
+    public class RelCourseClassroom : BaseClassCourseRelation
     {
-        /// <summary>
-        /// the courses' id
-        /// </summary>
-        [Column("course_id")]
-        public int CourseId { get; set; }
-
         /// <summary>
         /// the classrooms' id
         /// </summary>
