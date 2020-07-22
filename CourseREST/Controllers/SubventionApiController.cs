@@ -1,5 +1,6 @@
 ﻿using Data.Models;
 using Logic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -29,10 +30,10 @@ namespace CourseREST.Controllers
                 subventionList = subventionController.GetAllSubventions();
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return subventionList;
         }
@@ -51,10 +52,10 @@ namespace CourseREST.Controllers
                 returnSubvention = subventionController.PostSubvention(recSubvention);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return returnSubvention;
         }
@@ -74,10 +75,10 @@ namespace CourseREST.Controllers
                 returnSubvention = subventionController.PutSubvention(id, recSubvention);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return returnSubvention;
         }
@@ -94,9 +95,10 @@ namespace CourseREST.Controllers
                 subventionController.DeleteSubvention(id);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
+                Response.WriteAsync(ex.Message);
             }
         }
     }

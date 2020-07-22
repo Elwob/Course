@@ -1,4 +1,6 @@
 ﻿using Data.Models;
+using Logic.Exceptions;
+using Org.BouncyCastle.Crypto.Modes;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,8 +15,6 @@ namespace Logic
         public List<Content> GetAllContents()
         {
             var content = entities.Contents.ToList();
-            // use following line if you want to return relations to courses (where a content is teached in) as well:
-            //var content = entities.Contents.Include(c => c.ContentCourse).ThenInclude(x => x.Course).ToList();
             return content;
         }
 
@@ -38,11 +38,18 @@ namespace Logic
         public Content PutContent(int id, Content content)
         {
             var putContent = entities.Contents.Where(x => x.Id == id).FirstOrDefault();
-            putContent.Topic = content.Topic;
-            putContent.Description = content.Description;
-            putContent.UnitEstimation = content.UnitEstimation;
-            entities.SaveChanges();
-            return entities.Contents.Where(x => x.Id == id).FirstOrDefault();
+            if (putContent != null)
+            {
+                putContent.Topic = content.Topic;
+                putContent.Description = content.Description;
+                putContent.UnitEstimation = content.UnitEstimation;
+                entities.SaveChanges();
+                return entities.Contents.Where(x => x.Id == id).FirstOrDefault();
+            }
+            else
+            {
+                throw new EntryCouldNotBeFoundException("Could not find content in database");
+            }
         }
 
         /// <summary>
@@ -51,8 +58,15 @@ namespace Logic
         /// <param name="id"></param>
         public void DeleteContent(int id)
         {
-            entities.Contents.Remove(entities.Contents.Single(x => x.Id == id));
-            entities.SaveChanges();
+            if (entities.Contents.FirstOrDefault(x => x.Id == id) != null)
+            {
+                entities.Contents.Remove(entities.Contents.Single(x => x.Id == id));
+                entities.SaveChanges();
+            }
+            else
+            {
+                throw new EntryCouldNotBeFoundException("Could not find content in database");
+            }
         }
     }
 }

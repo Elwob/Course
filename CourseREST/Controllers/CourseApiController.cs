@@ -1,6 +1,7 @@
 using Data.Models;
 using Data.Models.JSONModels;
 using Logic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Newtonsoft.Json.Linq;
@@ -41,10 +42,10 @@ namespace CourseREST.Controllers
                 returnList = courseController.GetAllCourses();
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return returnList;
         }
@@ -64,10 +65,10 @@ namespace CourseREST.Controllers
                 returnList = courseController.GetFilteredCourses(filter);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return returnList;
         }
@@ -86,10 +87,10 @@ namespace CourseREST.Controllers
                 returnCourse = courseController.PostCourse(course);
                 Response.StatusCode = 200;
             }
-            catch
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return returnCourse;
         }
@@ -109,10 +110,10 @@ namespace CourseREST.Controllers
                 returnCourse = courseController.UpdateCourse(id, course);
                 Response.StatusCode = 200;
             }
-            catch
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return returnCourse;
         }
@@ -129,9 +130,10 @@ namespace CourseREST.Controllers
                 courseController.DeleteCourse(id);
                 Response.StatusCode = 200;
             }
-            catch
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
+                Response.WriteAsync(ex.Message);
             }
         }
     }

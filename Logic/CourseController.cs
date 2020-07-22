@@ -1,6 +1,8 @@
 ﻿using Data.Entities;
 using Data.Models;
 using Data.Models.JSONModels;
+using DocumentFormat.OpenXml.Bibliography;
+using Logic.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
@@ -16,11 +18,10 @@ namespace Logic
         RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
         RelCourseClassroomController relCourseClassroomController = new RelCourseClassroomController();
         RelCourseSubventionController relCourseSubventionController = new RelCourseSubventionController();
-        ClassroomController classroomController = new ClassroomController();
         JSONConverter jsonConverter = new JSONConverter();
 
         /// <summary>
-        /// 
+        /// finds all courses as List<JSONCourseSend>
         /// </summary>
         /// <returns></returns>
         public List<JSONCourseSend> GetAllCourses()
@@ -128,7 +129,7 @@ namespace Logic
         }
 
         /// <summary>
-        /// filters for a certain course category (e.g. CodingCampus)
+        /// filters for a certain course category (e.g. Coding Campus)
         /// </summary>
         /// <param name="courses"></param>
         /// <param name="filter"></param>
@@ -199,7 +200,6 @@ namespace Logic
             Course course = jsonConverter.ConvertJSONToCourse(jsonCourse);
             entities.Courses.Add(course);
             entities.SaveChanges();
-            // TODO: build a generic method for all CreateRelations
             // create trainer relations
             foreach (var trainerid in jsonCourse.TrainerArr)
             {
@@ -232,20 +232,26 @@ namespace Logic
         /// <returns></returns>
         public JSONCourseSend UpdateCourse(int courseId, JSONCourseReceive courseReceive)
         {
-            Course courseNew = jsonConverter.ConvertJSONToCourse(courseReceive);
-            courseNew.Id = courseId;
-            entities.Entry(entities.Courses.FirstOrDefault(x => x.Id == courseId)).CurrentValues.SetValues(courseNew);
-            entities.SaveChanges();
-            // TODO: build a generic method for all UpdateRelations
-            // update trainer relations
-            relCourseTrainerController.UpdateRelations(courseId, courseReceive.TrainerArr);
-            // update content relations
-            relCourseContentController.UpdateRelations(courseId, courseReceive.ContentArr);
-            // update classroom relations
-            relCourseClassroomController.UpdateRelations(courseId, courseReceive.ClassroomArr);
-            // update subvention relations
-            relCourseSubventionController.UpdateRelations(courseId, courseReceive.SubventionArr);
-            return jsonConverter.ConvertCourseToJSON(entities.Courses.FirstOrDefault(x => x.Id == courseId));
+            if (entities.Courses.FirstOrDefault(x => x.Id == courseId) != null)
+            {
+                Course courseNew = jsonConverter.ConvertJSONToCourse(courseReceive);
+                courseNew.Id = courseId;
+                entities.Entry(entities.Courses.FirstOrDefault(x => x.Id == courseId)).CurrentValues.SetValues(courseNew);
+                entities.SaveChanges();
+                // update trainer relations
+                relCourseTrainerController.UpdateRelations(courseId, courseReceive.TrainerArr);
+                // update content relations
+                relCourseContentController.UpdateRelations(courseId, courseReceive.ContentArr);
+                // update classroom relations
+                relCourseClassroomController.UpdateRelations(courseId, courseReceive.ClassroomArr);
+                // update subvention relations
+                relCourseSubventionController.UpdateRelations(courseId, courseReceive.SubventionArr);
+                return jsonConverter.ConvertCourseToJSON(entities.Courses.FirstOrDefault(x => x.Id == courseId));
+            }
+            else
+            {
+                throw new EntryCouldNotBeFoundException("The course you want to update could not be found in database");
+            }
         }
 
         /// <summary>
@@ -254,8 +260,15 @@ namespace Logic
         /// <param name="id"></param>
         public void DeleteCourse(int id)
         {
-            entities.Courses.Remove(entities.Courses.Single(x => x.Id == id));
-            entities.SaveChanges();
+            if (entities.Courses.FirstOrDefault(x => x.Id == id) != null)
+            {
+                entities.Courses.Remove(entities.Courses.Single(x => x.Id == id));
+                entities.SaveChanges();
+            }
+            else
+            {
+                throw new EntryCouldNotBeFoundException("The course you want to delete could not be found in database");
+            }
         }
     }
 }

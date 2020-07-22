@@ -1,5 +1,6 @@
 using Data.Models;
 using Logic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -34,10 +35,10 @@ namespace CourseREST.Controllers
                 contentList = contentController.GetAllContents();
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return contentList;
         }
@@ -56,10 +57,10 @@ namespace CourseREST.Controllers
                 returnContent = contentController.PostContent(recContent);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return returnContent;
         }
@@ -79,10 +80,10 @@ namespace CourseREST.Controllers
                 returnContent = contentController.PutContent(id, content);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return returnContent;
         }
@@ -99,10 +100,10 @@ namespace CourseREST.Controllers
                 contentController.DeleteContent(id);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
         }
     }

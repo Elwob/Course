@@ -1,5 +1,6 @@
 using Data.Models.JSONModels;
 using Logic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class ClassroomApiController : ControllerBase
     {
-        private ClassroomController classroomController = new ClassroomController();
+        private RelCourseClassroomController classroomController = new RelCourseClassroomController();
 
         /// <summary>
         /// returns all classrooms existing in DB
@@ -30,10 +31,10 @@ namespace CourseREST.Controllers
                 classrooms = classroomController.GetRooms();
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return classrooms;
         }
