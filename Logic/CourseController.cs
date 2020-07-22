@@ -1,7 +1,6 @@
 ﻿using Data.Entities;
 using Data.Models;
 using Data.Models.JSONModels;
-using DocumentFormat.OpenXml.Bibliography;
 using Logic.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;

@@ -1,12 +1,8 @@
 ﻿using Data.Models.BaseClasses;
-using Data.Models.Relations;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace Logic.RelationControllers
 {
@@ -37,7 +33,6 @@ namespace Logic.RelationControllers
             entities.SaveChanges();
         }
 
-        //Todo: RelCourseContent could also be implemented here
         /// <summary>
         /// updates relations between two classes
         /// </summary>

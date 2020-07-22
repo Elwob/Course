@@ -1,6 +1,5 @@
 ﻿using Data.Entities;
 using Data.Models;
-using DocumentFormat.OpenXml.Bibliography;
 using Logic.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
