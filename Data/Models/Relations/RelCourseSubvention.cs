@@ -7,14 +7,8 @@ namespace Data.Models
     /// intermediate data used to create relations between courses and subventions
     /// </summary>
     [Table("course_subvention")]
-    public class RelCourseSubvention : BaseClassRelation
+    public class RelCourseSubvention : BaseClassCourseRelation
     {
-        /// <summary>
-        /// the courses' id
-        /// </summary>
-        [Column("course_id")]
-        public int CourseId { get; set; }
-
         /// <summary>
         /// the subventions' id
         /// </summary>

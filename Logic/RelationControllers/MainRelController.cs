@@ -1,5 +1,6 @@
 ﻿using Data.Models.BaseClasses;
 using Data.Models.Relations;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace Logic.RelationControllers
 {
-    public class MainRelController<T> : MainController where T : BaseClassRelation
+    public class MainRelController<T> : MainController where T : BaseClassCourseRelation
     {
         /// <summary>
         /// builds a generic relation between two classes
@@ -34,6 +35,38 @@ namespace Logic.RelationControllers
             var relEntity = property.GetValue(entities, null) as DbSet<T>;
             relEntity.Add(rel);
             entities.SaveChanges();
+        }
+
+        public void UpdateRels(int id1, List<int> relIds, string IdName1, string RelIdsName)
+        {
+            var relType = typeof(T);
+            // select belonging entity
+            var property = entities.GetType().GetProperty(typeof(T).Name + "s");
+            var relEntity = property.GetValue(entities, null) as DbSet<T>;
+            // get entries wih certain courseId
+            var rels = relEntity.Where(x => x.CourseId == id1).ToList();
+            // add not already existing relations
+            foreach (var relObjId in relIds)
+            {
+                if(!rels.Any(x => (int)x.GetType().GetProperty(RelIdsName).GetValue(x) == relObjId))
+                {
+                    // create instance and set values
+                    var rel = (T)Activator.CreateInstance(relType);
+                    rel.GetType().GetProperty(IdName1).SetValue(rel, id1);
+                    rel.GetType().GetProperty(RelIdsName).SetValue(rel, relObjId);
+                    relEntity.Add(rel);
+                    entities.SaveChanges();
+                }
+            }
+            // delete relations
+            foreach (var rel in rels)
+            {
+                if (!relIds.Contains((int)rel.GetType().GetProperty(RelIdsName).GetValue(rel)))
+                {
+                    relEntity.Remove(rel);
+                    entities.SaveChanges();
+                }
+            }
         }
     }
 }

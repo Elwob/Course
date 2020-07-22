@@ -24,25 +24,7 @@ namespace Logic
 
         public void UpdateRelations(int courseId, List<int> subventionIds)
         {
-            // add not already existing relations
-            var courseRels = entities.RelCourseSubventions.Where(x => x.CourseId == courseId).ToList();
-            foreach (var subventionId in subventionIds)
-            {
-                if (!courseRels.Any(x => x.SubventionId == subventionId))
-                {
-                    entities.RelCourseSubventions.Add(new RelCourseSubvention() { CourseId = courseId, SubventionId = subventionId });
-                    entities.SaveChanges();
-                }
-            }
-            // delete relations
-            foreach (var courseRel in courseRels)
-            {
-                if (!subventionIds.Contains(courseRel.SubventionId))
-                {
-                    entities.RelCourseSubventions.Remove(courseRel);
-                    entities.SaveChanges();
-                }
-            }
+            UpdateRels(courseId, subventionIds, "CourseId", "SubventionId");
         }
 
         /// <summary>

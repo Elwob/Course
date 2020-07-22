@@ -7,8 +7,14 @@ namespace Data.Models
     /// intermediate data used to create relations between communcations and different classes (e.g. Person or Course)
     /// </summary>
     [Table("communication_class")]
-    public class RelCommunicationClass : BaseClassRelation
+    public class RelCommunicationClass
     {
+        /// <summary>
+        /// id in DB (is assigned by DB as autoIncrement)
+        /// </summary>
+        [Column("id")]
+        public int Id { get; set; }
+
         /// <summary>
         /// the communications' id
         /// </summary>

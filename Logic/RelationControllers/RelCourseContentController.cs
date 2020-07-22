@@ -18,6 +18,8 @@ namespace Logic
             CreateRel(courseId, content.Id, content.Units, "CourseId", "ContentId", "Units");
         }
 
+        // TODO: could also use UpdateRels in MainRelController 
+        //(but is a bit different than the other classes using that method --> would need an adjustment of UpdateRels)
         /// <summary>
         /// Updates relations between courses and contents
         /// </summary>
@@ -43,10 +45,13 @@ namespace Logic
             }
             foreach (var courseRel in courseRels)
             {
-                if (contentIds.Contains(courseRel.ContentId) && courseRel.Units != contents.FirstOrDefault(x => x.Id == courseRel.ContentId).Units) ;
+                if (courseRels.Any(x => x.ContentId == courseRel.ContentId))
                 {
-                    courseRel.Units = contents.FirstOrDefault(x => x.Id == courseRel.ContentId).Units;
-                    entities.SaveChanges();
+                    if (contentIds.Contains(courseRel.ContentId) && courseRel.Units != contents.FirstOrDefault(x => x.Id == courseRel.ContentId).Units)
+                    {
+                        courseRel.Units = contents.FirstOrDefault(x => x.Id == courseRel.ContentId).Units;
+                        entities.SaveChanges();
+                    }
                 }
             }
             // delete relations
