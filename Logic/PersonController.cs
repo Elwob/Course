@@ -1,10 +1,14 @@
+using Data.Extensions;
 using Data.Models;
 using Data.Models.BaseClasses;
+using Data.Models.Enums;
 using Logic.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Logic
 {
@@ -18,7 +22,12 @@ namespace Logic
         public Person FindOne(int id)
         {
             var x = entities.Persons.Include(x => x.Contacts).FirstOrDefault(x => x.Id == id);
-            return x;
+            if (x != null)
+            {
+                return x;
+            }
+            else throw new EntryCouldNotBeFoundException("The Person could not be found.");
+            
         }
 
         /// <summary>
@@ -26,9 +35,14 @@ namespace Logic
         /// </summary>
         /// <returns></returns>
         public List<Person> FindAllTrainers()
-        {
-            // TODO: change strings "0" and "1" to enums
-            return entities.Persons.Where(x => x.Function == "0" || x.Function == "1").ToList();
+        {        
+            List<Person> trainers = entities.Persons.ToList().Where(x => x.Function.Equals(EFunction.Trainer_Intern) || x.Function.Equals(EFunction.Trainer_Extern)).ToList();
+            if (trainers.Count > 0)
+            {
+                return trainers;
+            }
+            else throw new EntryCouldNotBeFoundException("No Trainers found.");
+             
         }
         /// <summary>
         /// returns a list of all persons
@@ -36,7 +50,12 @@ namespace Logic
         /// <returns></returns>
         public List<Person> FindAll()
         {
-            return entities.Persons.ToList();
+            List<Person> allPersons = entities.Persons.ToList();
+            if (allPersons.Count > 0)
+            {
+                return allPersons;
+            }
+            else throw new EntryCouldNotBeFoundException("No Persons could be found.");
         }
 
         /// <summary>
