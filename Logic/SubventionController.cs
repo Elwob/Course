@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using Logic.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +17,7 @@ namespace Logic
         }
 
         /// <summary>
-        /// inserts a Subvention in DB and returns created Subvention (including auto-generated id)
+        /// inserts a subvention in DB and returns created subvention (including auto-generated id)
         /// </summary>
         /// <param name="recSub"></param>
         /// <returns></returns>
@@ -28,28 +29,42 @@ namespace Logic
         }
 
         /// <summary>
-        /// updates a Subvention in DB
+        /// updates a subvention in DB
         /// </summary>
         /// <param name="id"></param>
         /// <param name="recSub"></param>
         public Subvention PutSubvention(int id, Subvention recSub)
         {
             var putSubvention = entities.Subventions.Where(x => x.Id == id).FirstOrDefault();
-            putSubvention.Name = recSub.Name;
-            putSubvention.Percentage = recSub.Percentage;
-            putSubvention.Amount = recSub.Amount;
-            entities.SaveChanges();
-            return entities.Subventions.Where(x => x.Id == id).FirstOrDefault();
+            if (putSubvention != null)
+            {
+                putSubvention.Name = recSub.Name;
+                putSubvention.Percentage = recSub.Percentage;
+                putSubvention.Amount = recSub.Amount;
+                entities.SaveChanges();
+                return entities.Subventions.Where(x => x.Id == id).FirstOrDefault();
+            }
+            else
+            {
+                throw new EntryCouldNotBeFoundException("Could not find subvention in database");
+            }
         }
 
         /// <summary>
-        /// deletes a Subvention in DB
+        /// deletes a subvention in DB
         /// </summary>
         /// <param name="id"></param>
         public void DeleteSubvention(int id)
         {
-            entities.Subventions.Remove(entities.Subventions.Single(x => x.Id == id));
-            entities.SaveChanges();
+            if (entities.Subventions.FirstOrDefault(x => x.Id == id) != null)
+            {
+                entities.Subventions.Remove(entities.Subventions.Single(x => x.Id == id));
+                entities.SaveChanges();
+            }
+            else
+            {
+                throw new EntryCouldNotBeFoundException("Could not find subvention in database");
+            }
         }
     }
 }

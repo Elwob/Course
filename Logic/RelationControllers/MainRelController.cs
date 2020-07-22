@@ -13,7 +13,7 @@ namespace Logic.RelationControllers
     public class MainRelController<T> : MainController where T : BaseClassCourseRelation
     {
         /// <summary>
-        /// builds a generic relation between two classes
+        /// builds a relation between two classes
         /// </summary>
         /// <param name="id1"></param>
         /// <param name="id2"></param>
@@ -37,6 +37,14 @@ namespace Logic.RelationControllers
             entities.SaveChanges();
         }
 
+        //Todo: RelCourseContent could also be implemented here
+        /// <summary>
+        /// updates relations between two classes
+        /// </summary>
+        /// <param name="id1"></param>
+        /// <param name="relIds"></param>
+        /// <param name="IdName1"></param>
+        /// <param name="RelIdsName"></param>
         public void UpdateRels(int id1, List<int> relIds, string IdName1, string RelIdsName)
         {
             var relType = typeof(T);

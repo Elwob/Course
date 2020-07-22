@@ -1,5 +1,7 @@
 ﻿using Data.Entities;
 using Data.Models;
+using DocumentFormat.OpenXml.Bibliography;
+using Logic.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,17 +26,31 @@ namespace Logic
         public CourseCategory UpdateCategory(int id, CourseCategory courseCategory)
         {
             var putCat = entities.CourseCategories.FirstOrDefault(x => x.Id == id);
-            putCat.Name = courseCategory.Name;
-            putCat.Color = courseCategory.Color;
-            putCat.FontColor = courseCategory.FontColor;
-            entities.SaveChanges();
-            return putCat;
+            if (putCat != null)
+            {
+                putCat.Name = courseCategory.Name;
+                putCat.Color = courseCategory.Color;
+                putCat.FontColor = courseCategory.FontColor;
+                entities.SaveChanges();
+                return putCat;
+            }
+            else
+            {
+                throw new EntryCouldNotBeFoundException("the course category you want to change could not be found");
+            }
         }
 
         public void DeleteCategory(int id)
         {
-            entities.CourseCategories.Remove(entities.CourseCategories.Single(x => x.Id == id));
-            entities.SaveChanges();
+            if (entities.CourseCategories.FirstOrDefault(x => x.Id == id) != null)
+            {
+                entities.CourseCategories.Remove(entities.CourseCategories.Single(x => x.Id == id));
+                entities.SaveChanges();
+            }
+            else
+            {
+                throw new EntryCouldNotBeFoundException("the course category you want to delete could not be found");
+            }
         }
     }
 }
