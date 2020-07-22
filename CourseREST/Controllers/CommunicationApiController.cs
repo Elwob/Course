@@ -1,9 +1,7 @@
 using Data.Models;
 using Logic;
-using Logic.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System;
 
 using System.Collections.Generic;

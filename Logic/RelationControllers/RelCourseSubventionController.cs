@@ -1,12 +1,7 @@
 ﻿using Data.Models;
-using DocumentFormat.OpenXml.Bibliography;
-using iText.StyledXmlParser.Jsoup.Nodes;
 using Logic.RelationControllers;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Logic
 {

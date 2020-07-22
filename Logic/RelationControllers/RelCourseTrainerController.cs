@@ -41,7 +41,7 @@ namespace Logic
             var jsonTrainers = new List<JSONTrainer>();
             // get all belonging trainers
             var relations = entities.RelCourseTrainers.Where(x => x.CourseId == courseId).ToList();
-            // function 0 and 1 are trainers TODO: change to enums
+            // TODO: change to enums / function "0" and "1" are trainers 
             var t = entities.Persons.Where(x => x.Function == "0" || x.Function == "1").ToList();
             var trainers = t.Where(x => relations.Any(z => x.Id == z.TrainerId)).ToList();
             //Convert to JSONTrainer

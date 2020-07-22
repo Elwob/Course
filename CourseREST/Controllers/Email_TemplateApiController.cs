@@ -1,7 +1,6 @@
 ﻿using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 
@@ -17,7 +16,6 @@ namespace CourseREST.Controllers
     {
         private Email_TemplateController email_TemplateController = new Email_TemplateController();
 
-        // TODO: description of method
         [HttpPost]
         public List<Communication> FillDocuments([FromBody] EmailTemplate emailTemplate)
         {

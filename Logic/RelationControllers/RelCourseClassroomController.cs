@@ -1,8 +1,5 @@
-﻿using Data.Models;
-using Data.Models.BaseClasses;
-using Data.Models.JSONModels;
+﻿using Data.Models.JSONModels;
 using Data.Models.Relations;
-using iText.Signatures;
 using Logic.RelationControllers;
 using System;
 using System.Collections.Generic;
