@@ -1,5 +1,6 @@
 using Data.Models;
 using Data.Models.BaseClasses;
+using Logic.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System.Collections.Generic;
@@ -57,9 +58,10 @@ namespace Logic
             {
                 participants = FindPersonalizedMaterial<Notebook>(participants);
                 participants = FindPersonalizedMaterial<Equipment>(participants);
+                return participants;
             }
-
-            return participants;
+            else throw new EntryCouldNotBeFoundException("Could not find any Participants.");
+            
         }
 
         /// <summary>

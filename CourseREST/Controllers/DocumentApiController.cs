@@ -1,5 +1,6 @@
 using Data.Models;
 using Logic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System;
@@ -32,10 +33,10 @@ namespace CourseREST.Controllers
                 documents = documentController.GetDocumentsNeeded(id, className);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return documents;
         }
@@ -53,10 +54,10 @@ namespace CourseREST.Controllers
                 enums = documentController.GetEnums<EDocumentType>();
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return enums;
         }
@@ -74,10 +75,10 @@ namespace CourseREST.Controllers
                 latestDocument = documentController.CreateNewDocument(recDocument);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return latestDocument;
         }
@@ -95,10 +96,10 @@ namespace CourseREST.Controllers
                 responseString = documentController.DeleteById(id);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return responseString;
         }
