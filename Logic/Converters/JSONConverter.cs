@@ -16,7 +16,7 @@ namespace Logic
         private RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
         private RelCourseClassroomController relCourseClassroomController = new RelCourseClassroomController();
         private RelCourseSubventionController relCourseSubventionController = new RelCourseSubventionController();
-        private ClassroomController classroomController = new ClassroomController();
+    
 
         /// <summary>
         /// converts a JSONCourseReceive to Course
@@ -58,7 +58,7 @@ namespace Logic
             jC.Content = relCourseContentController.CreateContentArr(course.Id);
             jC.Units = course.Unit;
             jC.Price = course.Price;
-            jC.ClassroomArr = classroomController.CreateClassroomArr(course.Id);
+            jC.ClassroomArr = relCourseClassroomController.CreateClassroomArr(course.Id);
             jC.participant_max = course.MaxParticipants;
             jC.participant_min = course.MinParticipants;
             jC.TrainerArr = relCourseTrainerController.CreateTrainerArr(course.Id);
