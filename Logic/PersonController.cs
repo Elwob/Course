@@ -30,6 +30,7 @@ namespace Logic
             // TODO: change strings "0" and "1" to enums
             return entities.Persons.Where(x => x.Function == "0" || x.Function == "1").ToList();
         }
+
         /// <summary>
         /// returns a list of all persons
         /// </summary>

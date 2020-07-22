@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Data.Models;
+﻿using Data.Models;
 using Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace CourseREST.Controllers
 {
@@ -15,7 +15,7 @@ namespace CourseREST.Controllers
     [ApiController]
     public class CourseCategoryApiController : ControllerBase
     {
-        CourseCategoryController courseCategoryController = new CourseCategoryController();
+        private CourseCategoryController courseCategoryController = new CourseCategoryController();
 
         /// <summary>
         /// returns all course categories existing in DB

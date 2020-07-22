@@ -32,7 +32,7 @@ namespace Logic
             else
             {
                 throw new EntryCouldNotBeFoundException("Could not get any information about this Person from Database.");
-            }         
+            }
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Logic
         public Communication CreateRelationAndAddToDatabase(Communication communication)
         {
             CheckIfIdToConnectWithExists(communication);
-   
+
             communication.CreatedAt = DateTime.Now;
             communication.ModifiedAt = DateTime.Now;
 
@@ -100,8 +100,8 @@ namespace Logic
             else
             {
                 entities.Communications.Remove(communicationToDelete);
-                entities.SaveChanges();             
-                return "Communication has been successfully deleted.";             
+                entities.SaveChanges();
+                return "Communication has been successfully deleted.";
             }
         }
 
@@ -149,18 +149,18 @@ namespace Logic
             {
                 trainer = entities.Persons.FirstOrDefault(c => c.Id == communication.TrainerId);
                 if (trainer == null)
-                {                 
+                {
                     throw new EntryCouldNotBeFoundException("The Trainer you have entered could not be found.");
                 }
             }
-            if(communication.CourseId != null)
+            if (communication.CourseId != null)
             {
                 course = entities.Courses.FirstOrDefault(c => c.Id == communication.CourseId);
                 if (course == null)
-                {                   
+                {
                     throw new EntryCouldNotBeFoundException("The Course you have entered could not be found.");
                 }
-            }           
+            }
         }
     }
 }

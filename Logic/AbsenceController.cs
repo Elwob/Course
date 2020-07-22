@@ -36,6 +36,7 @@ namespace Logic
         {
             var absence = entities.Absences.Where(p => p.ParticipantId == id).FirstOrDefault();
             return absence;
+
         }
     }
 }

@@ -17,6 +17,7 @@ namespace CourseREST.Controllers
     public class CourseApiController : ControllerBase
     {
         private CourseController courseController = new CourseController();
+
         public CourseApiController()
         {
             Data.Models.Content.ShouldIgnoreRelation = true;

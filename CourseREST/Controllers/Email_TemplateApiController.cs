@@ -30,7 +30,7 @@ namespace CourseREST.Controllers
                 Response.StatusCode = 500;
                 throw;
             }
-            return communications;  
+            return communications;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace CourseREST.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public EmailTemplate GetEmailTemplate (int id)
+        public EmailTemplate GetEmailTemplate(int id)
         {
             EmailTemplate emailTemplate = null;
             try
