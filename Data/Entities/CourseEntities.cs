@@ -156,7 +156,7 @@ namespace Data.Entities
         /// set to "server=192.168.0.94;database=dcv;user=root" if used with DB on server
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=192.168.0.94;database=dcv;user=root");
+            optionsBuilder.UseMySQL("server=192.168.0.94;database=dcv;user=root;convert zero datetime=true;");
         }
 
         /// <summary>
