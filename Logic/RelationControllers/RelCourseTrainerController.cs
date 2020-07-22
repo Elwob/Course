@@ -1,4 +1,5 @@
-﻿using Data.Models;
+using Data.Models;
+using Data.Models.Enums;
 using Data.Models.JSONModels;
 using Logic.RelationControllers;
 using System.Collections.Generic;
@@ -40,9 +41,8 @@ namespace Logic
         {
             var jsonTrainers = new List<JSONTrainer>();
             // get all belonging trainers
-            var relations = entities.RelCourseTrainers.Where(x => x.CourseId == courseId).ToList();
-            // TODO: change to enums / function "0" and "1" are trainers 
-            var t = entities.Persons.Where(x => x.Function == "0" || x.Function == "1").ToList();
+            var relations = entities.RelCourseTrainers.Where(x => x.CourseId == courseId).ToList();          
+            var t = entities.Persons.Where(x => x.Function.Equals(EFunction.Trainer_Intern) || x.Function.Equals(EFunction.Trainer_Extern)).ToList();
             var trainers = t.Where(x => relations.Any(z => x.Id == z.TrainerId)).ToList();
             //Convert to JSONTrainer
             foreach (var trainer in trainers)

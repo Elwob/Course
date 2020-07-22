@@ -1,4 +1,5 @@
 ﻿using Data.Models.BaseClasses;
+using Data.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -85,7 +86,7 @@ namespace Data.Models
         /// the persons' current function
         /// </summary>
         [Column("function", TypeName = "varchar(200)")]
-        public string? Function { get; set; }
+        public EFunction? Function { get; set; }
 
         /// <summary>
         /// says if a person is an active user ???????
