@@ -13,8 +13,10 @@ namespace Logic.RelationControllers
         /// </summary>
         /// <param name="id1"></param>
         /// <param name="id2"></param>
+        /// <param name="value"></param>
         /// <param name="IdName1"></param>
         /// <param name="IdName2"></param>
+        /// <param name="valueName"></param>
         public void CreateRel(int id1, int id2, int? value, string IdName1, string IdName2, string valueName)
         {
             // create instance of T and set values
