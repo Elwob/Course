@@ -1,5 +1,6 @@
 ﻿using Data.Models;
 using Logic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -29,10 +30,10 @@ namespace CourseREST.Controllers
                 persons = personController.FindAll();
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return persons;
         }
@@ -52,10 +53,10 @@ namespace CourseREST.Controllers
                 participants = personController.FindAllParticipantsOfOneCourse(courseId);
                 Response.StatusCode = 200;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return participants;
         }
@@ -80,10 +81,10 @@ namespace CourseREST.Controllers
                 trainers = personController.FindAllTrainers();
                 Response.StatusCode = 200;
             }
-            catch
+            catch (Exception ex)
             {
                 Response.StatusCode = 500;
-                throw;
+                Response.WriteAsync(ex.Message);
             }
             return trainers;
         }

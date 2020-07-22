@@ -1,4 +1,5 @@
 using Data.Models;
+using Logic.Exceptions;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace Logic
                 }
                 return documents;
             }
-            else return null;        
+            else throw new EntryCouldNotBeFoundException("Documents could not be found.");        
         }
         /// <summary>
         /// Creates a new document
@@ -37,11 +38,8 @@ namespace Logic
         /// <returns>Document</returns>
         public Document CreateNewDocument(Document recDocument)
         {
-            recDocument = CheckIfIdToConnectWithExists(recDocument);
-            if (recDocument == null)
-            {
-                return null;
-            }
+            CheckIfIdToConnectWithExists(recDocument);
+            
             if(recDocument.DocumentString != null)
             {
                 recDocument = ConvertDocumentStringFromBase64AndSave(recDocument, ".pdf");
@@ -86,6 +84,11 @@ namespace Logic
         /// <returns></returns>
         public string DeleteById(int id)
         {
+            Document documentToDelete = entities.Documents.SingleOrDefault(x => x.Id == id);
+            if (documentToDelete == null)
+            {
+               throw new EntryCouldNotBeFoundException("The Document you want to delete could not be found.");
+            }
             ///delete the Relations from Documents to Classes
             List<RelDocumentClass> relationList = entities.RelDocumentClasses.Where(x => x.DocId == id).ToList();
             foreach (var item in relationList)
@@ -106,36 +109,23 @@ namespace Logic
                 item.DocumentId = null;
                 entities.Communications.Update(item);
             }
-
-            Document documentToDelete = entities.Documents.SingleOrDefault(x => x.Id == id);
-            if (documentToDelete == null)
-            {
-                return "The Document you want to delete could not be found.";
-            }
+         
             ///Deletes Document with its Path
-            bool fileFound = DeleteRealDocument(documentToDelete);
+            DeleteRealDocument(documentToDelete);
             ///Deletes Document entry in Database
             entities.Documents.Remove(documentToDelete);
             entities.SaveChanges();
-
-            if (fileFound)
-            {
-                return "Record has been successfully deleted";
-            }
-            else
-            {
-                return "File not found.";
-            }
+           
+            return "Record has been successfully deleted";
+          
         }
         /// <summary>
         /// Deletes a file
         /// </summary>
         /// <param name="documentToDelete"></param>
         /// <returns></returns>
-        public bool DeleteRealDocument(Document documentToDelete)
-        {
-            bool fileFound = true;
-
+        public void DeleteRealDocument(Document documentToDelete)
+        {       
             string filename = documentToDelete.Url;
 
             if (File.Exists(filename))
@@ -144,10 +134,9 @@ namespace Logic
             }
             else
             {
-                fileFound = false;
+                throw new FileDoesNotExistException("It seems that the File you want to delete does not exist.");
             }         
 
-            return fileFound;
         }
         /// <summary>
         /// receives data from Email_TemplateController, creates a Document and then a communication on database
@@ -181,39 +170,41 @@ namespace Logic
         /// <param name="fileExtension"></param>
         /// <returns>string</returns>
         public string CreateFileName(EDocumentType Type, Person person, string fileExtension)
-        {
-            string name = null;
-            if (person != null)
-            {
-                name = Type.ToString() + "_" + person.LastName + "_" + DateTime.Now.ToFileTime() + fileExtension;
-            }
+        {                                  
+            string name = Type.ToString() + "_" + person.LastName + "_" + DateTime.Now.ToFileTime() + fileExtension;                     
             return name;
         }
 
         /// <summary>
-        /// prevents wrong entries, because of not existing CourseId or PersonId
+        /// prevents wrong entries, because of not existing Ids
         /// </summary>
         /// <param name="document"></param>
         /// <returns>document</returns>
-        public Document CheckIfIdToConnectWithExists(Document document)
+        public void CheckIfIdToConnectWithExists(Document document)
         {
-            var person = entities.Persons.FirstOrDefault(c => c.Id == document.PersonId);
-            var course = entities.Courses.FirstOrDefault(c => c.Id == document.CourseId);
-            if (person == null && course == null)
+            Person person = null;
+            Course course = null;
+
+            if (document.PersonId == null && document.CourseId == null)
             {
-                return null;
+                throw new MissingInputException("You have to enter either Person or Course or both.");
             }
-            else if (person == null && course != null)
+            if (document.PersonId != null)
             {
-                document.PersonId = null;
-                return document;
+                person = entities.Persons.FirstOrDefault(c => c.Id == document.PersonId);
+                if(person == null)
+                {
+                    throw new EntryCouldNotBeFoundException("The Person you want to assign to this document could not be found.");
+                }
             }
-            else if (course == null && person != null)
+            if (document.CourseId != null)
             {
-                document.CourseId = null;
-                return document;
-            }
-            else return document;
+                course = entities.Courses.FirstOrDefault(c => c.Id == document.CourseId);
+                if(course == null)
+                {
+                    throw new EntryCouldNotBeFoundException("The Course you want to assign to this document could not be found.");
+                }
+            }                         
         }
     }
 }

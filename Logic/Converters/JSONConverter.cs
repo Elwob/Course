@@ -30,6 +30,7 @@ namespace Logic
             course.Category = jsonCourse.Category;
             course.Start = DateTime.ParseExact(jsonCourse.Start.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
             course.End = DateTime.ParseExact(jsonCourse.End.Replace('T', ' '), "yyyy-MM-dd HH:mm", null);
+
             course.Unit = jsonCourse.Unit;
             course.Price = jsonCourse.Price;
             course.MaxParticipants = jsonCourse.MaxParticipants;

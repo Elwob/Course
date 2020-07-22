@@ -129,7 +129,7 @@ namespace Logic
         }
 
         /// <summary>
-        /// prevents wrong entries, because of not existing CourseId or PersonId
+        /// prevents wrong entries, because of not existing Ids
         /// </summary>
         /// <param name="communication"></param>
         /// <returns>communication</returns>
