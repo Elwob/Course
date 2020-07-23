@@ -1,24 +1,24 @@
-using Data.Extensions;
 using Data.Models;
 using Data.Models.BaseClasses;
 using Data.Models.Enums;
 using Logic.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace Logic
 {
+    /// <summary>
+    /// contains logic for handling Persons (participants and trainers)
+    /// </summary>
     public class PersonController : MainController
     {
         /// <summary>
-        /// returns a specific person
+        /// finds a specific person
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>a Person</returns>
         public Person FindOne(int id)
         {
             var x = entities.Persons.Include(x => x.Contacts).FirstOrDefault(x => x.Id == id);
@@ -27,13 +27,12 @@ namespace Logic
                 return x;
             }
             else throw new EntryCouldNotBeFoundException("The Person could not be found.");
-            
         }
 
         /// <summary>
-        /// returns all trainers
+        /// gets all trainers
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a list of Persons</returns>
         public List<Person> FindAllTrainers()
         {        
             List<Person> trainers = entities.Persons.ToList().Where(x => x.Function.Equals(EFunction.Trainer_Intern) || x.Function.Equals(EFunction.Trainer_Extern)).ToList();
@@ -42,13 +41,12 @@ namespace Logic
                 return trainers;
             }
             else throw new EntryCouldNotBeFoundException("No Trainers found.");
-             
         }
 
         /// <summary>
-        /// returns a list of all persons
+        /// gets a list of all Persons
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a list of Persons</returns>
         public List<Person> FindAll()
         {
             List<Person> allPersons = entities.Persons.ToList();
@@ -60,7 +58,7 @@ namespace Logic
         }
 
         /// <summary>
-        /// Searches all Participants of one Course and calls Method FindPersonalizedMaterial
+        /// Searches all participants of one Course and calls Method FindPersonalizedMaterial
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

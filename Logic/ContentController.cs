@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace Logic
 {
+    /// <summary>
+    /// contains logic for handling Contents
+    /// </summary>
     public class ContentController : MainController
     {
         /// <summary>

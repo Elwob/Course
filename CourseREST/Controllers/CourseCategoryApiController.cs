@@ -18,9 +18,9 @@ namespace CourseREST.Controllers
         private CourseCategoryController courseCategoryController = new CourseCategoryController();
 
         /// <summary>
-        /// returns all course categories existing in DB
+        /// gets all CourseCategories existing in DB
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a list of CourseCategories</returns>
         [HttpGet]
         public List<CourseCategory> Get()
         {
@@ -39,10 +39,10 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// creates a new category in DB
+        /// creates a new CourseCategory in DB
         /// </summary>
         /// <param name="courseCategory"></param>
-        /// <returns></returns>
+        /// <returns>the created CourseCategory</returns>
         [HttpPost]
         public CourseCategory Post([FromBody] CourseCategory courseCategory)
         {
@@ -61,11 +61,11 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// updates a certain category in DB
+        /// updates a certain CourseCategory in DB
         /// </summary>
         /// <param name="id"></param>
         /// <param name="courseCategory"></param>
-        /// <returns></returns>
+        /// <returns>the updated CourseCategory</returns>
         [HttpPut("{id}")]
         public CourseCategory Put(int id, [FromBody] CourseCategory courseCategory)
         {
@@ -84,7 +84,7 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// deletes a certain category in DB
+        /// deletes a certain CourseCategory in DB
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]

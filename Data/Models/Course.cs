@@ -84,12 +84,21 @@ namespace Data.Models
         [NotMapped]
         public List<RelCourseSubvention> CourseSubventions { get; set; }
 
+        /// <summary>
+        /// a list of relations to the courses' participants (Persons)
+        /// </summary>
         [NotMapped]
         public List<RelCourseParticipant> CourseParticipants { get; set; }
 
+        /// <summary>
+        /// a list of relations to the courses' trainers (Persons)
+        /// </summary>
         [NotMapped]
         public List<RelCourseTrainer> CourseTrainers { get; set; }
 
+        /// <summary>
+        /// a list of absences belonging to a course
+        /// </summary>
         [NotMapped]
         public List<Absence> Absences { get; set; }
 

@@ -1,5 +1,4 @@
-﻿using Data.Models.BaseClasses;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
 {
@@ -33,6 +32,9 @@ namespace Data.Models
         [Column("class_id")]
         public int ClassId { get; set; }
 
+        /// <summary>
+        /// needed for creating link
+        /// </summary>
         [NotMapped]
         public Communication Communication { get; set; }
     }

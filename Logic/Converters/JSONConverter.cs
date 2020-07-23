@@ -68,6 +68,11 @@ namespace Logic
             return jC;
         }
 
+        /// <summary>
+        /// converts the name of a category to a CourseCategory
+        /// </summary>
+        /// <param name="catString"></param>
+        /// <returns></returns>
         private CourseCategory FindCategory(string catString)
         {
             return entities.CourseCategories.FirstOrDefault(x => x.Name == catString);

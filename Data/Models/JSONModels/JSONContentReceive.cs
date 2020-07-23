@@ -1,5 +1,8 @@
 ﻿namespace Data.Models.JSONModels
 {
+    /// <summary>
+    /// maps how Contents are received
+    /// </summary>
     public class JSONContentReceive
     {
         /// <summary>

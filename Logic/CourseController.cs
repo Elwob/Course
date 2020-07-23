@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace Logic
 {
+    /// <summary>
+    /// contains logic for handling, filtering, etc. Courses
+    /// </summary>
     public class CourseController
     {
         private CourseEntities entities = CourseEntities.GetInstance();
@@ -22,7 +25,7 @@ namespace Logic
         /// <summary>
         /// finds all courses as List<JSONCourseSend>
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a list of JSONCourseSends</returns>
         public List<JSONCourseSend> GetAllCourses()
         {
             var courses = GetAll();
@@ -37,7 +40,7 @@ namespace Logic
         /// <summary>
         /// returns a list of all courses in DB
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a list of courses</returns>
         public List<Course> GetAll()
         {
             var courses = entities.Courses
@@ -50,10 +53,10 @@ namespace Logic
         }
 
         /// <summary>
-        /// filters for four filter options and returns courses as list
+        /// filters Courses for four filter options
         /// </summary>
         /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <returns>a list of JSONCourseSends</returns>
         public List<JSONCourseSend> GetFilteredCourses(CourseFilter filter)
         {
             var courses = GetAll();
@@ -71,11 +74,11 @@ namespace Logic
         }
 
         /// <summary>
-        /// filters courses for a certain status (planned, active, completed)
+        /// filters Courses for a certain status (planned, active, completed)
         /// </summary>
         /// <param name="courses"></param>
         /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <returns>a list of Courses</returns>
         public List<Course> FilterStatus(List<Course> courses, CourseFilter filter)
         {
             if (filter.status != null && filter.status.Count > 0)
@@ -110,11 +113,11 @@ namespace Logic
         }
 
         /// <summary>
-        /// filters courses assigned to a certain trainer
+        /// filters Courses for assignment to a certain trainer
         /// </summary>
         /// <param name="courses"></param>
         /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <returns>a list of Courses</returns>
         public List<Course> FilterTrainer(List<Course> courses, CourseFilter filter)
         {
             if (filter.trainer_id != null && filter.trainer_id != 0)
@@ -128,11 +131,11 @@ namespace Logic
         }
 
         /// <summary>
-        /// filters for a certain course category (e.g. Coding Campus)
+        /// filters Courses for a certain course category (e.g. Coding Campus)
         /// </summary>
         /// <param name="courses"></param>
         /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <returns>a list of Courses</returns>
         public List<Course> FilterCategory(List<Course> courses, CourseFilter filter)
         {
             if (filter.category != null && filter.category.Length > 0)
@@ -143,11 +146,11 @@ namespace Logic
         }
 
         /// <summary>
-        /// filters course titles for an entry in the search field
+        /// filters Course titles for an entry in the search field (at frontend)
         /// </summary>
         /// <param name="courses"></param>
         /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <returns>a list of Courses</returns>
         public List<Course> FilterSearch(List<Course> courses, CourseFilter filter)
         {
             // not the best looking code but working...
@@ -172,11 +175,11 @@ namespace Logic
         }
 
         /// <summary>
-        /// filters
+        /// filters Courses for a certain Content
         /// </summary>
         /// <param name="courses"></param>
         /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <returns>a list of Courses</returns>
         public List<Course> FilterContent(List<Course> courses, CourseFilter filter)
         {
             if (filter.content_id != null && filter.content_id != 0)
@@ -190,10 +193,10 @@ namespace Logic
         }
 
         /// <summary>
-        /// adds a course to DB (+ relations to trainers and contents)
+        /// adds a Course to DB (+ relations to trainers and Contents)
         /// </summary>
         /// <param name="jsonCourse"></param>
-        /// <returns></returns>
+        /// <returns>the created Course as JSONCourseSend</returns>
         public JSONCourseSend PostCourse(JSONCourseReceive jsonCourse)
         {
             Course course = jsonConverter.ConvertJSONToCourse(jsonCourse);
@@ -202,7 +205,6 @@ namespace Logic
             // create trainer relations
             foreach (var trainerid in jsonCourse.TrainerArr)
             {
-
                 relCourseTrainerController.CreateRelation(course.Id, trainerid);
             }
             // create content relations
@@ -224,11 +226,11 @@ namespace Logic
         }
 
         /// <summary>
-        /// updates an existing course in DB
+        /// updates an existing Course in DB
         /// </summary>
         /// <param name="courseId"></param>
         /// <param name="courseReceive"></param>
-        /// <returns></returns>
+        /// <returns>the updated Course as JSONCourseSend</returns>
         public JSONCourseSend UpdateCourse(int courseId, JSONCourseReceive courseReceive)
         {
             if (entities.Courses.FirstOrDefault(x => x.Id == courseId) != null)
@@ -254,7 +256,7 @@ namespace Logic
         }
 
         /// <summary>
-        /// deletes a certain course in db
+        /// deletes a certain Course in db
         /// </summary>
         /// <param name="id"></param>
         public void DeleteCourse(int id)

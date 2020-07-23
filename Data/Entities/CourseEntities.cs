@@ -134,9 +134,9 @@ namespace Data.Entities
         private static CourseEntities instance = null;
 
         /// <summary>
-        /// returns the singleton instance of CourseEntities
+        /// gets the singleton instance of CourseEntities
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the singleton instance of CourseEntities</returns>
         public static CourseEntities GetInstance()
         {
             if (instance == null)
@@ -150,12 +150,12 @@ namespace Data.Entities
         }
 
         /// <summary>
-        /// creates a DBContextOptionsBuilder to represent the DCV-dataBase
+        /// creates a DBContextOptionsBuilder to represent the DCV-DB
         /// </summary>
         /// <param name="optionsBuilder"></param>
-        /// set to "server=192.168.0.94;database=dcv;user=root" if used with DB on server
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // "convert zero datetime=true" converts wrong datetime-entries (e.g. 0000-00-00... to the lowest datetime known in c#s' datetime-class
             optionsBuilder.UseMySQL("server=192.168.0.94;database=dcv;user=root;convert zero datetime=true;");
         }
 
@@ -173,7 +173,7 @@ namespace Data.Entities
         }
 
         /// <summary>
-        /// creates primary course models
+        /// creates primarily course-related models
         /// </summary>
         /// <param name="modelBuilder"></param>
         private void CreateCourseSpecificModels(ModelBuilder modelBuilder)
@@ -245,7 +245,7 @@ namespace Data.Entities
         }
 
         /// <summary>
-        /// creates primary person models
+        /// creates primarily person-related models
         /// </summary>
         /// <param name="modelBuilder"></param>
         private void CreatePersonSpecificModels(ModelBuilder modelBuilder)
@@ -330,7 +330,7 @@ namespace Data.Entities
         }
 
         /// <summary>
-        /// creates primarily relations between person models + classroom
+        /// creates primarily relations between person-related models + classroom
         /// </summary>
         /// <param name="modelBuilder"></param>
         private void CreatePersonRelations(ModelBuilder modelBuilder)
@@ -385,7 +385,7 @@ namespace Data.Entities
         }
 
         /// <summary>
-        /// creates primarily relations between course models as well as course-person relations
+        /// creates primarily relations between course-related models as well as course-person relations
         /// </summary>
         /// <param name="modelBuilder"></param>
         private void CreateCourseRelations(ModelBuilder modelBuilder)

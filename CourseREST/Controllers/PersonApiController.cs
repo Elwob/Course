@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace CourseREST.Controllers
 {
     /// <summary>
-    /// contains all requests concerning persons
+    /// contains all requests concerning Persons
     /// </summary>
     [Route("person")]
     [Route("[controller]")]
@@ -18,9 +18,9 @@ namespace CourseREST.Controllers
         public PersonController personController = new PersonController();
 
         /// <summary>
-        /// returns a list of all persons in DB
+        /// gets all persons in DB
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a list of persons in DB</returns>
         [HttpGet]
         public List<Person> Get()
         {
@@ -39,10 +39,10 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// returns a list of participants of a certain course
+        /// gets participants of a certain Course
         /// </summary>
         /// <param name="courseId"></param>
-        /// <returns></returns>
+        /// <returns>a list of Persons</returns>
         [Route("getParticipants/{courseId}")]
         [HttpGet]
         public List<Person> GetParticipants(int courseId)
@@ -63,7 +63,7 @@ namespace CourseREST.Controllers
     }
 
     /// <summary>
-    /// returns all trainers
+    /// contains all requests concerning trainers
     /// </summary>
     [Route("trainer")]
     [Route("[controller]")]
@@ -72,6 +72,10 @@ namespace CourseREST.Controllers
     {
         public PersonController personController = new PersonController();
 
+        /// <summary>
+        /// gets all trainers (all Persons that have the function trainer intern/extern)
+        /// </summary>
+        /// <returns>a list of Persons</returns>
         [HttpGet]
         public List<Person> Get()
         {

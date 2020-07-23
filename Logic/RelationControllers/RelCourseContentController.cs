@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace Logic
 {
+    /// <summary>
+    /// adds & updates relations between Courses and Contents
+    /// </summary>
     internal class RelCourseContentController : MainRelController<RelCourseContent>
     {
         /// <summary>

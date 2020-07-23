@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Data.Models.JSONModels
 {
+    /// <summary>
+    /// JSON format for Courses (only contains data necessary for frontend)
+    /// </summary>
     public class JSONCourseSend
     {
         /// <summary>
