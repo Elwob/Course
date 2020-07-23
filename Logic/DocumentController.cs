@@ -18,9 +18,56 @@ namespace Logic
         /// <param name="id"></param>
         /// <param name="className"></param>
         /// <returns>List<Document></returns>
-        public List<Document> GetDocumentsNeeded(int id, EClass className)
+        public List<Document> GetDocumentsNeeded(int personId, int courseId)
         {
-            List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == id && x.Class == className.ToString()).Select(c => c.Document).ToList();
+            List<Document> limitedDocuments = new List<Document>();
+            if (personId != 0)
+            {
+                List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == personId && x.Class == "Person").Select(c => c.Document).ToList();
+
+                ///if courseId is not null, we want to limit the documents and only search those 
+                ///with a relation to one Person and one special course          
+                if (courseId != 0)
+                {
+                    foreach (var item in documents)
+                    {
+                        if (entities.RelDocumentClasses.FirstOrDefault(x => x.DocId == item.Id && x.Class == "Course" && x.ClassId == courseId) != null)
+                        {
+                            limitedDocuments.Add(item);
+                        }
+                    }
+                    return ConvertDocuments(limitedDocuments);
+                }
+                else
+                {
+                    return ConvertDocuments(documents);
+                }
+            }
+            //here we want to get only Documents with relation to one Course...that means for example a CoffeeList
+            //documents with both...relation to Person and relation to Course are going to be removed
+            else if (personId == 0 && courseId != 0)
+            {
+                List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == courseId && x.Class == "Course").Select(c => c.Document).ToList();
+                
+                foreach (var item in documents)
+                {
+                    if (entities.RelDocumentClasses.FirstOrDefault(x => x.DocId == item.Id && x.Class == "Person") != null)
+                    {
+                        limitedDocuments.Add(item);
+                    }
+                }
+                foreach (var item in limitedDocuments)
+                {
+                    documents.Remove(item);
+                }
+                return ConvertDocuments(documents);
+            }
+            else throw new MissingInputException("You have to enter either Person or Course or both.");
+
+        }
+
+        private List<Document> ConvertDocuments(List<Document> documents)
+        {
             if (documents.Count > 0)
             {
                 foreach (Document document in documents)
@@ -29,8 +76,9 @@ namespace Logic
                 }
                 return documents;
             }
-            else throw new EntryCouldNotBeFoundException("Documents could not be found.");        
+            else throw new EntryCouldNotBeFoundException("Documents could not be found.");
         }
+
         /// <summary>
         /// Creates a new document
         /// </summary>

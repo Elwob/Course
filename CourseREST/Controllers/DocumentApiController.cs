@@ -23,13 +23,13 @@ namespace CourseREST.Controllers
         /// <param name="id"></param>
         /// <param name="className"></param>
         /// <returns>List<Document></Document></returns>
-        [HttpGet("{id}/{className}")]
-        public List<Document> GetVariousDocuments(int id, EClass className)
+        [HttpGet("{personId}/{courseId}")]
+        public List<Document> GetVariousDocuments(int personId, int courseId)
         {
             List<Document> documents = null;
             try
-            {
-                documents = documentController.GetDocumentsNeeded(id, className);
+            {             
+                documents = documentController.GetDocumentsNeeded(personId, courseId);            
                 Response.StatusCode = 200;
             }
             catch (Exception ex)
