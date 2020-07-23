@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace CourseREST.Controllers
 {
     /// <summary>
-    /// contains all requests concerning courses
+    /// contains all requests concerning Courses
     /// </summary>
     [Route("course")]
     [Route("[controller]")]
@@ -18,6 +18,7 @@ namespace CourseREST.Controllers
     {
         private CourseController courseController = new CourseController();
 
+        // not needed anymore, since courses are now returned as JSONCourseSend, which is generated from JSONConverter
         public CourseApiController()
         {
             Data.Models.Content.ShouldIgnoreRelation = true;
@@ -26,9 +27,9 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// returns a list of all contents converted to a JSON format
+        /// gets a list of all Courses converted to a JSON format
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a list of JSONCourseSends</returns>
         [HttpGet]
         public List<JSONCourseSend> GetAll()
         {
@@ -47,10 +48,10 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// filters courses according to the entries at frontend
+        /// filters Courses according to the entries at frontend
         /// </summary>
         /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <returns>a list of filtered JSONCourseSends</returns>
         [Route("search")]
         [HttpPost]
         public List<JSONCourseSend> Get([FromBody] CourseFilter filter)
@@ -70,10 +71,10 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// creates a new course in DB
+        /// creates a new Course in DB
         /// </summary>
         /// <param name="course"></param>
-        /// <returns></returns>
+        /// <returns>the created course as JSONCourseSend</returns>
         [HttpPost]
         public JSONCourseSend Post([FromBody] JSONCourseReceive course)
         {
@@ -92,11 +93,11 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// updates a course in DB
+        /// updates a Course in DB
         /// </summary>
         /// <param name="id"></param>
         /// <param name="course"></param>
-        /// <returns></returns>
+        /// <returns>the updated course as JSONCourseSend</returns>
         [HttpPut("{id}")]
         public JSONCourseSend Put(int id, [FromBody] JSONCourseReceive course)
         {
@@ -115,7 +116,7 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// deletes a certain course in DB
+        /// deletes a certain Course in DB
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]

@@ -15,9 +15,15 @@ namespace Data.Models
         [Column("trainer_id", TypeName = "int")]
         public int TrainerId { get; set; }
 
+        /// <summary>
+        /// needed for creating link
+        /// </summary>
         [NotMapped]
         public Person Trainer { get; set; }
 
+        /// <summary>
+        /// needed for creating link
+        /// </summary>
         [NotMapped]
         public Course Course { get; set; }
     }

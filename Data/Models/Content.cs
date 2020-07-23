@@ -38,6 +38,9 @@ namespace Data.Models
         [Column("unit_estimation")]
         public int? UnitEstimation { get; set; }
 
+        /// <summary>
+        /// needed for ignoring relations in JSON
+        /// </summary>
         private List<RelCourseContent> _contentCourses;
 
         /// <summary>

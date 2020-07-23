@@ -2,6 +2,9 @@
 
 namespace Data.Models.JSONModels
 {
+    /// <summary>
+    /// maps how Courses are received
+    /// </summary>
     public class JSONCourseReceive
     {
         /// <summary>

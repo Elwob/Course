@@ -6,14 +6,14 @@ namespace Data.Models
     public class CourseCategory
     {
         /// <summary>
-        /// the categorys' id in DB
+        /// the categories' id in DB
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public int Id { get; set; }
 
         /// <summary>
-        /// the categorys' name in DB
+        /// the categories' name in DB
         /// </summary>
         [Column("category")]
         public string Name { get; set; }

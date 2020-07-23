@@ -2,6 +2,9 @@
 
 namespace Data.Models.JSONModels
 {
+    /// <summary>
+    /// model for receiving all filter options from frontend (all options can be null if not used at frontend)
+    /// </summary>
     public class CourseFilter
     {
         /// <summary>

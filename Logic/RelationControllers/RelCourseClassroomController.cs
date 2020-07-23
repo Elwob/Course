@@ -8,7 +8,7 @@ using System.Linq;
 namespace Logic
 {
     /// <summary>
-    /// Adds & Updates Classrooms in a Course
+    /// adds & updates relations between Courses and Classrooms
     /// </summary>
     public class RelCourseClassroomController : MainRelController<RelCourseClassroom>
     {

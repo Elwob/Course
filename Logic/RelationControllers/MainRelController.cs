@@ -6,6 +6,10 @@ using System.Linq;
 
 namespace Logic.RelationControllers
 {
+    /// <summary>
+    /// contains generic methods for all models mapping relations between courses and other classes
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class MainRelController<T> : MainController where T : BaseClassCourseRelation
     {
         /// <summary>

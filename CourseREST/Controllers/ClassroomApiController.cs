@@ -18,9 +18,9 @@ namespace CourseREST.Controllers
         private RelCourseClassroomController classroomController = new RelCourseClassroomController();
 
         /// <summary>
-        /// returns all classrooms existing in DB
+        /// gets all classrooms existing in DB
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a list of JSONClassrooms</returns>
         [HttpGet]
         public List<JSONClassroom> get()
         {

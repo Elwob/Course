@@ -29,35 +29,38 @@ namespace Data.Models
         public string? Room { get; set; }
 
         /// <summary>
-        /// ???
+        /// id of the facilitator
         /// </summary>
         [Column("facility_id")]
         public int? FacilityId { get; set; }
 
         /// <summary>
-        /// ???
+        /// the image illustrating the room
         /// </summary>
         [Column("image")]
         public string? Image { get; set; }
 
         /// <summary>
-        /// the classroom's description
+        /// the classrooms' description
         /// </summary>
         [Column("description")]
         public string? Description { get; set; }
 
         /// <summary>
-        /// the classroom's title
+        /// the classrooms' title
         /// </summary>
         [Column("title")]
         public string? Title { get; set; }
 
         /// <summary>
-        /// the classroom's subtitle
+        /// the classrooms' subtitle
         /// </summary>
         [Column("subtitle")]
         public string? Subtitle { get; set; }
 
+        /// <summary>
+        /// needed for ignoring relations in JSON
+        /// </summary>
         private List<RelCourseClassroom> _classroomCourses;
 
         /// <summary>

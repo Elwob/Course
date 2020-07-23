@@ -1,5 +1,8 @@
 ﻿namespace Data.Models.JSONModels
 {
+    /// <summary>
+    /// JSON format for Contents (only contains data necessary for frontend)
+    /// </summary>
     public class JSONContentSend
     {
         /// <summary>

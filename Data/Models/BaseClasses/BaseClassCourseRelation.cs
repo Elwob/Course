@@ -2,6 +2,9 @@
 
 namespace Data.Models.BaseClasses
 {
+    /// <summary>
+    /// applies to all Rel-Classes that map a relation between a Course and another class
+    /// </summary>
     public class BaseClassCourseRelation
     {
         /// <summary>

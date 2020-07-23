@@ -21,9 +21,15 @@ namespace Data.Models
         [Column("completed", TypeName = "tinyint")]
         public bool Completed { get; set; }
 
+        /// <summary>
+        /// needed for creating link
+        /// </summary>
         [NotMapped]
         public Course Course { get; set; }
 
+        /// <summary>
+        /// needed for creating link
+        /// </summary>
         [NotMapped]
         public Person Person { get; set; }
     }

@@ -48,6 +48,9 @@ namespace Data.Models
         [NotMapped]
         public Person Person { get; set; }
 
+        /// <summary>
+        /// the quantity for a material
+        /// </summary>
         [Column("quantity")]
         public int Quantity { get; set; }
     }

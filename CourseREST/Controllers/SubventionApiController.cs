@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace CourseREST.Controllers
 {
     /// <summary>
-    /// contains all requests concerning subventions
+    /// contains all requests concerning Subventions
     /// </summary>
     [Route("subvention")]
     [Route("[controller]")]
@@ -18,9 +18,9 @@ namespace CourseREST.Controllers
         private SubventionController subventionController = new SubventionController();
 
         /// <summary>
-        /// returns all subventions
+        /// gets all Subventions
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a list of Subventions</returns>
         [HttpGet]
         public List<Subvention> Get()
         {
@@ -39,10 +39,10 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// creates a new subvention in DB
+        /// creates a new Subvention in DB
         /// </summary>
         /// <param name="recSubvention"></param>
-        /// <returns></returns>
+        /// <returns>the created Subvention</returns>
         [HttpPost]
         public Subvention Post([FromBody] Subvention recSubvention)
         {
@@ -61,11 +61,11 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// updates a certain subvention in DB
+        /// updates a certain Subvention in DB
         /// </summary>
         /// <param name="id"></param>
         /// <param name="recSubvention"></param>
-        /// <returns></returns>
+        /// <returns>the updated Subvention</returns>
         [HttpPut("{id}")]
         public Subvention Put(int id, [FromBody] Subvention recSubvention)
         {
@@ -84,7 +84,7 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// deletes a certain subvention in DB
+        /// deletes a certain Subvention in DB
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]

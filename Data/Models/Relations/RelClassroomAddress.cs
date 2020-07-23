@@ -2,6 +2,9 @@
 
 namespace Data.Models.Relations
 {
+    /// <summary>
+    /// intermediate data used to create relations between addresses and locations
+    /// </summary>
     [Table("adresslocation")]
     public class RelClassroomAddress
     {

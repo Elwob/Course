@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace Logic
 {
+    /// <summary>
+    /// adds and updates relations between Courses and Subventions
+    /// </summary>
     internal class RelCourseSubventionController : MainRelController<RelCourseSubvention>
     {
         /// <summary>
@@ -17,13 +20,18 @@ namespace Logic
             CreateRel(courseId, objId, null, "CourseId", "SubventionId", null);
         }
 
+        /// <summary>
+        /// updates relations between Courses and Subventions
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="subventionIds"></param>
         public void UpdateRelations(int courseId, List<int> subventionIds)
         {
             UpdateRels(courseId, subventionIds, "CourseId", "SubventionId");
         }
 
         /// <summary>
-        /// creates a list of all subventions of a certain course
+        /// creates a list of all Subventions of a certain Course
         /// </summary>
         /// <param name="courseId"></param>
         /// <returns></returns>

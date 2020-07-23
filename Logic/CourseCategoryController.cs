@@ -6,15 +6,27 @@ using System.Linq;
 
 namespace Logic
 {
+    /// <summary>
+    /// contains logic for handling CourseCategories
+    /// </summary>
     public class CourseCategoryController
     {
         private CourseEntities entities = CourseEntities.GetInstance();
 
+        /// <summary>
+        /// gets all CourseCategories in DB
+        /// </summary>
+        /// <returns>a list of CourseCategories</returns>
         public List<CourseCategory> GetAllCategories()
         {
             return entities.CourseCategories.ToList();
         }
 
+        /// <summary>
+        /// creates a new CourseCategory
+        /// </summary>
+        /// <param name="courseCategory"></param>
+        /// <returns>the created CourseCategory</returns>
         public CourseCategory PostCategory(CourseCategory courseCategory)
         {
             entities.CourseCategories.Add(courseCategory);
@@ -22,6 +34,12 @@ namespace Logic
             return courseCategory;
         }
 
+        /// <summary>
+        /// updates a certain CourseCategory
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="courseCategory"></param>
+        /// <returns>the updated CourseCategory</returns>
         public CourseCategory UpdateCategory(int id, CourseCategory courseCategory)
         {
             var putCat = entities.CourseCategories.FirstOrDefault(x => x.Id == id);
@@ -39,6 +57,10 @@ namespace Logic
             }
         }
 
+        /// <summary>
+        /// deletes a certain CourseCategory
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteCategory(int id)
         {
             if (entities.CourseCategories.FirstOrDefault(x => x.Id == id) != null)

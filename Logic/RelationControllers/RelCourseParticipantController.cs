@@ -4,7 +4,7 @@ using Data.Models;
 namespace Logic
 {
     /// <summary>
-    ///  Adds & Updates Persons to a Course
+    ///  Adds & Updates relations between courses and participants
     /// </summary>
     internal class RelCourseParticipantController
     {

@@ -2,6 +2,9 @@
 
 namespace Data.Models.BaseClasses
 {
+    /// <summary>
+    /// applies to all classes that map different kind of materials
+    /// </summary>
     public class BaseClassMaterial
     {
         /// <summary>

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace CourseREST.Controllers
 {
     /// <summary>
-    /// contains all requests concerning contents
+    /// contains all requests concerning Contents
     /// </summary>
     [Route("content")]
     [Route("[controller]")]
@@ -17,15 +17,16 @@ namespace CourseREST.Controllers
     {
         private ContentController contentController = new ContentController();
 
+        // not needed anymore, since courses are now returned as JSONCourseSend, which is generated from JSONConverter
         public ContentApiController()
         {
             Data.Models.Content.ShouldIgnoreRelation = false;
         }
 
         /// <summary>
-        /// returns all contents existing in DB
+        /// gets all Contents existing in DB
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a list of Contents</returns>
         [HttpGet]
         public List<Content> Get()
         {
@@ -44,10 +45,10 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// creates a new content in DB
+        /// creates a new Content in DB
         /// </summary>
         /// <param name="recContent"></param>
-        /// <returns></returns>
+        /// <returns>the created Content</returns>
         [HttpPost]
         public Content Post([FromBody] Content recContent)
         {
@@ -66,11 +67,11 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// updates a content in DB
+        /// updates a Content in DB
         /// </summary>
         /// <param name="id"></param>
         /// <param name="content"></param>
-        /// <returns></returns>
+        /// <returns>the updated Content</returns>
         [HttpPut("{id}")]
         public Content Put(int id, [FromBody] Content content)
         {
@@ -89,7 +90,7 @@ namespace CourseREST.Controllers
         }
 
         /// <summary>
-        /// deletes a certain content in DB
+        /// deletes a certain Content in DB
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]

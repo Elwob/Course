@@ -8,12 +8,12 @@ using System.Linq;
 namespace Logic
 {
     /// <summary>
-    /// Adds & Updates Trainers in a Course
+    /// Adds & Updates relations between Courses and Trainers
     /// </summary>
     internal class RelCourseTrainerController : MainRelController<RelCourseTrainer>
     {
         /// <summary>
-        ///  creates relations between courses and trainers
+        ///  creates relations between Courses and Trainers
         /// </summary>
         /// <param name="courseId"></param>
         /// <param name="objId"></param>
@@ -23,7 +23,7 @@ namespace Logic
         }
 
         /// <summary>
-        /// Updates relations between courses and trainers
+        /// Updates relations between Courses and Trainers
         /// </summary>
         /// <param name="courseId"></param>
         /// <param name="trainerIds"></param>
@@ -33,7 +33,7 @@ namespace Logic
         }
 
         /// <summary>
-        /// creates a list of JSONTrainers for a specific course
+        /// creates a list of JSONTrainers for a specific Course
         /// </summary>
         /// <param name="courseId"></param>
         /// <returns></returns>
