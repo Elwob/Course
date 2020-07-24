@@ -43,15 +43,20 @@ namespace Logic
             dictionary.Add("«Zuname»", person.LastName.ToString());
             dictionary.Add("«Datum»", datetime.ToString());
             dictionary.Add("«KNr_DCV»", course.CourseNumber.ToString());
-          //  dictionary.Add("«Kursort»", course.CourseClassrooms.ToString());
 
-            foreach (string dictKey in dictionary.Keys)
-            {
-                foreach (var item in doc.Pages[0].FindText(dictKey).Finds)
-                {
-                    item.ApplyRecoverString(dictionary[dictKey]);
-                }
-            }
+            //  dictionary.Add("«Kursort»", course.CourseClassrooms.ToString());
+
+            ////fill Document
+            //foreach (string dictKey in dictionary.Keys)
+            //{
+            //    foreach (var item in doc.Pages[0].FindText(dictKey,true).Finds)
+            //    {
+            //        item.ApplyRecoverString(dictionary[dictKey]);
+            //    }
+    
+
+            //}
+
             //foreach ( doc.Pages[0].FindText(dictionary.Keys.ToString()))
             //{
             //}
