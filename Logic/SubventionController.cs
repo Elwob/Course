@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Logic
-{   
+{
     /// <summary>
     /// contains logic for handling Subventions
     /// </summary>

@@ -16,7 +16,6 @@ namespace Logic
         private RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
         private RelCourseClassroomController relCourseClassroomController = new RelCourseClassroomController();
         private RelCourseSubventionController relCourseSubventionController = new RelCourseSubventionController();
-    
 
         /// <summary>
         /// converts a JSONCourseReceive to Course

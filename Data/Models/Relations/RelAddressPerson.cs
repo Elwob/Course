@@ -27,6 +27,18 @@ namespace Data.Models
         public int PersonId { get; set; }
 
         /// <summary>
+        /// /Privat or Buissness contact
+        /// </summary>
+        [Column("contact_type")]
+        public int ContactType { get; set; }
+
+        /// <summary>
+        /// Billing Adress
+        /// </summary>
+        [Column("billing_address")]
+        public int? BillingAddress { get; set; }
+
+        /// <summary>
         /// needed for linking
         /// </summary>
         [NotMapped]

@@ -28,8 +28,8 @@ namespace CourseREST.Controllers
         {
             List<Document> documents = null;
             try
-            {             
-                documents = documentController.GetDocumentsNeeded(personId, courseId);            
+            {
+                documents = documentController.GetDocumentsNeeded(personId, courseId);
                 Response.StatusCode = 200;
             }
             catch (Exception ex)

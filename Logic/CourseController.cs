@@ -16,11 +16,11 @@ namespace Logic
     public class CourseController
     {
         private CourseEntities entities = CourseEntities.GetInstance();
-        RelCourseContentController relCourseContentController = new RelCourseContentController();
-        RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
-        RelCourseClassroomController relCourseClassroomController = new RelCourseClassroomController();
-        RelCourseSubventionController relCourseSubventionController = new RelCourseSubventionController();
-        JSONConverter jsonConverter = new JSONConverter();
+        private RelCourseContentController relCourseContentController = new RelCourseContentController();
+        private RelCourseTrainerController relCourseTrainerController = new RelCourseTrainerController();
+        private RelCourseClassroomController relCourseClassroomController = new RelCourseClassroomController();
+        private RelCourseSubventionController relCourseSubventionController = new RelCourseSubventionController();
+        private JSONConverter jsonConverter = new JSONConverter();
 
         /// <summary>
         /// finds all courses as List<JSONCourseSend>
@@ -98,7 +98,6 @@ namespace Logic
                     {
                         courses.Remove(course);
                     }
-                    
                 }
                 if (!filter.status.Contains("completed"))
                 {

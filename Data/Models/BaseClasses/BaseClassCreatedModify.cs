@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PersonData
 {
     /// <summary>
-    /// applies to all classes that contain the dateTimes CreatedAt and ModifiedAt. 
+    /// applies to all classes that contain the dateTimes CreatedAt and ModifiedAt.
     /// yes the name should correctly be "BaseClassCreatedModified" --> discuss with whoever is responsible for module "Persons" if you feel like it ;-)
     /// </summary>
     public class BaseClassCreatedModify

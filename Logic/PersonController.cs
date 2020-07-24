@@ -34,7 +34,7 @@ namespace Logic
         /// </summary>
         /// <returns>a list of Persons</returns>
         public List<Person> FindAllTrainers()
-        {        
+        {
             List<Person> trainers = entities.Persons.ToList().Where(x => x.Function.Equals(EFunction.Trainer_Intern) || x.Function.Equals(EFunction.Trainer_Extern)).ToList();
             if (trainers.Count > 0)
             {
@@ -79,7 +79,6 @@ namespace Logic
                 return participants;
             }
             else throw new EntryCouldNotBeFoundException("Could not find any Participants.");
-            
         }
 
         /// <summary>

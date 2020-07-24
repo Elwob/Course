@@ -41,7 +41,7 @@ namespace Logic
         {
             var jsonTrainers = new List<JSONTrainer>();
             // get all belonging trainers
-            var relations = entities.RelCourseTrainers.Where(x => x.CourseId == courseId).ToList();          
+            var relations = entities.RelCourseTrainers.Where(x => x.CourseId == courseId).ToList();
             var t = entities.Persons.Where(x => x.Function.Equals(EFunction.Trainer_Intern) || x.Function.Equals(EFunction.Trainer_Extern)).ToList();
             var trainers = t.Where(x => relations.Any(z => x.Id == z.TrainerId)).ToList();
             //Convert to JSONTrainer

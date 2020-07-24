@@ -37,10 +37,36 @@ namespace Logic
                     Person person = personController.FindOne(emailTemplate.PersonIds[i]);
                     string docName = emailTemplate.DocumentType.ToString();
 
+                    // salutation
+                    string gender = person.Gender.ToUpper().ToString();
+                    if (gender == null)
+                    {
+                        gender = "";
+                    }
+                    else if (gender.StartsWith("M"))
+                    {
+                        gender = "Herr";
+                    }
+                    else if (gender.StartsWith("W"))
+                    {
+                        gender = "Frau";
+                    }
+                    else if (gender.StartsWith("D"))
+                    {
+                        gender = "Frau/Herr";
+                    }
+
+                    //get Adress relations and Persons Address
+                    int addressid = entities.RelAddressPersons.Where(x => x.PersonId == person.Id).FirstOrDefault(x => x.ContactType == 0).AddressId;
+                    Address address = entities.Addresses.FirstOrDefault(x => x.Id == (int)addressid);
+
+                    //get Course
+                    Course course = entities.Courses.FirstOrDefault(id => id.Id == emailTemplate.CourseId);
+
                     //only this Id`s get a document attached
                     if ((int)emailTemplate.DocumentType > 1 && (int)emailTemplate.DocumentType < 6)
                     {
-                        destFile = pdfDocumentController.FillPdf(person, emailTemplate, ref destFile);
+                        destFile = pdfDocumentController.FillPdf(gender,person, course, address, emailTemplate, ref destFile);
                     }
 
                     Contact contact = entities.Contacts.Where(x => x.PersonId == person.Id).FirstOrDefault(x => x.ArtOfCommunication.Equals(EChannel.Email));
@@ -60,7 +86,7 @@ namespace Logic
                     message.Subject = emailTemplate.DocumentType.ToString();
 
                     //Call and Fill Email text
-                    message = emailTemplates.GetAndFillEmail(ref message, person, emailTemplate);
+                    message = emailTemplates.GetAndFillEmail(ref message,gender, person, course, emailTemplate);
 
                     //Connect
                     SmtpClient oSmtp = new SmtpClient("w01959cb.kasserver.com");

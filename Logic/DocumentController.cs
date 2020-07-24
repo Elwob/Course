@@ -12,6 +12,7 @@ namespace Logic
     public class DocumentController : MainController
     {
         private CommunicationController communicationController = new CommunicationController();
+
         /// <summary>
         /// Gets documents concerning one course or one person
         /// </summary>
@@ -25,8 +26,8 @@ namespace Logic
             {
                 List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == personId && x.Class == "Person").Select(c => c.Document).ToList();
 
-                ///if courseId is not null, we want to limit the documents and only search those 
-                ///with a relation to one Person and one special course          
+                ///if courseId is not null, we want to limit the documents and only search those
+                ///with a relation to one Person and one special course
                 if (courseId != 0)
                 {
                     foreach (var item in documents)
@@ -48,7 +49,7 @@ namespace Logic
             else if (personId == 0 && courseId != 0)
             {
                 List<Document> documents = entities.RelDocumentClasses.Where(x => x.ClassId == courseId && x.Class == "Course").Select(c => c.Document).ToList();
-                
+
                 foreach (var item in documents)
                 {
                     if (entities.RelDocumentClasses.FirstOrDefault(x => x.DocId == item.Id && x.Class == "Person") != null)
@@ -63,7 +64,6 @@ namespace Logic
                 return ConvertDocuments(documents);
             }
             else throw new MissingInputException("You have to enter either Person or Course or both.");
-
         }
 
         private List<Document> ConvertDocuments(List<Document> documents)
@@ -87,8 +87,8 @@ namespace Logic
         public Document CreateNewDocument(Document recDocument)
         {
             CheckIfIdToConnectWithExists(recDocument);
-            
-            if(recDocument.DocumentString != null)
+
+            if (recDocument.DocumentString != null)
             {
                 recDocument = ConvertDocumentStringFromBase64AndSave(recDocument, ".pdf");
             }
@@ -100,6 +100,7 @@ namespace Logic
             entities.SaveChanges();
             return recDocument;
         }
+
         /// <summary>
         /// Creates a unique file name, converts the DocumentString from Base 64 into Bytes and writes them into destination file
         /// </summary>
@@ -115,6 +116,7 @@ namespace Logic
             document.Name = fileName;
             return document;
         }
+
         /// <summary>
         /// Converts the DocumentString to Base64 and attaches it to the document we want to return
         /// </summary>
@@ -123,8 +125,8 @@ namespace Logic
         {
             var fileAsString = Convert.ToBase64String(System.IO.File.ReadAllBytes(document.Url));
             document.DocumentString = fileAsString;
-            
         }
+
         /// <summary>
         /// Deletes a document by its Id, removes entry in RelDocumentClasses and sets DocumentId in Absences and Communications to null
         /// </summary>
@@ -135,7 +137,7 @@ namespace Logic
             Document documentToDelete = entities.Documents.SingleOrDefault(x => x.Id == id);
             if (documentToDelete == null)
             {
-               throw new EntryCouldNotBeFoundException("The Document you want to delete could not be found.");
+                throw new EntryCouldNotBeFoundException("The Document you want to delete could not be found.");
             }
             ///delete the Relations from Documents to Classes
             List<RelDocumentClass> relationList = entities.RelDocumentClasses.Where(x => x.DocId == id).ToList();
@@ -157,23 +159,23 @@ namespace Logic
                 item.DocumentId = null;
                 entities.Communications.Update(item);
             }
-         
+
             ///Deletes Document with its Path
             DeleteRealDocument(documentToDelete);
             ///Deletes Document entry in Database
             entities.Documents.Remove(documentToDelete);
             entities.SaveChanges();
-           
+
             return "Record has been successfully deleted";
-          
         }
+
         /// <summary>
         /// Deletes a file
         /// </summary>
         /// <param name="documentToDelete"></param>
         /// <returns></returns>
         public void DeleteRealDocument(Document documentToDelete)
-        {       
+        {
             string filename = documentToDelete.Url;
 
             if (File.Exists(filename))
@@ -183,9 +185,9 @@ namespace Logic
             else
             {
                 throw new FileDoesNotExistException("It seems that the File you want to delete does not exist.");
-            }         
-
+            }
         }
+
         /// <summary>
         /// receives data from Email_TemplateController, creates a Document and then a communication on database
         /// </summary>
@@ -210,6 +212,7 @@ namespace Logic
             Communication communication = communicationController.CreateCommunication(document, template, date, reminderId);
             return communication;
         }
+
         /// <summary>
         /// creates unique fileName for Documents which are generated from Template
         /// </summary>
@@ -218,8 +221,8 @@ namespace Logic
         /// <param name="fileExtension"></param>
         /// <returns>string</returns>
         public string CreateFileName(EDocumentType Type, Person person, string fileExtension)
-        {                                  
-            string name = Type.ToString() + "_" + person.LastName + "_" + DateTime.Now.ToFileTime() + fileExtension;                     
+        {
+            string name = Type.ToString() + "_" + person.LastName + "_" + DateTime.Now.ToFileTime() + fileExtension;
             return name;
         }
 
@@ -240,7 +243,7 @@ namespace Logic
             if (document.PersonId != null)
             {
                 person = entities.Persons.FirstOrDefault(c => c.Id == document.PersonId);
-                if(person == null)
+                if (person == null)
                 {
                     throw new EntryCouldNotBeFoundException("The Person you want to assign to this document could not be found.");
                 }
@@ -248,11 +251,11 @@ namespace Logic
             if (document.CourseId != null)
             {
                 course = entities.Courses.FirstOrDefault(c => c.Id == document.CourseId);
-                if(course == null)
+                if (course == null)
                 {
                     throw new EntryCouldNotBeFoundException("The Course you want to assign to this document could not be found.");
                 }
-            }                         
+            }
         }
     }
 }

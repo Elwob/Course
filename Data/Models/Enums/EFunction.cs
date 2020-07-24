@@ -13,9 +13,10 @@ namespace Data.Models.Enums
     {
         [EnumMember(Value = "Trainer Intern")]
         Trainer_Intern,
+
         [EnumMember(Value = "Trainer Extern")]
         Trainer_Extern,
+
         Büro
-        
     }
 }

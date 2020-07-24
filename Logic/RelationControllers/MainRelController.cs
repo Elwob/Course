@@ -57,7 +57,7 @@ namespace Logic.RelationControllers
             // add not already existing relations
             foreach (var relObjId in relIds)
             {
-                if(!rels.Any(x => (int)x.GetType().GetProperty(RelIdsName).GetValue(x) == relObjId))
+                if (!rels.Any(x => (int)x.GetType().GetProperty(RelIdsName).GetValue(x) == relObjId))
                 {
                     // create instance and set values
                     var rel = (T)Activator.CreateInstance(relType);

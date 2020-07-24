@@ -1,9 +1,4 @@
-﻿using Data.Models;
-using Data.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System;
 
 namespace Data.Extensions
 {
@@ -18,13 +13,11 @@ namespace Data.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="enumVal"></param>
         /// <returns></returns>
-        public static T GetEnumValue<T>(this string enumVal) where T:Enum
-        {     
-                                 
+        public static T GetEnumValue<T>(this string enumVal) where T : Enum
+        {
             Enum.TryParse(typeof(T), enumVal, out object myVal);
 
-            return (T)myVal;         
-            
+            return (T)myVal;
         }
     }
 }
